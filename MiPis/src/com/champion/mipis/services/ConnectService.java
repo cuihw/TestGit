@@ -520,20 +520,19 @@ public class ConnectService extends Service {
 
         }
 
-        // 解析接收到的数据包
         private void parsePackage(byte[] pkg) {
 
             if (DEBUG)
                 Log.d(TAG, "parsePackage .. ");
 
-            int CMD = pkg[3];// 命令字
-            int cmdType = pkg[4];// 命令类型
-            int oprCmd = pkg[5];// 操作命令
+            int CMD = pkg[3];// cmd byte
+            int cmdType = pkg[4];// type
+            int oprCmd = pkg[5];// operation cmd.
 
-            // 获得用户ID号
+            // get psersionid
             byte[] uId = new byte[4];
             System.arraycopy(pkg, 6, uId, 0, 4);
-            int userId = ByteAndInt.byteArray2Int(uId);
+            int personId = ByteAndInt.byteArray2Int(uId);
 
             switch (CMD) {
                 case Constant.CMD80:
@@ -542,13 +541,12 @@ public class ConnectService extends Service {
                         Log.d(TAG, "parsePackage .. Constant.CMD80");
                     switch (cmdType) {
                         case Constant.CMD_TYPE1:
-                            // 如果该信息不是自己发出则给对方发送回应包,并把对方加入用户列表
-                            if (userId != mySelf.personId) {
+                            if (personId != mySelf.personId) {
 
-                                updatePerson(userId, pkg);
-                                // 发送应答包
+                                updatePerson(personId, pkg);
 
-                                byte[] ipBytes = new byte[4];// 获得请求方的ip地址
+                                // get ip address
+                                byte[] ipBytes = new byte[4];
                                 System.arraycopy(pkg, 44, ipBytes, 0, 4);
                                 try {
                                     InetAddress targetIp = InetAddress.getByAddress(ipBytes);
@@ -557,7 +555,8 @@ public class ConnectService extends Service {
                                         Log.d(TAG, "parsePackage() ipBytes = " + ipBytes.toString() + ", targetIp = "
                                                 + targetIp.toString());
 
-                                    regBuffer[4] = Constant.CMD_TYPE2;// 把自己的注册信息修改成应答信息标志，把自己的信息发送给请求方
+                                    // modify myself info to ack the package.
+                                    regBuffer[4] = Constant.CMD_TYPE2;
                                     DatagramPacket dp =
                                             new DatagramPacket(regBuffer, Constant.bufferSize, targetIp, Constant.PORT);
                                     multicastSocket.send(dp);
@@ -567,16 +566,16 @@ public class ConnectService extends Service {
                             }
                             break;
                         case Constant.CMD_TYPE2:
-                            updatePerson(userId, pkg);
+                            updatePerson(personId, pkg);
                             break;
                         case Constant.CMD_TYPE3:
-                            childrenMap.remove(userId);
-                            personKeys.remove(Integer.valueOf(userId));
+                            childrenMap.remove(personId);
+                            personKeys.remove(Integer.valueOf(personId));
                             sendPersonHasChangedBroadcast();
                             break;
                     }
                     break;
-                case Constant.CMD81:// 收到信息
+                case Constant.CMD81:// reveive a message.
                     if (DEBUG)
                         Log.d(TAG, "parsePackage .. receive a text message.");
 
@@ -586,8 +585,8 @@ public class ConnectService extends Service {
 
                             synchronized (msgContainer) {
 
-                                if (msgContainer.containsKey(userId)) {
-                                    messages = msgContainer.get(userId);
+                                if (msgContainer.containsKey(personId)) {
+                                    messages = msgContainer.get(personId);
                                 } else {
                                     messages = new ArrayList<LocalMessage>();
                                 }
@@ -599,7 +598,7 @@ public class ConnectService extends Service {
                                 // save the message to the container
                                 String msg = msgStr;
                                 long receivedMills = System.currentTimeMillis();
-                                int personID = userId;
+                                int personID = personId;
                                 int fromTo = LocalMessage.FROM;
 
                                 LocalMessage message = new LocalMessage(msg, receivedMills, personID, fromTo);
@@ -614,10 +613,10 @@ public class ConnectService extends Service {
                                         Log.d(TAG, "message index " + i + " : " + messages.get(i));
                                 }
 
-                                msgContainer.put(userId, messages);
+                                msgContainer.put(personId, messages);
 
                             }
-                            broadcastNewMessage(userId, messages.size());
+                            broadcastNewMessage(personId, messages.size());
                             break;
                         case Constant.CMD_TYPE2:
                             break;
@@ -634,16 +633,16 @@ public class ConnectService extends Service {
                                     if (!isBusyNow) {
                                         // isBusyNow = true;
                                         // save the sent user id.
-                                        fileSenderUid = userId;
+                                        fileSenderUid = personId;
 
-                                        Person person = childrenMap.get(Integer.valueOf(userId));
+                                        Person person = childrenMap.get(Integer.valueOf(personId));
                                         Intent intent = new Intent();
                                         intent.putExtra("person", person);
                                         intent.setAction(Constant.receivedSendFileRequestAction);
                                         sendBroadcast(intent);
                                     } else {
                                         // send busy on the transfer file.
-                                        Person person = childrenMap.get(Integer.valueOf(userId));
+                                        Person person = childrenMap.get(Integer.valueOf(personId));
                                         fileSendBuffer[4] = Constant.CMD_TYPE2;
                                         fileSendBuffer[5] = Constant.OPR_CMD4;
                                         byte[] meIdBytes = ByteAndInt.int2ByteArray(mySelf.personId);
@@ -693,10 +692,10 @@ public class ConnectService extends Service {
                     switch (cmdType) {
                         case Constant.CMD_TYPE1:
                             switch (oprCmd) {
-                                case Constant.OPR_CMD1://receive a talk request
+                                case Constant.OPR_CMD1:// receive a talk request
                                     System.out.println("Received a talk request ... ");
                                     isStopTalk = false;
-                                    Person person = childrenMap.get(Integer.valueOf(userId));
+                                    Person person = childrenMap.get(Integer.valueOf(personId));
                                     Intent intent = new Intent();
                                     intent.putExtra("person", person);
                                     intent.setAction(Constant.receivedTalkRequestAction);
@@ -718,7 +717,7 @@ public class ConnectService extends Service {
                                     // start talk.
                                     if (!isStopTalk) {
                                         System.out.println("Begin to talk with remote user ... ");
-                                        Person person = childrenMap.get(Integer.valueOf(userId));
+                                        Person person = childrenMap.get(Integer.valueOf(personId));
                                         audioHandler.audioSend(person);
                                     }
                                     break;
@@ -1185,12 +1184,9 @@ public class ConnectService extends Service {
                 }
             }
 
-            // 开始给对方发送文件
             public void startSendFile() {
-                // 获得接收方信息
                 Person person = childrenMap.get(Integer.valueOf(tempUid));
                 final String userIp = person.ipAddress;
-                // 组合头数据包，该数据包中包括要发送的文件名
                 final byte[] sendFileCmd = new byte[Constant.bufferSize];
                 for (int i = 0; i < Constant.bufferSize; i++)
                     sendFileCmd[i] = 0;
@@ -1199,7 +1195,7 @@ public class ConnectService extends Service {
                 sendFileCmd[4] = Constant.CMD_TYPE1;
                 sendFileCmd[5] = Constant.OPR_CMD6;
                 System.arraycopy(ByteAndInt.int2ByteArray(mySelf.personId), 0, sendFileCmd, 6, 4);
-                for (final FileName file : tempFiles) {// 采用多线程发送文件
+                for (final FileName file : tempFiles) {
                     new Thread() {
                         @Override
                         public void run() {
@@ -1209,24 +1205,23 @@ public class ConnectService extends Service {
                             try {
                                 socket = new Socket(userIp, Constant.PORT);
                                 byte[] fileNameBytes = file.getFileName().getBytes();
-                                int fileNameLength = Constant.fileNameLength + 10;// 清除头文件包的文件名存储区域，以便写新的文件名
+                                int fileNameLength = Constant.fileNameLength + 10;
                                 for (int i = 10; i < fileNameLength; i++)
                                     sendFileCmd[i] = 0;
-                                System.arraycopy(fileNameBytes, 0, sendFileCmd, 10, fileNameBytes.length);// 把文件名放入头数据包
+                                System.arraycopy(fileNameBytes, 0, sendFileCmd, 10, fileNameBytes.length);
                                 System.arraycopy(ByteAndInt.longToByteArray(file.fileSize), 0, sendFileCmd, 100, 8);
-                                output = socket.getOutputStream();// 构造一个输出流
-                                output.write(sendFileCmd);// 把头数据包发给对方
+                                output = socket.getOutputStream();
+                                output.write(sendFileCmd);
                                 output.flush();
-                                sleep(1000);// sleep 1秒钟，等待对方处理完
-                                // 定义数据发送缓冲区
-                                byte[] readBuffer = new byte[Constant.readBufferSize];// 文件读写缓存
-                                input = new FileInputStream(new File(file.fileName));// 打开一个文件输入流
+                                sleep(1000);// sleep 1
+                                byte[] readBuffer = new byte[Constant.readBufferSize];
+                                input = new FileInputStream(new File(file.fileName));
                                 int readSize = 0;
                                 int length = 0;
                                 long count = 0;
                                 FileState fs = getFileStateByName(file.getFileName(), beSendFileNames);
-                                while (-1 != (readSize = input.read(readBuffer))) {// 循环把文件内容发送给对方
-                                    output.write(readBuffer, 0, readSize);// 把内容写到输出流中发送给对方
+                                while (-1 != (readSize = input.read(readBuffer))) {
+                                    output.write(readBuffer, 0, readSize);
                                     output.flush();
                                     length += readSize;
 
@@ -1246,7 +1241,7 @@ public class ConnectService extends Service {
                                 intent.setAction(Constant.fileSendStateUpdateAction);
                                 sendBroadcast(intent);
                             } catch (Exception e) {
-                                // 往界面层发送文件传输出错信息
+
                                 Intent intent = new Intent();
                                 intent.putExtra("msg", e.getMessage());
                                 intent.setAction(Constant.dataSendErrorAction);
@@ -1289,10 +1284,10 @@ public class ConnectService extends Service {
                 }
             }
         }
-        // =========================TCP文件传输模块结束==============================================================
+        // =========================TCP file transfer
 
-        // =========================TCP语音传输模块==================================================================
-        // 基于Tcp语音传输模块
+        // =========================TCP audio transfer module
+
         private class AudioHandler extends Thread {
 
             // private G711Codec codec;
@@ -1303,7 +1298,7 @@ public class ConnectService extends Service {
                 super.run();
                 try {
                     if (sAudioSocket == null) {
-                        sAudioSocket = new ServerSocket(Constant.AUDIO_PORT);// 监听音频端口
+                        sAudioSocket = new ServerSocket(Constant.AUDIO_PORT);
                     }
 
                     System.out.println("Audio Handler socket started ...");
@@ -1317,17 +1312,14 @@ public class ConnectService extends Service {
                 }
             }
 
-            // 用来启动音频播放子线程
             public void audioPlay(Socket socket) {
                 new AudioPlay(socket).start();
             }
 
-            // 用来启动音频发送子线程
             public void audioSend(Person person) {
                 new AudioSend(person).start();
             }
 
-            // 音频播线程
             public class AudioPlay extends Thread {
                 Socket socket = null;
 
@@ -1341,28 +1333,30 @@ public class ConnectService extends Service {
                     super.run();
                     try {
                         InputStream is = socket.getInputStream();
-                        // 获得音频缓冲区大小
+
                         int bufferSize =
                                 android.media.AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
                                         AudioFormat.ENCODING_PCM_16BIT);
 
-                        // 获得音轨对象
                         AudioTrack player =
                                 new AudioTrack(AudioManager.STREAM_MUSIC, 8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
                                         AudioFormat.ENCODING_PCM_16BIT, bufferSize, AudioTrack.MODE_STREAM);
 
-                        // 设置喇叭音量
+
                         player.setStereoVolume(1.0f, 1.0f);
-                        // 开始播放声音
+
                         player.play();
-                        byte[] audio = new byte[160];// 音频读取缓存
+                        byte[] audio = new byte[160];
                         int length = 0;
 
                         while (!isStopTalk) {
-                            length = is.read(audio);// 从网络读取音频数据
+                            length = is.read(audio);
                             if (length > 0 && length % 2 == 0) {
-                                // for(int i=0;i<length;i++)audio[i]=(byte)(audio[i]*2);//音频放大1倍
-                                player.write(audio, 0, length);// 播放音频数据
+                                // power change to double volume.
+                                // for(int i=0;i<length;i++)audio[i]=(byte)(audio[i]*2);
+
+                                // play the audio data;
+                                player.write(audio, 0, length);
                             }
                         }
                         player.stop();
@@ -1374,7 +1368,6 @@ public class ConnectService extends Service {
                 }
             }
 
-            // 音频发送线程
             public class AudioSend extends Thread {
                 Person person = null;
 
@@ -1393,26 +1386,26 @@ public class ConnectService extends Service {
                         socket = new Socket(person.ipAddress, Constant.AUDIO_PORT);
                         socket.setSoTimeout(5000);
                         os = socket.getOutputStream();
-                        // 获得录音缓冲区大小
+
                         int bufferSize =
                                 AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
                                         AudioFormat.ENCODING_PCM_16BIT);
 
-                        // 获得录音机对象
+
                         recorder =
                                 new AudioRecord(MediaRecorder.AudioSource.MIC, 8000,
                                         AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT,
                                         bufferSize * 10);
 
-                        recorder.startRecording();// 开始录音
-                        byte[] readBuffer = new byte[640];// 录音缓冲区
+                        recorder.startRecording();
+                        byte[] readBuffer = new byte[640];
 
                         int length = 0;
 
                         while (!isStopTalk) {
-                            length = recorder.read(readBuffer, 0, 640);// 从mic读取音频数据
+                            length = recorder.read(readBuffer, 0, 640);
                             if (length > 0 && length % 2 == 0) {
-                                os.write(readBuffer, 0, length);// 写入到输出流，把音频数据通过网络发送给对方
+                                os.write(readBuffer, 0, length);
                             }
                         }
                         recorder.stop();
@@ -1434,7 +1427,7 @@ public class ConnectService extends Service {
                 }
             }
         }
-        // =========================TCP语音传输模块结束==================================================================
+        // =========================TCP audio end
     }
 
     public void sendFile(final int personId, String filename) {
@@ -1451,6 +1444,8 @@ public class ConnectService extends Service {
         }).start();
     }
 
+    private void login() {
 
+    }
 
 }
