@@ -488,7 +488,7 @@ public class ConnectService extends Service {
             audioHandler.start();
         }
 
-        // 打开组播端口，准备组播通讯
+        // open broadcast ready for comminication.
         @Override
         public void run() {
             super.run();
