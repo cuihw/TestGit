@@ -468,17 +468,17 @@ public class ConnectService extends Service {
     private class CommunicationBridge extends Thread {
         private MulticastSocket multicastSocket = null;
         private byte[] recvBuffer = new byte[Constant.bufferSize];
-        private int fileSenderUid = 0;// 用来保存文件发送者的id号
-        private boolean isBusyNow = false;// 现在是否正在收发文件，如果该状态为true则表示现在正在进行收发文件操作，这时需要向其它发送文件的用户发送忙指令
-        private String fileSavePath = null;// 用来保存接收到的文件
-        private boolean isStopTalk = false;// 通话结束标志
-        private ArrayList<FileName> tempFiles = null;// 用来临时保存需要发送的文件名
-        private int tempUid = 0;// 用来临时保存需要发送文件的用户id(接受文件方的用户id)
+        private int fileSenderUid = 0;
+        private boolean isBusyNow = false;
+        private String fileSavePath = null;
+        private boolean isStopTalk = false;
+        private ArrayList<FileName> tempFiles = null;
+        private int tempUid = 0;
         private ArrayList<FileState> receivedFileNames = new ArrayList<FileState>();
         private ArrayList<FileState> beSendFileNames = new ArrayList<FileState>();
 
-        private FileHandler fileHandler = null;// 文件处理线程，用来收发文件
-        private AudioHandler audioHandler = null;// 音频处理模块，用来收发音频数据
+        private FileHandler fileHandler = null;
+        private AudioHandler audioHandler = null;
 
         public CommunicationBridge() {
             fileHandler = new FileHandler();
