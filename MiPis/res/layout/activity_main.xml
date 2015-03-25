@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+     <fragment
+        android:id="@+id/fragment_place"
+        android:name="com.champion.mipis.TitleFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="54dip" />
+
+    <LinearLayout
+        android:id="@+id/footbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <include layout="@layout/home_footbar_layout" />
+    </LinearLayout>
+
+</RelativeLayout>

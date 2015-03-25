@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/send_msg_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingRight="40dp" >
+
+    <ImageView
+        android:id="@+id/sended_head_imageview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/blue_bird" />
+
+    <TextView
+        android:id="@+id/time_stamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/sended_head_imageview"
+        android:ems="10"
+        android:text="@string/time_sample"
+        android:textColor="@drawable/gray" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/sended_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_stamp"
+        android:padding="20dp"
+        android:background="@drawable/chatfrom_bg"
+        android:layout_toRightOf="@id/sended_head_imageview"
+        android:text="received_message" />
+
+    <ImageView
+        android:id="@+id/msg_image_view"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/time_stamp"
+        android:padding="20dp"
+        android:background="@drawable/chatfrom_bg"
+        android:layout_toRightOf="@id/sended_head_imageview"/>
+    
+</RelativeLayout>

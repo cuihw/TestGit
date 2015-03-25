@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="54dip"
+    android:background="@drawable/ab_bottom_solid_light_holo"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/bottom_home_video"
+        android:layout_width="64dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="4dip"
+        android:layout_weight="1"
+        android:background="@drawable/home_bottom_style"
+        android:onClick="selectFrag"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/home_video_bn"
+            android:layout_width="28dip"
+            android:layout_height="28dip"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_media_video_poster" />
+
+        <TextView
+            android:id="@+id/home_video_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:paddingTop="2dip"
+            android:text="@string/video_tab"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottom_home_message"
+        android:layout_width="64dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="4dip"
+        android:layout_weight="1"
+        android:background="@drawable/home_bottom_style"
+        android:onClick="selectFrag"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/home_message_img_layout"
+            android:layout_width="28dip"
+            android:layout_height="28dip"
+            android:layout_gravity="center"
+            android:background="@drawable/message_tab_normal" >
+
+            <ImageView
+                android:id="@+id/home_message_prompt"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/prompt_new_message"
+                android:src="@drawable/prompt" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/home_message_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:paddingTop="2dip"
+            android:text="@string/message_tab"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_home_contract"
+        android:layout_width="64dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="4dip"
+        android:layout_weight="1"
+        android:background="@drawable/home_bottom_style"
+        android:onClick="selectFrag"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/home_contract_bn"
+            android:layout_width="28dip"
+            android:layout_height="29dip"
+            android:layout_gravity="center"
+            android:background="@drawable/contract_tab_normal" />
+
+        <TextView
+            android:id="@+id/home_contract_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:paddingTop="2dip"
+            android:text="@string/contract_tab" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_setting"
+        android:layout_width="64dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="4dip"
+        android:layout_weight="1"
+        android:background="@drawable/home_bottom_style"
+        android:onClick="selectFrag"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/home_setting_image"
+            android:layout_width="28dip"
+            android:layout_height="29dip"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_settings" />
+
+        <TextView
+            android:id="@+id/home_setting_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:paddingTop="2dip"
+            android:text="@string/home_settings" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/footbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/txt_msg_bg"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true" >
+        <include layout="@layout/chat_message_bottom" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_above="@id/footbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</RelativeLayout>

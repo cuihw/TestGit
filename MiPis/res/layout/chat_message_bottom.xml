@@ -1,0 +1,234 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:src="@drawable/yi" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView1"
+        android:paddingRight="70dp"
+        android:paddingTop="10dp" >
+
+        <EditText
+            android:id="@+id/message_edittext"
+            android:paddingRight="40dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </EditText>
+
+        <ImageView
+            android:id="@+id/plug_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/message_edittext"
+            android:layout_centerVertical="true"
+            android:src="@drawable/plug_file_sound_style" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/send_message_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="发送" />
+
+    <LinearLayout
+        android:id="@+id/plug_file_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/send_message_btn"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" >
+
+            <LinearLayout
+                android:id="@+id/plugImage_layout"
+                android:onClick="selectFile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/plugImage_imageView"
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_launcher_albums" />
+
+                <TextView
+                    android:id="@+id/home_video_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="图片" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/plugtuya_layout"
+                android:onClick="selectFile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/plugtuya_imageView"
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_launcher_drawing_board" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="涂鸦" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/plugvideo_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:onClick="selectFile"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_launcher_video" />
+
+                <TextView
+                    android:id="@+id/home_video_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="视频" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" >
+
+            <LinearLayout
+                android:id="@+id/plugfile_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:layout_weight="1"
+                android:onClick="selectFile"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/plugImage_imageView"
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_category_other" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="文件" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible" >
+
+                <ImageView
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_category_other" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="文件" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dip"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible" >
+
+                <ImageView
+                    android:layout_width="48dip"
+                    android:layout_height="48dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_category_other" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="2dip"
+                    android:text="文件" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dip"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

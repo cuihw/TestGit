@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/round_rectangle" >
+
+        <TextView
+            android:id="@+id/head_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="20sp"
+            android:text="@string/headicon"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/head_imageview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5sp"
+            android:src="@drawable/face3" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/information_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/round_rectangle"
+        android:paddingBottom="10sp" >
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="10sp"
+            android:text="@string/nickname"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/nicknake_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/nickname"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="right"
+            android:hint="name" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nickname"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="20sp"
+            android:text="@string/userId"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/userid_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/userid"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="right" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userid"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="20sp"
+            android:text="@string/gender"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/gender_radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="30dp"
+            android:layout_alignTop="@id/gender"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="性别" >
+
+            <RadioButton
+                android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="男" >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="女" >
+            </RadioButton>
+        </RadioGroup>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:background="@drawable/round_rectangle"
+        android:orientation="vertical"
+        android:textSize="15sp" >
+
+        <TextView
+            android:id="@+id/about"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:padding="10sp"
+            android:text="@string/about" />
+    </LinearLayout>
+
+</LinearLayout>
