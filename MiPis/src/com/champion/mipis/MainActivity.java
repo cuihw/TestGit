@@ -168,10 +168,11 @@ public class MainActivity extends Activity {
                 currentFragment = new VideoFragment();                
             }
         } else if (view.getId() == R.id.home_setting) {
-
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-            return;
+            if (mOldFragment instanceof SettingFragment) {
+                return;
+            } else {
+                currentFragment = new SettingFragment();
+            }
         }
 
         if (currentFragment!= null) {
