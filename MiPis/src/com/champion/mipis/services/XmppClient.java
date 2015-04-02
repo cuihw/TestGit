@@ -17,6 +17,7 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterListener;
@@ -80,7 +81,7 @@ public class XmppClient {
         // config.setRosterLoadedAtLogin(true);
 
         connection = new XMPPConnection(config);
-        
+
         new Thread(new Runnable() {
 
             @Override
@@ -156,12 +157,36 @@ public class XmppClient {
     public void connect() {
         try {
             connection.connect();
+            
+            connection.addConnectionListener(new ConnectionListener(){
+
+				@Override
+				public void connectionClosed() {
+                    Log.d(TAG, "connectionClosed");
+				}
+
+				@Override
+				public void connectionClosedOnError(Exception arg0) {
+                    Log.d(TAG, "connectionClosedOnError");
+				}
+
+				@Override
+				public void reconnectingIn(int arg0) {
+                    Log.d(TAG, "reconnectingIn");
+				}
+
+				@Override
+				public void reconnectionFailed(Exception arg0) {
+                    Log.d(TAG, "reconnectionFailed");
+				}
+
+				@Override
+				public void reconnectionSuccessful() {
+                    Log.d(TAG, "reconnectionFailed");
+				}});
 
             ChatManager manager = connection.getChatManager();
-
-
-            final Roster roster = connection.getRoster();  
-
+            //final Roster roster = connection.getRoster();  
             manager.addChatListener(new ChatManagerListener() {
                 public void chatCreated(Chat chat, boolean arg1) {
                     chat.addMessageListener(new MessageListener() {
@@ -173,42 +198,41 @@ public class XmppClient {
                     });
                 }
             });
-
-            roster.addRosterListener(  
-                    new RosterListener() {
-
-                        @Override  
-                        public void entriesAdded(Collection<String> arg0) {  
-                            // TODO Auto-generated method stub  
-                            System.out.println("--------EE:"+"entriesAdded");  
-                        }  
-
-                        @Override  
-                        public void entriesDeleted(Collection<String> arg0) {  
-                            // TODO Auto-generated method stub  
-                            System.out.println("--------EE:"+"entriesDeleted");  
-                        }  
-
-                        @Override  
-                        public void entriesUpdated(Collection<String> arg0) {  
-                            // TODO Auto-generated method stub  
-                            System.out.println("--------EE:"+"entriesUpdated");  
-                        }  
-
-                        @Override  
-                        public void presenceChanged(Presence arg0) {  
-                            // TODO Auto-generated method stub  
-                            System.out.println("--------EE:"+"presenceChanged");  
-                        }     
-                          
-                    });  
+//
+//            roster.addRosterListener(  
+//                    new RosterListener() {
+//
+//                        @Override  
+//                        public void entriesAdded(Collection<String> arg0) {  
+//                            // TODO Auto-generated method stub  
+//                            System.out.println("--------EE:"+"entriesAdded");  
+//                        }  
+//
+//                        @Override  
+//                        public void entriesDeleted(Collection<String> arg0) {  
+//                            // TODO Auto-generated method stub  
+//                            System.out.println("--------EE:"+"entriesDeleted");  
+//                        }  
+//
+//                        @Override  
+//                        public void entriesUpdated(Collection<String> arg0) {  
+//                            // TODO Auto-generated method stub  
+//                            System.out.println("--------EE:"+"entriesUpdated");  
+//                        }  
+//
+//                        @Override  
+//                        public void presenceChanged(Presence arg0) {  
+//                            // TODO Auto-generated method stub  
+//                            System.out.println("--------EE:"+"presenceChanged");  
+//                        }     
+//                          
+//                    });  
         } catch (XMPPException e) {
             e.printStackTrace();
         }
         fail(connection);
         fail(connection.getConnectionID());
     }
-
 
     public void testConfig() {
         fail("ServiceName: {0}", config.getServiceName());

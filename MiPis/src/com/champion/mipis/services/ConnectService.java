@@ -54,7 +54,6 @@ public class ConnectService extends Service {
     private IBinder mBinder = new ServiceBinder();// bind service;
 
     private static Map<Integer, Person> childrenMap = new HashMap<Integer, Person>();// current
-                                                                                     // online user
 
     private static ArrayList<Integer> personKeys = new ArrayList<Integer>();// current online user
                                                                             // id
@@ -126,7 +125,6 @@ public class ConnectService extends Service {
         return mBinder;
     }
 
-
     // bind service.
     public class ServiceBinder extends Binder {
         public ConnectService getService() {
@@ -158,7 +156,6 @@ public class ConnectService extends Service {
 
         if (filerui != null) {
 
-
             final File file = new File(filerui.getPath());
 
             new Thread(new Runnable() {
@@ -186,8 +183,7 @@ public class ConnectService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
 
-        if (DEBUG)
-            Log.d(TAG, "onStart Services");
+        if (DEBUG) Log.d(TAG, "onStart Services");
         initCmdBuffer();
 
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -522,8 +518,7 @@ public class ConnectService extends Service {
 
         private void parsePackage(byte[] pkg) {
 
-            if (DEBUG)
-                Log.d(TAG, "parsePackage .. ");
+            if (DEBUG) Log.d(TAG, "parsePackage .. ");
 
             int CMD = pkg[3];// cmd byte
             int cmdType = pkg[4];// type

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +20,8 @@ import com.champion.mipis.splash.DragFlashLayout;
 import com.champion.mipis.splash.OnViewChangeListener;
 
 public class SplashActivity extends Activity implements OnViewChangeListener {
+
+	private static final int GO_HOME = 100;
 
     protected static final String TAG = "SplashActivity";
     private DragFlashLayout mDragFlashLayout;
@@ -38,8 +42,27 @@ public class SplashActivity extends Activity implements OnViewChangeListener {
         setContentView(R.layout.splash_activity);
         initView();
         startServices();
+		mHandler.sendEmptyMessageDelayed(GO_HOME, 2000);
     }
-
+    
+    private Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case GO_HOME:
+				startApps();
+				break;
+			}
+		}
+	};
+	
+	public void startAnimActivity(Class<?> cla) {
+		this.startActivity(new Intent(this, cla));
+	}
+	
+	public void startAnimActivity(Intent intent) {
+		this.startActivity(intent);
+	}
     private void initView() {
         mDragFlashLayout = (DragFlashLayout) findViewById(R.id.ScrollLayout);
         pointLLayout = (LinearLayout) findViewById(R.id.llayout);

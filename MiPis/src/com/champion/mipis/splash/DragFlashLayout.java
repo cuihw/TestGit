@@ -24,7 +24,7 @@ public class DragFlashLayout extends ViewGroup{
 	private int mDefaultScreen = 0;    					
 	 
     private float mLastMotionX;    
-    
+
  //   private int mTouchSlop;							
     
 //    private static final int TOUCH_STATE_REST = 0;
