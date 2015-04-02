@@ -6,7 +6,12 @@ import android.net.NetworkInfo;
 
 public class CommonUtils {
 
-	/** 检查是否有网络 */
+    // create the ID code.
+    public static int getMyId() {
+        int id = (int) (Math.random() * 1000000);
+        return id;
+    }
+   	/** 检查是否有网络 */
 	public static boolean isNetworkAvailable(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
 		if (info != null) {
@@ -51,4 +56,10 @@ public class CommonUtils {
 			return false;
 	}
 
+    // int to ip conversion
+    public static String intToIp(int i) {
+        String ip = ((i >> 24) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + (i & 0xFF);
+
+        return ip;
+    }
 }

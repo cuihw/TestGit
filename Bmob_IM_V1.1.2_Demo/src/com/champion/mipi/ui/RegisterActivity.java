@@ -17,6 +17,9 @@ import com.champion.mipi.R;
 import com.champion.mipi.bean.User;
 import com.champion.mipi.config.BmobConstants;
 import com.champion.mipi.util.CommonUtils;
+import com.champion.mipi.util.PreferencesData;
+import com.champion.mipi.wifiServices.ConnectService;
+
 
 public class RegisterActivity extends BaseActivity {
 
@@ -45,6 +48,22 @@ public class RegisterActivity extends BaseActivity {
 				register();
 			}
 		});
+		registerById();
+	}
+	
+	private void registerById() {
+		int id = CommonUtils.getMyId();
+		String name = "guest" + id;
+		String password = "123456789";
+		et_username.setText(name);
+		et_password.setText(password);
+		et_email.setText(password);
+
+        String myAccount = PreferencesData.getStringData( this, ConnectService.MY_ID, "");
+        if (!myAccount.equals(name)) {
+            PreferencesData.setStringData(this, ConnectService.MY_ID, name);
+        }
+ 		register();
 	}
 	
 	private void register(){

@@ -20,7 +20,9 @@ import cn.bmob.v3.listener.SaveListener;
 import com.champion.mipi.R;
 import com.champion.mipi.config.BmobConstants;
 import com.champion.mipi.util.CommonUtils;
+import com.champion.mipi.util.PreferencesData;
 import com.champion.mipi.view.dialog.DialogTips;
+import com.champion.mipi.wifiServices.ConnectService;
 
 /**
  * @ClassName: LoginActivity
@@ -47,8 +49,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH);
 		registerReceiver(receiver, filter);
-		
-		showNotice();
+
+		//showNotice();
+		registerActivity();
 	}
 
 	public void showNotice() {
@@ -81,7 +84,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				finish();
 			}
 		}
-
+	}
+	
+	private void registerActivity(){
+		Intent intent = new Intent(LoginActivity.this,
+				RegisterActivity.class);
+		startActivity(intent);
 	}
 	
 	@Override
@@ -113,6 +121,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			ShowToast(R.string.toast_error_password_null);
 			return;
 		}
+
+
+        String myAccount = PreferencesData.getStringData( this, ConnectService.MY_ID, "");
+        if (!myAccount.equals(name)) {
+            PreferencesData.setStringData(this, ConnectService.MY_ID, name);
+        }
+        
 
 		final ProgressDialog progress = new ProgressDialog(
 				LoginActivity.this);
@@ -148,9 +163,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				ShowToast(arg0);
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

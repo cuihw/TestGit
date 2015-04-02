@@ -25,6 +25,7 @@ import com.champion.mipi.R;
 import com.champion.mipi.ui.fragment.ContactFragment;
 import com.champion.mipi.ui.fragment.RecentFragment;
 import com.champion.mipi.ui.fragment.SettingsFragment;
+import com.champion.mipi.ui.fragment.VideoFragment;
 
 /**
  * 登陆
@@ -36,9 +37,13 @@ import com.champion.mipi.ui.fragment.SettingsFragment;
 public class MainActivity extends ActivityBase implements EventListener{
 
 	private Button[] mTabs;
+	private VideoFragment mVideoFragment;
 	private ContactFragment contactFragment;
 	private RecentFragment recentFragment;
 	private SettingsFragment settingFragment;
+	
+	private Fragment mOldFragment;
+	
 	private Fragment[] fragments;
 	private int index;
 	private int currentTabIndex;
@@ -59,10 +64,11 @@ public class MainActivity extends ActivityBase implements EventListener{
 	}
 
 	private void initView(){
-		mTabs = new Button[3];
-		mTabs[0] = (Button) findViewById(R.id.btn_message);
-		mTabs[1] = (Button) findViewById(R.id.btn_contract);
-		mTabs[2] = (Button) findViewById(R.id.btn_set);
+		mTabs = new Button[4];
+		mTabs[0] = (Button) findViewById(R.id.btn_video);
+		mTabs[1] = (Button) findViewById(R.id.btn_message);
+		mTabs[2] = (Button) findViewById(R.id.btn_contract);
+		mTabs[3] = (Button) findViewById(R.id.btn_set);
 		iv_recent_tips = (ImageView)findViewById(R.id.iv_recent_tips);
 		iv_contact_tips = (ImageView)findViewById(R.id.iv_contact_tips);
 		//把第一个tab设为选中状态
@@ -70,13 +76,23 @@ public class MainActivity extends ActivityBase implements EventListener{
 	}
 	
 	private void initTab(){
+		mVideoFragment = new VideoFragment();
 		contactFragment = new ContactFragment();
 		recentFragment = new RecentFragment();
 		settingFragment = new SettingsFragment();
-		fragments = new Fragment[] {recentFragment, contactFragment, settingFragment };
+		fragments = new Fragment[] {mVideoFragment, recentFragment, contactFragment, settingFragment };
 		// 添加显示第一个fragment
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, recentFragment).
-			add(R.id.fragment_container, contactFragment).hide(contactFragment).show(recentFragment).commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mVideoFragment)
+		                           .add(R.id.fragment_container, recentFragment)
+		                           .add(R.id.fragment_container, contactFragment)
+		                           .add(R.id.fragment_container, settingFragment)
+		                           .hide(recentFragment).hide(contactFragment).hide(settingFragment)
+		                           .show(mVideoFragment).commit();
+		
+		
+//		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, recentFragment)
+//		    .add(R.id.fragment_container, contactFragment)
+//			.hide(contactFragment).show(recentFragment).commit();
 	}
 	
 	
@@ -87,14 +103,17 @@ public class MainActivity extends ActivityBase implements EventListener{
 	 */
 	public void onTabSelect(View view) {
 		switch (view.getId()) {
-		case R.id.btn_message:
+		case R.id.btn_video:
 			index = 0;
 			break;
-		case R.id.btn_contract:
+		case R.id.btn_message:
 			index = 1;
 			break;
-		case R.id.btn_set:
+		case R.id.btn_contract:
 			index = 2;
+			break;
+		case R.id.btn_set:
+			index = 3;
 			break;
 		}
 		if (currentTabIndex != index) {
@@ -104,6 +123,7 @@ public class MainActivity extends ActivityBase implements EventListener{
 				trx.add(R.id.fragment_container, fragments[index]);
 			}
 			trx.show(fragments[index]).commit();
+			mOldFragment = fragments[index];
 		}
 		mTabs[currentTabIndex].setSelected(false);
 		//把当前tab设为选中状态
@@ -278,6 +298,13 @@ public class MainActivity extends ActivityBase implements EventListener{
 	 */
 	@Override
 	public void onBackPressed() {
+	    
+	    if (mOldFragment instanceof VideoFragment) {
+            VideoFragment vfragment = (VideoFragment)mOldFragment;
+            if (vfragment.webViewGoBack()) {
+                return;                    
+            }
+        }
 		// TODO Auto-generated method stub
 		if (firstTime + 2000 > System.currentTimeMillis()) {
 			super.onBackPressed();

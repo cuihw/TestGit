@@ -7,9 +7,11 @@ import java.util.Map;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
@@ -22,6 +24,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.champion.mipi.util.CollectionUtils;
 import com.champion.mipi.util.SharePreferenceUtil;
+import com.champion.mipi.wifiServices.ConnectService;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -39,6 +42,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
  */
 public class CustomApplcation extends Application {
 
+    private static final String TAG = "CustomApplcation";
 	public static CustomApplcation mInstance;
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
@@ -65,7 +69,13 @@ public class CustomApplcation extends Application {
 			// 获取本地好友user list到内存,方便以后获取好友list
 			contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
 		}
+		WifiServices();
 		initBaidu();
+	}
+
+	private void WifiServices() {
+
+	    startServices();
 	}
 
 	/**
@@ -263,4 +273,10 @@ public class CustomApplcation extends Application {
 		setLongtitude(null);
 	}
 
+    private void startServices() {
+        Intent intentStartServices = new Intent();
+        intentStartServices.setClass(this, ConnectService.class);
+        Log.d(TAG, "startServices..............");
+        startService(intentStartServices);
+    }
 }
