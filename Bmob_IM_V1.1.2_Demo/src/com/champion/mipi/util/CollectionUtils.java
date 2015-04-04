@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.champion.mipi.bean.User;
+
 import cn.bmob.im.bean.BmobChatUser;
 
 public class CollectionUtils {
@@ -47,4 +49,14 @@ public class CollectionUtils {
 		}
 		return users;
 	}
+
+    public static List<User> userMap2list(Map<String, User> maps){
+        List<User> users = new ArrayList<User>();
+        Iterator<Entry<String, User>> iterator = maps.entrySet().iterator();
+        while(iterator.hasNext()){
+            Entry<String, User> entry = iterator.next();
+            users.add(entry.getValue());
+        }
+        return users;
+    }
 }

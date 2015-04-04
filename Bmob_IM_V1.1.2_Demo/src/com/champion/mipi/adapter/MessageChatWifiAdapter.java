@@ -121,12 +121,11 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 		final ImageView iv_voice = ViewHolder.get(convertView, R.id.iv_voice);
 		//语音长度
 		final TextView tv_voice_length = ViewHolder.get(convertView, R.id.tv_voice_length);
-		
 
 		String avatar = item.mAvatar;
 		if(avatar!=null && !avatar.equals("")){//加载头像-为了不每次都加载头像
 			ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions(),animateFirstListener);
-		}else{
+		} else {
 			iv_avatar.setImageResource(R.drawable.head);
 		}
 
@@ -171,7 +170,6 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 		}
 
 		final String text = item.msg ;
-		
 		
 		return convertView;
 	}

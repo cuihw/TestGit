@@ -84,7 +84,12 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 		}
 
 		User friend = data.get(position);
-		final String name = friend.getUsername();
+		String name = friend.getNick();
+
+		if (TextUtils.isEmpty(friend.getNick())) {
+	        name = friend.getUsername();
+		}
+
 		final String avatar = friend.getAvatar();
 
 		if (!TextUtils.isEmpty(avatar)) {
@@ -117,6 +122,10 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 	 * 根据ListView的当前位置获取分类的首字母的Char ascii值
 	 */
 	public int getSectionForPosition(int position) {
+	    if (data == null) return 0;
+	    if (data.get(position).getSortLetters() == null) {
+	        return 0;
+	    }
 		return data.get(position).getSortLetters().charAt(0);
 	}
 

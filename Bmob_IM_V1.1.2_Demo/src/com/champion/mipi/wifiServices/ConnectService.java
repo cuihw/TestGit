@@ -80,6 +80,10 @@ public class ConnectService extends Service {
     public boolean isStopUpdateMe = false;
     private boolean isInRunning = false;
 
+    public Map<String, User> getUserInfoMap() {
+        return mUserinfoMap;
+    }
+    
     // bind service.
     @Override
     public IBinder onBind(Intent arg0) {
@@ -96,7 +100,7 @@ public class ConnectService extends Service {
         }
     }
 
-    public static ConnectService getstence() {
+    public static ConnectService getInstence() {
         return getInstence;
     }
 

@@ -313,7 +313,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		}else{
 			iv_msg_tips.setVisibility(View.GONE);
 		}
-		//在这里再做一次本地的好友数据库的检查，是为了本地好友数据库中已经添加了对方，但是界面却没有显示出来的问题
+		//　在这里再做一次本地的好友数据库的检查，是为了本地好友数据库中已经添加了对方，但是界面却没有显示出来的问题
 		// 重新设置下内存中保存的好友列表
 		CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(BmobDB.create(getActivity()).getContactList()));
 	
