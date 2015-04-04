@@ -107,6 +107,8 @@
         <activity android:name="com.champion.mipi.ui.BlackListActivity" />
         
         <activity android:name="com.champion.mipi.ui.ImageBrowserActivity" />
+
+        <activity android:name="com.champion.mipi.ui.WifiFriendActivity" />
         
         <activity
             android:name="com.champion.mipi.ui.AddFriendActivity"

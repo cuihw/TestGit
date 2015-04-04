@@ -24,7 +24,10 @@ public class User extends BmobChatUser {
 	 * //性别-true-男
 	 */
 	private boolean sex;
-	
+
+    public String ipAddress = null;
+
+    public long updateTime = 0;
 	/**
 	 * 地理坐标
 	 */
@@ -48,5 +51,5 @@ public class User extends BmobChatUser {
 	public void setSortLetters(String sortLetters) {
 		this.sortLetters = sortLetters;
 	}
-	
+
 }

@@ -40,6 +40,8 @@
     <string name="set_voice">声音</string>
     <string name="set_vibrate">震动</string>
     <string name="tips">提示</string>
+    <string name="friend_social">圈子</string>
+    
     
     <string name="logout">退出登陆</string>
     <string name="pop_photo">拍照</string>

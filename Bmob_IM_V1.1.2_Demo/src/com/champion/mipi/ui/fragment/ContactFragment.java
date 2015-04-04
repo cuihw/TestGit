@@ -43,6 +43,7 @@ import com.champion.mipi.ui.FragmentBase;
 import com.champion.mipi.ui.NearPeopleActivity;
 import com.champion.mipi.ui.NewFriendActivity;
 import com.champion.mipi.ui.SetMyInfoActivity;
+import com.champion.mipi.ui.WifiFriendActivity;
 import com.champion.mipi.util.CharacterParser;
 import com.champion.mipi.util.CollectionUtils;
 import com.champion.mipi.util.PinyinComparator;
@@ -67,6 +68,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 	TextView dialog;
 
 	ListView list_friends;
+
 	MyLetterView right_letter;
 
 	private UserFriendAdapter userAdapter;// 好友
@@ -204,12 +206,12 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		// 根据a-z进行排序
 		Collections.sort(friends, pinyinComparator);
 	}
-	
-	
+
 	ImageView iv_msg_tips;
 	TextView tv_new_name;
 	LinearLayout layout_new;//新朋友
 	LinearLayout layout_near;//附近的人
+	LinearLayout layout_wifi;
 	
 	private void initListView() {
 		list_friends= (ListView)findViewById(R.id.list_friends);
@@ -217,6 +219,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		iv_msg_tips = (ImageView)headView.findViewById(R.id.iv_msg_tips);
 		layout_new =(LinearLayout)headView.findViewById(R.id.layout_new);
 		layout_near =(LinearLayout)headView.findViewById(R.id.layout_near);
+        layout_wifi =(LinearLayout)headView.findViewById(R.id.layout_wifi);
 		layout_new.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -227,6 +230,16 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 				startAnimActivity(intent);
 			}
 		});
+		layout_wifi.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(getActivity(), WifiFriendActivity.class);
+                //intent.putExtra("from", "contact");
+                startAnimActivity(intent);
+            }});
+		
 		layout_near.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -355,7 +368,6 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		intent.putExtra("from", "other");
 		intent.putExtra("username", user.getUsername());
 		startAnimActivity(intent);
-		
 	}
 	
 	@Override

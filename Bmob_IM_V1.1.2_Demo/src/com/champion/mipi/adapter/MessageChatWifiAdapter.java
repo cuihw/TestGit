@@ -141,7 +141,7 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 				        ||item.type==TYPE_RECEIVER_LOCATION
 				        ||item.type==TYPE_RECEIVER_VOICE){
 					intent.putExtra("from", "other");
-					intent.putExtra("username", item.user.mAccount);
+					intent.putExtra("username", item.user.getUsername());
 				}else{
 					intent.putExtra("from", "me");
 				}

@@ -2,6 +2,8 @@ package com.champion.mipi.util;
 
 import java.io.Serializable;
 
+import com.champion.mipi.bean.User;
+
 public class ChatMessage implements Serializable, Comparable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,7 +14,7 @@ public class ChatMessage implements Serializable, Comparable {
 
 	public long mMills = 0;
 
-	public UserInfo user; // users
+	public User user; // users
 
 	public String mAvatar;
 
