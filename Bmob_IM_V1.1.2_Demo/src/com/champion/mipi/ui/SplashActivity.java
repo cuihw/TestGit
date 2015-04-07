@@ -105,10 +105,10 @@ public class SplashActivity extends BaseActivity {
 		public void onReceive(Context context, Intent intent) {
 			String s = intent.getAction();
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-				ShowToast(SplashActivity.this.getString(R.string.error_app_key));
+				ShowToast(getApplicationContext().getString(R.string.error_app_key));
 			} else if (s
 					.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
-				ShowToast(SplashActivity.this.getString(R.string.network_unsteadiness));
+				ShowToast(getApplicationContext().getString(R.string.network_unsteadiness));
 			}
 		}
 	}
