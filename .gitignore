@@ -14,8 +14,8 @@
 MiPis/.project
 MiPis/.settings/
 MiPis/proguard-project.txt
-MiPis/project.properties
-
+MiPis/project.propertie
+Bmob_IM_V1.1.2_Demo/project.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

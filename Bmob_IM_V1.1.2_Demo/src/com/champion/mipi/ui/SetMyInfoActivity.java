@@ -71,7 +71,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	Button btn_chat, btn_back, btn_add_friend;
 	RelativeLayout layout_head, layout_nick, layout_gender, layout_black_tips;
 
-	String from = "";
+	String mFrom = "";
 	String username = "";
 	User user;
 
@@ -86,7 +86,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 		}
 		setContentView(R.layout.activity_set_info);
-		from = getIntent().getStringExtra("from");//me add other
+		mFrom = getIntent().getStringExtra("from");//me add other
 		username = getIntent().getStringExtra("username");
 		initView();
 	}
@@ -110,7 +110,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		btn_add_friend.setEnabled(false);
 		btn_chat.setEnabled(false);
 		btn_back.setEnabled(false);
-		if (from.equals("me")) {
+		if (mFrom.equals("me")) {
 			initTopBarForLeft("个人资料");
 			layout_head.setOnClickListener(this);
 			layout_nick.setOnClickListener(this);
@@ -127,7 +127,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			//不管对方是不是你的好友，均可以发送消息--BmobIM_V1.1.2修改
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
-			if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
+			if (mFrom.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
 				if (mApplication.getContactList().containsKey(username)) {// 是好友
 //					btn_chat.setVisibility(View.VISIBLE);
 //					btn_chat.setOnClickListener(this);
@@ -186,7 +186,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		tv_set_nick.setText(user.getNick());
 		tv_set_gender.setText(user.getSex() == true ? "男" : "女");
 		// 检测是否为黑名单用户
-		if (from.equals("other")) {
+		if (mFrom.equals("other")) {
 			if (BmobDB.create(this).isBlackUser(user.getUsername())) {
 				btn_back.setVisibility(View.GONE);
 				layout_black_tips.setVisibility(View.VISIBLE);
@@ -216,7 +216,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if (from.equals("me")) {
+		if (mFrom.equals("me")) {
 			initMeData();
 		}
 	}
