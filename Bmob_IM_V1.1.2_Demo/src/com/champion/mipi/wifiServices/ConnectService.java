@@ -67,7 +67,7 @@ public class ConnectService extends Service {
     ServiceBroadcastReceiver receiver;
     public static ConnectService getInstence;
 
-    private UpdateMe mUpdateMe = new UpdateMe() ;
+    private UpdateMe mUpdateMe = new UpdateMe();
     private CheckUserOnline mCheckUserOnline = new CheckUserOnline();
     // System Action declare
     public static final String bootCompleted = "android.intent.action.BOOT_COMPLETED";
@@ -83,7 +83,7 @@ public class ConnectService extends Service {
     public Map<String, User> getUserInfoMap() {
         return mUserinfoMap;
     }
-    
+
     // bind service.
     @Override
     public IBinder onBind(Intent arg0) {
@@ -120,7 +120,7 @@ public class ConnectService extends Service {
 
         getInstence = ConnectService.this;
         init();
-        Log.d(TAG, "onStartCommand。。。。");
+        Log.d(TAG, "onStartCommand ");
         flags = START_STICKY;
         return super.onStartCommand(intent, flags, startId);
     }
@@ -162,23 +162,26 @@ public class ConnectService extends Service {
         byte[] account = userInfo.getUsername().getBytes();
         System.arraycopy(account, 0, regBuffer, 7, account.length);
     }
-    
+
     private void setReg() {
         System.arraycopy(REG_HEAD.getBytes(), 0, regBuffer, 0, 3);
     }
+
     private void setAckReg() {
         System.arraycopy(ACK_REG.getBytes(), 0, regBuffer, 0, 3);
     }
 
     private User updatePerson(byte[] pkg) {
-        
+
         // get User name
         byte[] userAccount = new byte[23];
         System.arraycopy(pkg, 7, userAccount, 0, 23);
         String account = (new String(userAccount)).trim();
-        
+
+        Log.d(TAG, "account: " + account);
+
         User userCached = mUserinfoMap.get(account);
-        if (userCached == null){
+        if (userCached == null) {
             userCached = new User();
         }
         userCached.setUsername(account);
@@ -190,24 +193,27 @@ public class ConnectService extends Service {
 
         userCached.updateTime = System.currentTimeMillis();
 
-        Log.d(TAG, "put a person: " + userCached.toString());
+        Log.d(TAG, "put a person: " + userCached.getUsername());
         if (userCached.getAvatar() == null) {
             queryUserInfo(userCached);
         }
 
-        mUserinfoMap.put(account, userCached);
-        
-        if (!mUserAccount.contains(userCached.getUsername())) {
-            mUserAccount.add(userCached.getUsername());
+        if (!TextUtils.isEmpty(userCached.getUsername())) {
+            mUserinfoMap.put(account, userCached);
+
+            if (!mUserAccount.contains(userCached.getUsername())) {
+                mUserAccount.add(userCached.getUsername());
+            }
         }
+
         Log.d(TAG, "receive a REG_HEAD. " + userCached.getUsername() + ", ipaddress:" + userCached.ipAddress);
         return userCached;
     }
-    
+
     private void queryUserInfo(User user) {
-        
+
         BmobUserManager userManager = BmobUserManager.getInstance(this);
-        userManager.queryUser(user.getUsername(), new FindListener<User>(){
+        userManager.queryUser(user.getUsername(), new FindListener<User>() {
 
             @Override
             public void onError(int arg0, String arg1) {
@@ -219,10 +225,13 @@ public class ConnectService extends Service {
                 if (arg0 != null && arg0.size() > 0) {
                     User user = arg0.get(0);
                     User userCached = mUserinfoMap.get(user.getUsername());
-                    if (userCached != null) {
+                    if (userCached != null && !TextUtils.isEmpty(userCached.getUsername())) {
+
+                        Log.d(TAG, "onSuccess update this user.");
                         user.ipAddress = userCached.ipAddress;
                         user.updateTime = System.currentTimeMillis();
                         mUserinfoMap.put(user.getUsername(), user);
+
                     } else {
                         Log.d(TAG, "onSuccess cached map not found this user.");
                     }
@@ -230,7 +239,8 @@ public class ConnectService extends Service {
                 } else {
                     Log.d(TAG, "onSuccess not found this user.");
                 }
-            }});
+            }
+        });
     }
 
     private void setMyIpinfo() {
@@ -264,7 +274,7 @@ public class ConnectService extends Service {
             }
         }
     }
-    
+
 
 
     private void startNetworkListener() {
@@ -276,16 +286,13 @@ public class ConnectService extends Service {
                 try {
                     mMulticastSocket = new MulticastSocket(PORT);
 
-                    mMulticastSocket.joinGroup(InetAddress
-                            .getByName(MULTICAST_IP));
+                    mMulticastSocket.joinGroup(InetAddress.getByName(MULTICAST_IP));
                     Log.d(TAG, "Socket started...");
-                    while (null != mMulticastSocket
-                            && !mMulticastSocket.isClosed()) {
+                    while (null != mMulticastSocket && !mMulticastSocket.isClosed()) {
                         for (int i = 0; i < BUFFERSIZE; i++) {
                             recvBuffer[i] = 0;
                         }
-                        DatagramPacket rdp = new DatagramPacket(recvBuffer,
-                                recvBuffer.length);
+                        DatagramPacket rdp = new DatagramPacket(recvBuffer, recvBuffer.length);
                         mMulticastSocket.receive(rdp);
                         parsePackage(recvBuffer);
                     }
@@ -313,8 +320,7 @@ public class ConnectService extends Service {
                 try {
                     InetAddress targetIp = InetAddress.getByName(user.ipAddress);
                     setAckReg();
-                    DatagramPacket dp = new DatagramPacket(regBuffer, BUFFERSIZE,
-                            targetIp, PORT);
+                    DatagramPacket dp = new DatagramPacket(regBuffer, BUFFERSIZE, targetIp, PORT);
                     mMulticastSocket.send(dp);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -325,7 +331,7 @@ public class ConnectService extends Service {
             Log.d(TAG, "receive a ACK_REG.");
             updatePerson(pkg);
         } else if (headStr.equals("MESSAGE_HEAD")) {
-            
+
         }
 
     }
@@ -335,8 +341,8 @@ public class ConnectService extends Service {
         try {
             if (null != mMulticastSocket && !mMulticastSocket.isClosed()) {
                 setReg();
-                DatagramPacket dp = new DatagramPacket(regBuffer, BUFFERSIZE,
-                        InetAddress.getByName(MULTICAST_IP), PORT);
+                DatagramPacket dp =
+                        new DatagramPacket(regBuffer, BUFFERSIZE, InetAddress.getByName(MULTICAST_IP), PORT);
                 mMulticastSocket.send(dp);
             }
         } catch (IOException e) {
@@ -348,8 +354,7 @@ public class ConnectService extends Service {
     private class ServiceBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(WIFIACTION)
-                    || intent.getAction().equals(ETHACTION)) {
+            if (intent.getAction().equals(WIFIACTION) || intent.getAction().equals(ETHACTION)) {
                 new CheckNetConnectivity().start();
             } else if (intent.getAction().equals(updateMyInformationAction)) {
                 getMyinfoFromSharedPreference();
@@ -371,28 +376,23 @@ public class ConnectService extends Service {
                     return;
                 }
 
-                for (Enumeration<NetworkInterface> en = NetworkInterface
-                        .getNetworkInterfaces(); en.hasMoreElements();) {
+                for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                     NetworkInterface intf = en.nextElement();
 
-                    for (Enumeration<InetAddress> enumIpAddr = intf
-                            .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                         InetAddress inetAddress = enumIpAddr.nextElement();
                         if (!inetAddress.isLoopbackAddress()) {
                             if (inetAddress.isReachable(1000)) {
 
                                 localInetAddress = inetAddress;
 
-                                localIp = inetAddress.getHostAddress()
-                                        .toString();
+                                localIp = inetAddress.getHostAddress().toString();
 
                                 localIpBytes = inetAddress.getAddress();
 
                                 if (DEBUG)
-                                    Log.d(TAG, "localInetAddress = "
-                                            + localInetAddress.toString()
-                                            + "localIp = " + localIp
-                                            + "localIpBytes = " + localIpBytes);
+                                    Log.d(TAG, "localInetAddress = " + localInetAddress.toString() + "localIp = "
+                                            + localIp + "localIpBytes = " + localIpBytes);
 
                                 setMyIpinfo();
                                 registerMyInfo();
@@ -414,27 +414,30 @@ public class ConnectService extends Service {
             if (isInRunning) {
                 return;
             }
-            synchronized(this) {
+            synchronized (this) {
                 isInRunning = true;
-                 while (!isStopUpdateMe) {
+                while (!isStopUpdateMe) {
                     try {
                         if (DEBUG)
                             Log.d(TAG, "Update Me..");
 
                         myUserInfo.updateTime = System.currentTimeMillis();
+                        if (TextUtils.isEmpty(myUserInfo.getUsername()) ) {
 
-                        mUserinfoMap.put(myUserInfo.getUsername(), myUserInfo);
+                            mUserinfoMap.put(myUserInfo.getUsername(), myUserInfo);
 
-                        if (myUserInfo.getAvatar() != null) {
-                            queryUserInfo(myUserInfo);
+                            if (myUserInfo.getAvatar() != null) {
+                                queryUserInfo(myUserInfo);
+                            }
+
+                            if (!mUserAccount.contains(myUserInfo.getUsername())) {
+                                mUserAccount.add(myUserInfo.getUsername());
+                            }
+                            joinOrganization();
+                            sendPersonHasChangedBroadcast();
+
                         }
 
-                        if (!mUserAccount.contains(myUserInfo.getUsername())) {
-                            mUserAccount.add(myUserInfo.getUsername());
-                        }
-
-                        joinOrganization();
-                        sendPersonHasChangedBroadcast();
                         sleep(30000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -458,10 +461,10 @@ public class ConnectService extends Service {
         @Override
         public void run() {
             super.run();
-             synchronized(this) {
+            synchronized (this) {
 
                 boolean hasChanged = false;
-                
+
                 while (!isStopUpdateMe) {
 
                     ArrayList<String> removePersonKeys = new ArrayList<String>();
