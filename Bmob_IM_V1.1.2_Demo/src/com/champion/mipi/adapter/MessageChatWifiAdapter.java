@@ -8,18 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
-
-import cn.bmob.im.config.BmobConfig;
-
 import com.champion.mipi.R;
-
 import com.champion.mipi.adapter.base.BaseListAdapter;
 import com.champion.mipi.adapter.base.ViewHolder;
 import com.champion.mipi.ui.SetMyInfoActivity;
@@ -35,17 +30,17 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 
-	// 8ÖÖItemµÄÀàĞÍ
-	// ÎÄ±¾
+	// 8ç§Itemçš„ç±»å‹
+	// æ–‡æœ¬
 	private final int TYPE_RECEIVER_TXT = 0;
 	private final int TYPE_SEND_TXT = 1;
-	// Í¼Æ¬
+	// å›¾ç‰‡
 	private final int TYPE_SEND_IMAGE = 2;
 	private final int TYPE_RECEIVER_IMAGE = 3;
-	// Î»ÖÃ
+	// ä½ç½®
 	private final int TYPE_SEND_LOCATION = 4;
 	private final int TYPE_RECEIVER_LOCATION = 5;
-	// ÓïÒô
+	// è¯­éŸ³
 	private final int TYPE_SEND_VOICE = 6;
 	private final int TYPE_RECEIVER_VOICE = 7;
 
@@ -108,22 +103,22 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 		}
 
 		ImageView iv_avatar = ViewHolder.get(convertView, R.id.iv_avatar);
-		final ImageView iv_fail_resend = ViewHolder.get(convertView, R.id.iv_fail_resend);//Ê§°ÜÖØ·¢
-		final TextView tv_send_status = ViewHolder.get(convertView, R.id.tv_send_status);//·¢ËÍ×´Ì¬
+		final ImageView iv_fail_resend = ViewHolder.get(convertView, R.id.iv_fail_resend);//å¤±è´¥é‡å‘
+		final TextView tv_send_status = ViewHolder.get(convertView, R.id.tv_send_status);//å‘é€çŠ¶æ€
 		TextView tv_time = ViewHolder.get(convertView, R.id.tv_time);
 		TextView tv_message = ViewHolder.get(convertView, R.id.tv_message);
-		//Í¼Æ¬
+		//å›¾ç‰‡
 		ImageView iv_picture = ViewHolder.get(convertView, R.id.iv_picture);
-		final ProgressBar progress_load = ViewHolder.get(convertView, R.id.progress_load);//½ø¶ÈÌõ
-		//Î»ÖÃ
+		final ProgressBar progress_load = ViewHolder.get(convertView, R.id.progress_load);//è¿›åº¦æ¡
+		//ä½ç½®
 		TextView tv_location = ViewHolder.get(convertView, R.id.tv_location);
-		//ÓïÒô
+		//è¯­éŸ³
 		final ImageView iv_voice = ViewHolder.get(convertView, R.id.iv_voice);
-		//ÓïÒô³¤¶È
+		//è¯­éŸ³é•¿åº¦
 		final TextView tv_voice_length = ViewHolder.get(convertView, R.id.tv_voice_length);
 
 		String avatar = item.mAvatar;
-		if(avatar!=null && !avatar.equals("")){//¼ÓÔØÍ·Ïñ-ÎªÁË²»Ã¿´Î¶¼¼ÓÔØÍ·Ïñ
+		if(avatar!=null && !avatar.equals("")){//åŠ è½½å¤´åƒ-ä¸ºäº†ä¸æ¯æ¬¡éƒ½åŠ è½½å¤´åƒ
 			ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions(),animateFirstListener);
 		} else {
 			iv_avatar.setImageResource(R.drawable.head);
@@ -151,12 +146,12 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 		tv_time.setText(TimeUtil.getChatTime(item.mMills));
 
 		if(getItemViewType(position)==TYPE_SEND_TXT
-//				||getItemViewType(position)==TYPE_SEND_IMAGE//Í¼Æ¬µ¥¶À´¦Àí
+//				||getItemViewType(position)==TYPE_SEND_IMAGE//å›¾ç‰‡å•ç‹¬å¤„ç†
 				
 				||getItemViewType(position)==TYPE_SEND_LOCATION
-				||getItemViewType(position)==TYPE_SEND_VOICE){//Ö»ÓĞ×Ô¼º·¢ËÍµÄÏûÏ¢²ÅÓĞÖØ·¢»úÖÆ
-			//×´Ì¬ÃèÊö
- 			{//·¢ËÍ³É¹¦
+				||getItemViewType(position)==TYPE_SEND_VOICE){//åªæœ‰è‡ªå·±å‘é€çš„æ¶ˆæ¯æ‰æœ‰é‡å‘æœºåˆ¶
+			//çŠ¶æ€æè¿°
+ 			{//å‘é€æˆåŠŸ
 				progress_load.setVisibility(View.INVISIBLE);
 				iv_fail_resend.setVisibility(View.INVISIBLE);
 				if(item.type == TYPE_SEND_VOICE){
@@ -164,7 +159,7 @@ public class MessageChatWifiAdapter extends BaseListAdapter<ChatMessage> {
 					tv_voice_length.setVisibility(View.VISIBLE);
 				}else{
 					tv_send_status.setVisibility(View.VISIBLE);
-					tv_send_status.setText("ÒÑ·¢ËÍ");
+					tv_send_status.setText("å·²å‘é€");
 				}
 			}
 		}

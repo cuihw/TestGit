@@ -1,21 +1,26 @@
-package com.champion.mipi.ui.fragment;
+package com.champion.mipis.fragment;
 
-import com.champion.mipi.R;
-import com.champion.mipi.ui.FragmentBase;
+import com.champion.mipis.R;
+import com.champion.mipis.R.id;
+import com.champion.mipis.R.layout;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class VideoFragment extends FragmentBase {
+
+@SuppressLint("NewApi")
+public class VideoFragment extends Fragment {
 
     private static final String TAG = "VideoFragment";
 
@@ -43,6 +48,7 @@ public class VideoFragment extends FragmentBase {
         mWebView.loadData("loading", "text/html", "UTF-8");
     }
 
+
     @Override
     public void onResume() {
 
@@ -51,10 +57,12 @@ public class VideoFragment extends FragmentBase {
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.setVisibility(View.VISIBLE);
         mWebView.loadData("loading", "text/html", "UTF-8");
+        // mWebView.setWebViewClient(new VideoClient());
+
 
         mWebView.getSettings().setPluginState(PluginState.ON);
 
-
+        mWebView.getSettings().setJavaScriptEnabled(true);
         WebSettings settings = mWebView.getSettings();
 
         settings.setJavaScriptEnabled(true);

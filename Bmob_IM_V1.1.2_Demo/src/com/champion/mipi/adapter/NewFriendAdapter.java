@@ -25,11 +25,11 @@ import com.champion.mipi.util.CollectionUtils;
 import com.champion.mipi.util.ImageLoadOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-/** ĞÂµÄºÃÓÑÇëÇó
+/** æ–°çš„å¥½å‹è¯·æ±‚
   * @ClassName: NewFriendAdapter
   * @Description: TODO
   * @author smile
-  * @date 2014-6-9 ÏÂÎç1:26:12
+  * @date 2014-6-9 ä¸‹åˆ1:26:12
   */
 public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 
@@ -60,7 +60,7 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 
 		int status = msg.getStatus();
 		if(status==BmobConfig.INVITE_ADD_NO_VALIDATION||status==BmobConfig.INVITE_ADD_NO_VALI_RECEIVED){
-//			btn_add.setText("Í¬Òâ");
+//			btn_add.setText("åŒæ„");
 //			btn_add.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.btn_login_selector));
 //			btn_add.setTextColor(mContext.getResources().getColor(R.color.base_color_text_white));
 			btn_add.setOnClickListener(new OnClickListener() {
@@ -68,12 +68,12 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					BmobLog.i("µã»÷Í¬Òâ°´Å¥:"+msg.getFromid());
+					BmobLog.i("ç‚¹å‡»åŒæ„æŒ‰é’®:"+msg.getFromid());
 					agressAdd(btn_add, msg);
 				}
 			});
 		}else if(status==BmobConfig.INVITE_ADD_AGREE){
-			btn_add.setText("ÒÑÍ¬Òâ");
+			btn_add.setText("å·²åŒæ„");
 			btn_add.setBackgroundDrawable(null);
 			btn_add.setTextColor(mContext.getResources().getColor(R.color.base_color_text_black));
 			btn_add.setEnabled(false);
@@ -84,7 +84,7 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 	}
 
 	
-	/**Ìí¼ÓºÃÓÑ
+	/**æ·»åŠ å¥½å‹
 	  * agressAdd
 	  * @Title: agressAdd
 	  * @Description: TODO
@@ -95,22 +95,22 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 	  */
 	private void agressAdd(final Button btn_add,final BmobInvitation msg){
 		final ProgressDialog progress = new ProgressDialog(mContext);
-		progress.setMessage("ÕıÔÚÌí¼Ó...");
+		progress.setMessage("æ­£åœ¨æ·»åŠ ...");
 		progress.setCanceledOnTouchOutside(false);
 		progress.show();
 		try {
-			//Í¬ÒâÌí¼ÓºÃÓÑ
+			//åŒæ„æ·»åŠ å¥½å‹
 			BmobUserManager.getInstance(mContext).agreeAddContact(msg, new UpdateListener() {
 				
 				@Override
 				public void onSuccess() {
 					// TODO Auto-generated method stub
 					progress.dismiss();
-					btn_add.setText("ÒÑÍ¬Òâ");
+					btn_add.setText("å·²åŒæ„");
 					btn_add.setBackgroundDrawable(null);
 					btn_add.setTextColor(mContext.getResources().getColor(R.color.base_color_text_black));
 					btn_add.setEnabled(false);
-					//±£´æµ½applicationÖĞ·½±ã±È½Ï
+					//ä¿å­˜åˆ°applicationä¸­æ–¹ä¾¿æ¯”è¾ƒ
 					CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(BmobDB.create(mContext).getContactList()));	
 				}
 				
@@ -118,12 +118,12 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
 				public void onFailure(int arg0, final String arg1) {
 					// TODO Auto-generated method stub
 					progress.dismiss();
-					ShowToast("Ìí¼ÓÊ§°Ü: " +arg1);
+					ShowToast("æ·»åŠ å¤±è´¥: " +arg1);
 				}
 			});
 		} catch (final Exception e) {
 			progress.dismiss();
-			ShowToast("Ìí¼ÓÊ§°Ü: " +e.getMessage());
+			ShowToast("æ·»åŠ å¤±è´¥: " +e.getMessage());
 		}
 	}
 }

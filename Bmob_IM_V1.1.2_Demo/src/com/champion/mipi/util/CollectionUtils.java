@@ -22,7 +22,7 @@ public class CollectionUtils {
 	}
 	
 	/** list转map
-	 *  以用户名为key
+
 	  * @return Map<String,BmobChatUser>
 	  * @throws
 	  */

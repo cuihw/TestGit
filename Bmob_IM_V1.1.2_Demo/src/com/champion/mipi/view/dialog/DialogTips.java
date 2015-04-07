@@ -3,88 +3,88 @@ package com.champion.mipi.view.dialog;
 import android.content.Context;
 
 /**
- * ÌáÊ¾¶Ô»°¿ò£¬ÓĞÒ»¸öÈ·ÈÏ¡¢Ò»¸ö·µ»Ø°´Å¥
+ * æç¤ºå¯¹è¯æ¡†ï¼Œæœ‰ä¸€ä¸ªç¡®è®¤ã€ä¸€ä¸ªè¿”å›æŒ‰é’®
  */
 public class DialogTips extends DialogBase {
-	boolean hasNegative;
-	boolean hasTitle;
-	/**
-	 * ¹¹Ôìº¯Êı
-	 * @param context
-	 */
-	public DialogTips(Context context, String title,String message,String buttonText,boolean hasNegative,boolean hasTitle) {
-		super(context);
-		super.setMessage(message);
-		super.setNamePositiveButton(buttonText);
-		this.hasNegative = hasNegative;
-		this.hasTitle = hasTitle;
-		super.setTitle(title);
-	}
-	
-	/**ÏÂÏßÍ¨ÖªµÄ¶Ô»°¿òÑùÊ½
-	 * @param context
-	 * @param title
-	 * @param message
-	 * @param buttonText
-	 */
-	public DialogTips(Context context,String message,String buttonText) {
-		super(context);
-		super.setMessage(message);
-		super.setNamePositiveButton(buttonText);
-		this.hasNegative = false;
-		this.hasTitle = true;
-		super.setTitle("ÌáÊ¾");
-		super.setCancel(false);
-	}
-	
-	public DialogTips(Context context, String message,String buttonText,String negetiveText,String title,boolean isCancel) {
-		super(context);
-		super.setMessage(message);
-		super.setNamePositiveButton(buttonText);
-		this.hasNegative=false;
-		super.setNameNegativeButton(negetiveText);
-		this.hasTitle = true;
-		super.setTitle(title);
-		super.setCancel(isCancel);
-	}
+    boolean hasNegative;
+    boolean hasTitle;
+    /**
+     * æ„é€ å‡½æ•°
+     * @param context
+     */
+    public DialogTips(Context context, String title,String message,String buttonText,boolean hasNegative,boolean hasTitle) {
+        super(context);
+        super.setMessage(message);
+        super.setNamePositiveButton(buttonText);
+        this.hasNegative = hasNegative;
+        this.hasTitle = hasTitle;
+        super.setTitle(title);
+    }
+    
+    /**ä¸‹çº¿é€šçŸ¥çš„å¯¹è¯æ¡†æ ·å¼
+     * @param context
+     * @param title
+     * @param message
+     * @param buttonText
+     */
+    public DialogTips(Context context,String message,String buttonText) {
+        super(context);
+        super.setMessage(message);
+        super.setNamePositiveButton(buttonText);
+        this.hasNegative = false;
+        this.hasTitle = true;
+        super.setTitle("æç¤º");
+        super.setCancel(false);
+    }
+    
+    public DialogTips(Context context, String message,String buttonText,String negetiveText,String title,boolean isCancel) {
+        super(context);
+        super.setMessage(message);
+        super.setNamePositiveButton(buttonText);
+        this.hasNegative=false;
+        super.setNameNegativeButton(negetiveText);
+        this.hasTitle = true;
+        super.setTitle(title);
+        super.setCancel(isCancel);
+    }
 
-	/**
-	 * ´´½¨¶Ô»°¿ò
-	 */
-	@Override
-	protected void onBuilding() {
-		super.setWidth(dip2px(mainContext, 300));
-		if(hasNegative){
-			super.setNameNegativeButton("È¡Ïû");
-		}
-		if(!hasTitle){
-			super.setHasTitle(false);
-		}
-	}
+    /**
+     * åˆ›å»ºå¯¹è¯æ¡†
+     */
+    @Override
+    protected void onBuilding() {
+        super.setWidth(dip2px(mainContext, 300));
+        if(hasNegative){
+            super.setNameNegativeButton("å–æ¶ˆ");
+        }
+        if(!hasTitle){
+            super.setHasTitle(false);
+        }
+    }
 
-	public int dip2px(Context context,float dipValue){
-		float scale=context.getResources().getDisplayMetrics().density;		
-		return (int) (scale*dipValue+0.5f);		
-	}
-	
-	@Override
-	protected void onDismiss() { }
+    public int dip2px(Context context,float dipValue){
+        float scale=context.getResources().getDisplayMetrics().density;     
+        return (int) (scale*dipValue+0.5f);     
+    }
+    
+    @Override
+    protected void onDismiss() { }
 
-	@Override
-	protected void OnClickNegativeButton() { 
-		if(onCancelListener != null){
-			onCancelListener.onClick(this, 0);
-		}
-	}
+    @Override
+    protected void OnClickNegativeButton() { 
+        if(onCancelListener != null){
+            onCancelListener.onClick(this, 0);
+        }
+    }
 
-	/**
-	 * È·ÈÏ°´Å¥£¬´¥·¢onSuccessListenerµÄonClick
-	 */
-	@Override
-	protected boolean OnClickPositiveButton() { 
-		if(onSuccessListener != null){
-			onSuccessListener.onClick(this, 1);
-		}
-		return true;
-	}
+    /**
+     * ç¡®è®¤æŒ‰é’®ï¼Œè§¦å‘onSuccessListenerçš„onClick
+     */
+    @Override
+    protected boolean OnClickPositiveButton() { 
+        if(onSuccessListener != null){
+            onSuccessListener.onClick(this, 1);
+        }
+        return true;
+    }
 }

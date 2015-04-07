@@ -11,7 +11,7 @@ public class CommonUtils {
         int id = (int) (Math.random() * 1000000);
         return id;
     }
-   	/** ¼ì²éÊÇ·ñÓÐÍøÂç */
+
 	public static boolean isNetworkAvailable(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
 		if (info != null) {
@@ -20,7 +20,7 @@ public class CommonUtils {
 		return false;
 	}
 
-	/** ¼ì²éÊÇ·ñÊÇWIFI */
+
 	public static boolean isWifi(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
 		if (info != null) {
@@ -30,7 +30,7 @@ public class CommonUtils {
 		return false;
 	}
 
-	/** ¼ì²éÊÇ·ñÊÇÒÆ¶¯ÍøÂç */
+	/** ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public static boolean isMobile(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
 		if (info != null) {
@@ -47,7 +47,7 @@ public class CommonUtils {
 		return cm.getActiveNetworkInfo();
 	}
 
-	/** ¼ì²éSD¿¨ÊÇ·ñ´æÔÚ */
+
 	public static boolean checkSdCard() {
 		if (android.os.Environment.getExternalStorageState().equals(
 				android.os.Environment.MEDIA_MOUNTED))

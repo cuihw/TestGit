@@ -9,12 +9,12 @@ import com.champion.mipi.bean.User;
 import com.champion.mipi.view.HeaderLayout.onRightImageButtonClickListener;
 
 /**
- * ÉèÖÃêÇ³ÆºÍĞÔ±ğ
+ * è®¾ç½®æ˜µç§°å’Œæ€§åˆ«
  * 
  * @ClassName: SetNickAndSexActivity
  * @Description: TODO
  * @author smile
- * @date 2014-6-7 ÏÂÎç4:03:40
+ * @date 2014-6-7 ä¸‹åˆ4:03:40
  */
 public class UpdateInfoActivity extends ActivityBase {
 
@@ -29,7 +29,7 @@ public class UpdateInfoActivity extends ActivityBase {
 	}
 
 	private void initView() {
-		initTopBarForBoth("ĞŞ¸ÄêÇ³Æ", R.drawable.base_action_bar_true_bg_selector,
+		initTopBarForBoth("ä¿®æ”¹æ˜µç§°", R.drawable.base_action_bar_true_bg_selector,
 				new onRightImageButtonClickListener() {
 
 					@Override
@@ -37,7 +37,7 @@ public class UpdateInfoActivity extends ActivityBase {
 						// TODO Auto-generated method stub
 						String nick = edit_nick.getText().toString();
 						if (nick.equals("")) {
-							ShowToast("ÇëÌîĞ´êÇ³Æ!");
+							ShowToast("è¯·å¡«å†™æ˜µç§°!");
 							return;
 						}
 						updateInfo(nick);
@@ -46,7 +46,7 @@ public class UpdateInfoActivity extends ActivityBase {
 		edit_nick = (EditText) findViewById(R.id.edit_nick);
 	}
 
-	/** ĞŞ¸Ä×ÊÁÏ
+	/** ä¿®æ”¹èµ„æ–™
 	  * updateInfo
 	  * @Title: updateInfo
 	  * @return void
@@ -60,7 +60,7 @@ public class UpdateInfoActivity extends ActivityBase {
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				ShowToast("ĞŞ¸Ä³É¹¦");
+				ShowToast("ä¿®æ”¹æˆåŠŸ");
 				finish();
 			}
 

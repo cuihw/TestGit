@@ -34,244 +34,244 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 /**
- * ×Ô¶¨ÒåÈ«¾ÖApplcationÀà
+ * è‡ªå®šä¹‰å…¨å±€Applcationç±»
  * @ClassName: CustomApplcation
  * @Description: TODO
  * @author smile
- * @date 2014-5-19 ÏÂÎç3:25:00
+ * @date 2014-5-19 ä¸‹åˆ3:25:00
  */
 public class CustomApplcation extends Application {
 
     private static final String TAG = "CustomApplcation";
-	public static CustomApplcation mInstance;
-	public LocationClient mLocationClient;
-	public MyLocationListener mMyLocationListener;
+    public static CustomApplcation mInstance;
+    public LocationClient mLocationClient;
+    public MyLocationListener mMyLocationListener;
 
-	public static BmobGeoPoint lastPoint = null;// ÉÏÒ»´Î¶¨Î»µ½µÄ¾­Î³¶È
+    public static BmobGeoPoint lastPoint = null;// ä¸Šä¸€æ¬¡å®šä½åˆ°çš„ç»çº¬åº¦
 
-	@Override
-	public void onCreate() {
-		// TODO Auto-generated method stub
-		super.onCreate();
-		// ÊÇ·ñ¿ªÆôdebugÄ£Ê½--Ä¬ÈÏ¿ªÆô×´Ì¬
-		BmobChat.DEBUG_MODE = true;
-		mInstance = this;
-		init();
-	}
+    @Override
+    public void onCreate() {
+        // TODO Auto-generated method stub
+        super.onCreate();
+        // æ˜¯å¦å¼€å¯debugæ¨¡å¼--é»˜è®¤å¼€å¯çŠ¶æ€
+        BmobChat.DEBUG_MODE = true;
+        mInstance = this;
+        init();
+    }
 
-	private void init() {
-		mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
-		mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-		initImageLoader(getApplicationContext());
-		// ÈôÓÃ»§µÇÂ½¹ı£¬ÔòÏÈ´ÓºÃÓÑÊı¾İ¿âÖĞÈ¡³öºÃÓÑlist´æÈëÄÚ´æÖĞ
-		if (BmobUserManager.getInstance(getApplicationContext())
-				.getCurrentUser() != null) {
-			// »ñÈ¡±¾µØºÃÓÑuser listµ½ÄÚ´æ,·½±ãÒÔºó»ñÈ¡ºÃÓÑlist
-			contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
-		}
-		WifiServices();
-		initBaidu();
-	}
+    private void init() {
+        mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
+        mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+        initImageLoader(getApplicationContext());
+        // è‹¥ç”¨æˆ·ç™»é™†è¿‡ï¼Œåˆ™å…ˆä»å¥½å‹æ•°æ®åº“ä¸­å–å‡ºå¥½å‹listå­˜å…¥å†…å­˜ä¸­
+        if (BmobUserManager.getInstance(getApplicationContext())
+                .getCurrentUser() != null) {
+            // è·å–æœ¬åœ°å¥½å‹user liståˆ°å†…å­˜,æ–¹ä¾¿ä»¥åè·å–å¥½å‹list
+            contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
+        }
+        WifiServices();
+        initBaidu();
+    }
 
-	private void WifiServices() {
+    private void WifiServices() {
 
-	    startServices();
-	}
+        startServices();
+    }
 
-	/**
-	 * ³õÊ¼»¯°Ù¶ÈÏà¹Øsdk initBaidumap
-	 * @Title: initBaidumap
-	 * @Description: TODO
-	 * @param
-	 * @return void
-	 * @throws
-	 */
-	private void initBaidu() {
-		// ³õÊ¼»¯µØÍ¼Sdk
-		SDKInitializer.initialize(this);
-		// ³õÊ¼»¯¶¨Î»sdk
-		initBaiduLocClient();
-	}
+    /**
+     * åˆå§‹åŒ–ç™¾åº¦ç›¸å…³sdk initBaidumap
+     * @Title: initBaidumap
+     * @Description: TODO
+     * @param
+     * @return void
+     * @throws
+     */
+    private void initBaidu() {
+        // åˆå§‹åŒ–åœ°å›¾Sdk
+        SDKInitializer.initialize(this);
+        // åˆå§‹åŒ–å®šä½sdk
+        initBaiduLocClient();
+    }
 
-	/**
-	 * ³õÊ¼»¯°Ù¶È¶¨Î»sdk
-	 * @Title: initBaiduLocClient
-	 * @Description: TODO
-	 * @param
-	 * @return void
-	 * @throws
-	 */
-	private void initBaiduLocClient() {
-		mLocationClient = new LocationClient(this.getApplicationContext());
-		mMyLocationListener = new MyLocationListener();
-		mLocationClient.registerLocationListener(mMyLocationListener);
-	}
+    /**
+     * åˆå§‹åŒ–ç™¾åº¦å®šä½sdk
+     * @Title: initBaiduLocClient
+     * @Description: TODO
+     * @param
+     * @return void
+     * @throws
+     */
+    private void initBaiduLocClient() {
+        mLocationClient = new LocationClient(this.getApplicationContext());
+        mMyLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mMyLocationListener);
+    }
 
-	/**
-	 * ÊµÏÖÊµÎ»»Øµ÷¼àÌı
-	 */
-	public class MyLocationListener implements BDLocationListener {
+    /**
+     * å®ç°å®ä½å›è°ƒç›‘å¬
+     */
+    public class MyLocationListener implements BDLocationListener {
 
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			// Receive Location
-			double latitude = location.getLatitude();
-			double longtitude = location.getLongitude();
-			if (lastPoint != null) {
-				if (lastPoint.getLatitude() == location.getLatitude()
-						&& lastPoint.getLongitude() == location.getLongitude()) {
-//					BmobLog.i("Á½´Î»ñÈ¡×ø±êÏàÍ¬");// ÈôÁ½´ÎÇëÇó»ñÈ¡µ½µÄµØÀíÎ»ÖÃ×ø±êÊÇÏàÍ¬µÄ£¬Ôò²»ÔÙ¶¨Î»
-					mLocationClient.stop();
-					return;
-				}
-			}
-			lastPoint = new BmobGeoPoint(longtitude, latitude);
-		}
-	}
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // Receive Location
+            double latitude = location.getLatitude();
+            double longtitude = location.getLongitude();
+            if (lastPoint != null) {
+                if (lastPoint.getLatitude() == location.getLatitude()
+                        && lastPoint.getLongitude() == location.getLongitude()) {
+//                  BmobLog.i("ä¸¤æ¬¡è·å–åæ ‡ç›¸åŒ");// è‹¥ä¸¤æ¬¡è¯·æ±‚è·å–åˆ°çš„åœ°ç†ä½ç½®åæ ‡æ˜¯ç›¸åŒçš„ï¼Œåˆ™ä¸å†å®šä½
+                    mLocationClient.stop();
+                    return;
+                }
+            }
+            lastPoint = new BmobGeoPoint(longtitude, latitude);
+        }
+    }
 
-	/** ³õÊ¼»¯ImageLoader */
-	public static void initImageLoader(Context context) {
-		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
-				"bmobim/Cache");// »ñÈ¡µ½»º´æµÄÄ¿Â¼µØÖ·
-		// ´´½¨ÅäÖÃImageLoader(ËùÓĞµÄÑ¡Ïî¶¼ÊÇ¿ÉÑ¡µÄ,Ö»Ê¹ÓÃÄÇĞ©ÄãÕæµÄÏë¶¨ÖÆ)£¬Õâ¸ö¿ÉÒÔÉè¶¨ÔÚAPPLACATIONÀïÃæ£¬ÉèÖÃÎªÈ«¾ÖµÄÅäÖÃ²ÎÊı
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				context)
-				// Ïß³Ì³ØÄÚ¼ÓÔØµÄÊıÁ¿
-				.threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
-				.memoryCache(new WeakMemoryCache())
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				// ½«±£´æµÄÊ±ºòµÄURIÃû³ÆÓÃMD5 ¼ÓÃÜ
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.discCache(new UnlimitedDiscCache(cacheDir))// ×Ô¶¨Òå»º´æÂ·¾¶
-				// .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-				.writeDebugLogs() // Remove for release app
-				.build();
-		// Initialize ImageLoader with configuration.
-		ImageLoader.getInstance().init(config);// È«¾Ö³õÊ¼»¯´ËÅäÖÃ
-	}
+    /** åˆå§‹åŒ–ImageLoader */
+    public static void initImageLoader(Context context) {
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context,
+                "bmobim/Cache");// è·å–åˆ°ç¼“å­˜çš„ç›®å½•åœ°å€
+        // åˆ›å»ºé…ç½®ImageLoader(æ‰€æœ‰çš„é€‰é¡¹éƒ½æ˜¯å¯é€‰çš„,åªä½¿ç”¨é‚£äº›ä½ çœŸçš„æƒ³å®šåˆ¶)ï¼Œè¿™ä¸ªå¯ä»¥è®¾å®šåœ¨APPLACATIONé‡Œé¢ï¼Œè®¾ç½®ä¸ºå…¨å±€çš„é…ç½®å‚æ•°
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                context)
+                // çº¿ç¨‹æ± å†…åŠ è½½çš„æ•°é‡
+                .threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
+                .memoryCache(new WeakMemoryCache())
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                // å°†ä¿å­˜çš„æ—¶å€™çš„URIåç§°ç”¨MD5 åŠ å¯†
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .discCache(new UnlimitedDiscCache(cacheDir))// è‡ªå®šä¹‰ç¼“å­˜è·¯å¾„
+                // .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+                .writeDebugLogs() // Remove for release app
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);// å…¨å±€åˆå§‹åŒ–æ­¤é…ç½®
+    }
 
-	public static CustomApplcation getInstance() {
-		return mInstance;
-	}
+    public static CustomApplcation getInstance() {
+        return mInstance;
+    }
 
-	// µ¥ÀıÄ£Ê½£¬²ÅÄÜ¼°Ê±·µ»ØÊı¾İ
-	SharePreferenceUtil mSpUtil;
-	public static final String PREFERENCE_NAME = "_sharedinfo";
+    // å•ä¾‹æ¨¡å¼ï¼Œæ‰èƒ½åŠæ—¶è¿”å›æ•°æ®
+    SharePreferenceUtil mSpUtil;
+    public static final String PREFERENCE_NAME = "_sharedinfo";
 
-	public synchronized SharePreferenceUtil getSpUtil() {
-		if (mSpUtil == null) {
-			String currentId = BmobUserManager.getInstance(
-					getApplicationContext()).getCurrentUserObjectId();
-			String sharedName = currentId + PREFERENCE_NAME;
-			mSpUtil = new SharePreferenceUtil(this, sharedName);
-		}
-		return mSpUtil;
-	}
+    public synchronized SharePreferenceUtil getSpUtil() {
+        if (mSpUtil == null) {
+            String currentId = BmobUserManager.getInstance(
+                    getApplicationContext()).getCurrentUserObjectId();
+            String sharedName = currentId + PREFERENCE_NAME;
+            mSpUtil = new SharePreferenceUtil(this, sharedName);
+        }
+        return mSpUtil;
+    }
 
-	NotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
 
-	public NotificationManager getNotificationManager() {
-		if (mNotificationManager == null)
-			mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-		return mNotificationManager;
-	}
+    public NotificationManager getNotificationManager() {
+        if (mNotificationManager == null)
+            mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+        return mNotificationManager;
+    }
 
-	MediaPlayer mMediaPlayer;
+    MediaPlayer mMediaPlayer;
 
-	public synchronized MediaPlayer getMediaPlayer() {
-		if (mMediaPlayer == null)
-			mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
-		return mMediaPlayer;
-	}
-	
-	public final String PREF_LONGTITUDE = "longtitude";// ¾­¶È
-	private String longtitude = "";
+    public synchronized MediaPlayer getMediaPlayer() {
+        if (mMediaPlayer == null)
+            mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
+        return mMediaPlayer;
+    }
+    
+    public final String PREF_LONGTITUDE = "longtitude";// ç»åº¦
+    private String longtitude = "";
 
-	/**
-	 * »ñÈ¡¾­¶È
-	 * 
-	 * @return
-	 */
-	public String getLongtitude() {
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		longtitude = preferences.getString(PREF_LONGTITUDE, "");
-		return longtitude;
-	}
+    /**
+     * è·å–ç»åº¦
+     * 
+     * @return
+     */
+    public String getLongtitude() {
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        longtitude = preferences.getString(PREF_LONGTITUDE, "");
+        return longtitude;
+    }
 
-	/**
-	 * ÉèÖÃ¾­¶È
-	 * 
-	 * @param pwd
-	 */
-	public void setLongtitude(String lon) {
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
-		if (editor.putString(PREF_LONGTITUDE, lon).commit()) {
-			longtitude = lon;
-		}
-	}
+    /**
+     * è®¾ç½®ç»åº¦
+     * 
+     * @param pwd
+     */
+    public void setLongtitude(String lon) {
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        if (editor.putString(PREF_LONGTITUDE, lon).commit()) {
+            longtitude = lon;
+        }
+    }
 
-	public final String PREF_LATITUDE = "latitude";// ¾­¶È
-	private String latitude = "";
+    public final String PREF_LATITUDE = "latitude";// ç»åº¦
+    private String latitude = "";
 
-	/**
-	 * »ñÈ¡Î³¶È
-	 * 
-	 * @return
-	 */
-	public String getLatitude() {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		latitude = preferences.getString(PREF_LATITUDE, "");
-		return latitude;
-	}
+    /**
+     * è·å–çº¬åº¦
+     * 
+     * @return
+     */
+    public String getLatitude() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        latitude = preferences.getString(PREF_LATITUDE, "");
+        return latitude;
+    }
 
-	/**
-	 * ÉèÖÃÎ¬¶È
-	 * 
-	 * @param pwd
-	 */
-	public void setLatitude(String lat) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
-		if (editor.putString(PREF_LATITUDE, lat).commit()) {
-			latitude = lat;
-		}
-	}
+    /**
+     * è®¾ç½®ç»´åº¦
+     * 
+     * @param pwd
+     */
+    public void setLatitude(String lat) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        if (editor.putString(PREF_LATITUDE, lat).commit()) {
+            latitude = lat;
+        }
+    }
 
-	private Map<String, BmobChatUser> contactList = new HashMap<String, BmobChatUser>();
+    private Map<String, BmobChatUser> contactList = new HashMap<String, BmobChatUser>();
 
-	/**
-	 * »ñÈ¡ÄÚ´æÖĞºÃÓÑuser list
-	 * 
-	 * @return
-	 */
-	public Map<String, BmobChatUser> getContactList() {
-		return contactList;
-	}
+    /**
+     * è·å–å†…å­˜ä¸­å¥½å‹user list
+     * 
+     * @return
+     */
+    public Map<String, BmobChatUser> getContactList() {
+        return contactList;
+    }
 
-	/**
-	 * ÉèÖÃºÃÓÑuser listµ½ÄÚ´æÖĞ
-	 * @param contactList
-	 */
-	public void setContactList(Map<String, BmobChatUser> contactList) {
-		if (this.contactList != null) {
-			this.contactList.clear();
-		}
-		this.contactList = contactList;
-	}
+    /**
+     * è®¾ç½®å¥½å‹user liståˆ°å†…å­˜ä¸­
+     * @param contactList
+     */
+    public void setContactList(Map<String, BmobChatUser> contactList) {
+        if (this.contactList != null) {
+            this.contactList.clear();
+        }
+        this.contactList = contactList;
+    }
 
-	/**
-	 * ÍË³öµÇÂ¼,Çå¿Õ»º´æÊı¾İ
-	 */
-	public void logout() {
-		BmobUserManager.getInstance(getApplicationContext()).logout();
-		setContactList(null);
-		setLatitude(null);
-		setLongtitude(null);
-	}
+    /**
+     * é€€å‡ºç™»å½•,æ¸…ç©ºç¼“å­˜æ•°æ®
+     */
+    public void logout() {
+        BmobUserManager.getInstance(getApplicationContext()).logout();
+        setContactList(null);
+        setLatitude(null);
+        setLongtitude(null);
+    }
 
     private void startServices() {
         Intent intentStartServices = new Intent();

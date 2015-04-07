@@ -17,12 +17,9 @@ import android.widget.Toast;
 import cn.bmob.im.util.BmobLog;
 
 /**
- * 基础的适配器
  * 
  * @ClassName: BaseListAdapter
  * @Description: TODO
- * @author smile
- * @date 2014-6-19 上午11:04:01
  * @param <E>
  */
 @SuppressLint("UseSparseArrays")
@@ -83,7 +80,8 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = bindView(position, convertView, parent);
-		// 绑定内部点击监听
+
+
 		addInternalClickListener(convertView, position, list.get(position));
 		return convertView;
 	}
@@ -91,8 +89,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 	public abstract View bindView(int position, View convertView,
 			ViewGroup parent);
 
-	// adapter中的内部点击事件
-	public Map<Integer, onInternalClickListener> canClickItem;
+ 	public Map<Integer, onInternalClickListener> canClickItem;
 
 	private void addInternalClickListener(final View itemV, final Integer position,final Object valuesMap) {
 		if (canClickItem != null) {
@@ -147,7 +144,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 	}
 
 	/**
-	 * 打Log ShowLog
+	 * Log ShowLog
 	 * @return void
 	 * @throws
 	 */

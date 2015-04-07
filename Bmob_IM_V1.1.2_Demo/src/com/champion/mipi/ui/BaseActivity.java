@@ -28,240 +28,240 @@ import com.champion.mipi.view.HeaderLayout.onLeftImageButtonClickListener;
 import com.champion.mipi.view.HeaderLayout.onRightImageButtonClickListener;
 import com.champion.mipi.view.dialog.DialogTips;
 
-/** »ùÀà
+/** åŸºç±»
   * @ClassName: BaseActivity
   * @Description: TODO
   * @author smile
-  * @date 2014-6-13 ÏÂÎç5:05:38
+  * @date 2014-6-13 ä¸‹åˆ5:05:38
   */
 public class BaseActivity extends FragmentActivity {
 
-	BmobUserManager userManager;
-	BmobChatManager manager;
-	
-	CustomApplcation mApplication;
-	protected HeaderLayout mHeaderLayout;
-	
-	protected int mScreenWidth;
-	protected int mScreenHeight;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		userManager = BmobUserManager.getInstance(this);
-		manager = BmobChatManager.getInstance(this);
-		mApplication = CustomApplcation.getInstance();
-		DisplayMetrics metric = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metric);
-		mScreenWidth = metric.widthPixels;
-		mScreenHeight = metric.heightPixels;
-	}
+    BmobUserManager userManager;
+    BmobChatManager manager;
+    
+    CustomApplcation mApplication;
+    protected HeaderLayout mHeaderLayout;
+    
+    protected int mScreenWidth;
+    protected int mScreenHeight;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        userManager = BmobUserManager.getInstance(this);
+        manager = BmobChatManager.getInstance(this);
+        mApplication = CustomApplcation.getInstance();
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mScreenWidth = metric.widthPixels;
+        mScreenHeight = metric.heightPixels;
+    }
 
-	Toast mToast;
+    Toast mToast;
 
-	public void ShowToast(final String text) {
-		if (!TextUtils.isEmpty(text)) {
-			runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					if (mToast == null) {
-						mToast = Toast.makeText(getApplicationContext(), text,
-								Toast.LENGTH_LONG);
-					} else {
-						mToast.setText(text);
-					}
-					mToast.show();
-				}
-			});
-			
-		}
-	}
+    public void ShowToast(final String text) {
+        if (!TextUtils.isEmpty(text)) {
+            runOnUiThread(new Runnable() {
+                
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    if (mToast == null) {
+                        mToast = Toast.makeText(getApplicationContext(), text,
+                                Toast.LENGTH_LONG);
+                    } else {
+                        mToast.setText(text);
+                    }
+                    mToast.show();
+                }
+            });
+            
+        }
+    }
 
-	public void ShowToast(final int resId) {
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if (mToast == null) {
-					mToast = Toast.makeText(BaseActivity.this.getApplicationContext(), resId,
-							Toast.LENGTH_LONG);
-				} else {
-					mToast.setText(resId);
-				}
-				mToast.show();
-			}
-		});
-	}
+    public void ShowToast(final int resId) {
+        runOnUiThread(new Runnable() {
+            
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                if (mToast == null) {
+                    mToast = Toast.makeText(BaseActivity.this.getApplicationContext(), resId,
+                            Toast.LENGTH_LONG);
+                } else {
+                    mToast.setText(resId);
+                }
+                mToast.show();
+            }
+        });
+    }
 
-	/** ´òLog
-	  * ShowLog
-	  * @return void
-	  * @throws
-	  */
-	public void ShowLog(String msg){
-		BmobLog.i(msg);
-	}
-	
-	/**
-	 * Ö»ÓĞtitle initTopBarLayoutByTitle
-	 * @Title: initTopBarLayoutByTitle
-	 * @throws
-	 */
-	public void initTopBarForOnlyTitle(String titleName) {
-		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-		mHeaderLayout.init(HeaderStyle.DEFAULT_TITLE);
-		mHeaderLayout.setDefaultTitle(titleName);
-	}
+    /** æ‰“Log
+      * ShowLog
+      * @return void
+      * @throws
+      */
+    public void ShowLog(String msg){
+        BmobLog.i(msg);
+    }
+    
+    /**
+     * åªæœ‰title initTopBarLayoutByTitle
+     * @Title: initTopBarLayoutByTitle
+     * @throws
+     */
+    public void initTopBarForOnlyTitle(String titleName) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderStyle.DEFAULT_TITLE);
+        mHeaderLayout.setDefaultTitle(titleName);
+    }
 
-	/**
-	 * ³õÊ¼»¯±êÌâÀ¸-´ø×óÓÒ°´Å¥
-	 * @return void
-	 * @throws
-	 */
-	public void initTopBarForBoth(String titleName, int rightDrawableId,String text,
-			onRightImageButtonClickListener listener) {
-		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-		mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
-		mHeaderLayout.setTitleAndLeftImageButton(titleName,
-				R.drawable.base_action_bar_back_bg_selector,
-				new OnLeftButtonClickListener());
-		mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,
-				listener);
-	}
-	
-	public void initTopBarForBoth(String titleName, int rightDrawableId,
-			onRightImageButtonClickListener listener) {
-		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-		mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
-		mHeaderLayout.setTitleAndLeftImageButton(titleName,
-				R.drawable.base_action_bar_back_bg_selector,
-				new OnLeftButtonClickListener());
-		mHeaderLayout.setTitleAndRightImageButton(titleName, rightDrawableId,
-				listener);
-	}
+    /**
+     * åˆå§‹åŒ–æ ‡é¢˜æ -å¸¦å·¦å³æŒ‰é’®
+     * @return void
+     * @throws
+     */
+    public void initTopBarForBoth(String titleName, int rightDrawableId,String text,
+            onRightImageButtonClickListener listener) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+        mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,
+                listener);
+    }
+    
+    public void initTopBarForBoth(String titleName, int rightDrawableId,
+            onRightImageButtonClickListener listener) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+        mHeaderLayout.setTitleAndRightImageButton(titleName, rightDrawableId,
+                listener);
+    }
 
-	/**
-	 * Ö»ÓĞ×ó±ß°´Å¥ºÍTitle initTopBarLayout
-	 * 
-	 * @throws
-	 */
-	public void initTopBarForLeft(String titleName) {
-		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-		mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
-		mHeaderLayout.setTitleAndLeftImageButton(titleName,
-				R.drawable.base_action_bar_back_bg_selector,
-				new OnLeftButtonClickListener());
-	}
-	
-	/** ÏÔÊ¾ÏÂÏßµÄ¶Ô»°¿ò
-	  * showOfflineDialog
-	  * @return void
-	  * @throws
-	  */
-	public void showOfflineDialog(final Context context) {
-		DialogTips dialog = new DialogTips(this,"ÄúµÄÕËºÅÒÑÔÚÆäËûÉè±¸ÉÏµÇÂ¼!", "ÖØĞÂµÇÂ¼");
-		// ÉèÖÃ³É¹¦ÊÂ¼ş
-		dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int userId) {
-				CustomApplcation.getInstance().logout();
-				startActivity(new Intent(context, LoginActivity.class));
-				finish();
-				dialogInterface.dismiss();
-			}
-		});
-		// ÏÔÊ¾È·ÈÏ¶Ô»°¿ò
-		dialog.show();
-		dialog = null;
-	}
-	
-	// ×ó±ß°´Å¥µÄµã»÷ÊÂ¼ş
-	public class OnLeftButtonClickListener implements
-			onLeftImageButtonClickListener {
+    /**
+     * åªæœ‰å·¦è¾¹æŒ‰é’®å’ŒTitle initTopBarLayout
+     * 
+     * @throws
+     */
+    public void initTopBarForLeft(String titleName) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+    }
+    
+    /** æ˜¾ç¤ºä¸‹çº¿çš„å¯¹è¯æ¡†
+      * showOfflineDialog
+      * @return void
+      * @throws
+      */
+    public void showOfflineDialog(final Context context) {
+        DialogTips dialog = new DialogTips(this,"æ‚¨çš„è´¦å·å·²åœ¨å…¶ä»–è®¾å¤‡ä¸Šç™»å½•!", "é‡æ–°ç™»å½•");
+        // è®¾ç½®æˆåŠŸäº‹ä»¶
+        dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int userId) {
+                CustomApplcation.getInstance().logout();
+                startActivity(new Intent(context, LoginActivity.class));
+                finish();
+                dialogInterface.dismiss();
+            }
+        });
+        // æ˜¾ç¤ºç¡®è®¤å¯¹è¯æ¡†
+        dialog.show();
+        dialog = null;
+    }
+    
+    // å·¦è¾¹æŒ‰é’®çš„ç‚¹å‡»äº‹ä»¶
+    public class OnLeftButtonClickListener implements
+            onLeftImageButtonClickListener {
 
-		@Override
-		public void onClick() {
-			finish();
-		}
-	}
-	
-	public void startAnimActivity(Class<?> cla) {
-		this.startActivity(new Intent(this, cla));
-	}
-	
-	public void startAnimActivity(Intent intent) {
-		this.startActivity(intent);
-	}
-	/** ÓÃÓÚµÇÂ½»òÕß×Ô¶¯µÇÂ½Çé¿öÏÂµÄÓÃ»§×ÊÁÏ¼°ºÃÓÑ×ÊÁÏµÄ¼ì²â¸üĞÂ
-	  * @Title: updateUserInfos
-	  * @Description: TODO
-	  * @param  
-	  * @return void
-	  * @throws
-	  */
-	public void updateUserInfos(){
-		//¸üĞÂµØÀíÎ»ÖÃĞÅÏ¢
-		updateUserLocation();
-		//²éÑ¯¸ÃÓÃ»§µÄºÃÓÑÁĞ±í(Õâ¸öºÃÓÑÁĞ±íÊÇÈ¥³ıºÚÃûµ¥ÓÃ»§µÄÅ¶),Ä¿Ç°Ö§³ÖµÄ²éÑ¯ºÃÓÑ¸öÊıÎª100£¬ÈçĞèĞŞ¸ÄÇëÔÚµ÷ÓÃÕâ¸ö·½·¨Ç°ÉèÖÃBmobConfig.LIMIT_CONTACTS¼´¿É¡£
-		//ÕâÀïÄ¬ÈÏ²ÉÈ¡µÄÊÇµÇÂ½³É¹¦Ö®ºó¼´½«ºÃÓÚÁĞ±í´æ´¢µ½Êı¾İ¿âÖĞ£¬²¢¸üĞÂµ½µ±Ç°ÄÚ´æÖĞ,
-		userManager.queryCurrentContactList(new FindListener<BmobChatUser>() {
+        @Override
+        public void onClick() {
+            finish();
+        }
+    }
+    
+    public void startAnimActivity(Class<?> cla) {
+        this.startActivity(new Intent(this, cla));
+    }
+    
+    public void startAnimActivity(Intent intent) {
+        this.startActivity(intent);
+    }
+    /** ç”¨äºç™»é™†æˆ–è€…è‡ªåŠ¨ç™»é™†æƒ…å†µä¸‹çš„ç”¨æˆ·èµ„æ–™åŠå¥½å‹èµ„æ–™çš„æ£€æµ‹æ›´æ–°
+      * @Title: updateUserInfos
+      * @Description: TODO
+      * @param  
+      * @return void
+      * @throws
+      */
+    public void updateUserInfos(){
+        //æ›´æ–°åœ°ç†ä½ç½®ä¿¡æ¯
+        updateUserLocation();
+        //æŸ¥è¯¢è¯¥ç”¨æˆ·çš„å¥½å‹åˆ—è¡¨(è¿™ä¸ªå¥½å‹åˆ—è¡¨æ˜¯å»é™¤é»‘åå•ç”¨æˆ·çš„å“¦),ç›®å‰æ”¯æŒçš„æŸ¥è¯¢å¥½å‹ä¸ªæ•°ä¸º100ï¼Œå¦‚éœ€ä¿®æ”¹è¯·åœ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•å‰è®¾ç½®BmobConfig.LIMIT_CONTACTSå³å¯ã€‚
+        //è¿™é‡Œé»˜è®¤é‡‡å–çš„æ˜¯ç™»é™†æˆåŠŸä¹‹åå³å°†å¥½äºåˆ—è¡¨å­˜å‚¨åˆ°æ•°æ®åº“ä¸­ï¼Œå¹¶æ›´æ–°åˆ°å½“å‰å†…å­˜ä¸­,
+        userManager.queryCurrentContactList(new FindListener<BmobChatUser>() {
 
-					@Override
-					public void onError(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						if(arg0==BmobConfig.CODE_COMMON_NONE){
-							ShowLog(arg1);
-						}else{
-							ShowLog("²éÑ¯ºÃÓÑÁĞ±íÊ§°Ü£º"+arg1);
-						}
-					}
+                    @Override
+                    public void onError(int arg0, String arg1) {
+                        // TODO Auto-generated method stub
+                        if(arg0==BmobConfig.CODE_COMMON_NONE){
+                            ShowLog(arg1);
+                        }else{
+                            ShowLog("æŸ¥è¯¢å¥½å‹åˆ—è¡¨å¤±è´¥ï¼š"+arg1);
+                        }
+                    }
 
-					@Override
-					public void onSuccess(List<BmobChatUser> arg0) {
-						// TODO Auto-generated method stub
-						// ±£´æµ½applicationÖĞ·½±ã±È½Ï
-						CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(arg0));
-					}
-				});
-	}
-	/** ¸üĞÂÓÃ»§µÄ¾­Î³¶ÈĞÅÏ¢
-	  * @Title: uploadLocation
-	  * @Description: TODO
-	  * @param  
-	  * @return void
-	  * @throws
-	  */
-	public void updateUserLocation(){
-		if(CustomApplcation.lastPoint!=null){
-			String saveLatitude  = mApplication.getLatitude();
-			String saveLongtitude = mApplication.getLongtitude();
-			String newLat = String.valueOf(CustomApplcation.lastPoint.getLatitude());
-			String newLong = String.valueOf(CustomApplcation.lastPoint.getLongitude());
-//			ShowLog("saveLatitude ="+saveLatitude+",saveLongtitude = "+saveLongtitude);
-//			ShowLog("newLat ="+newLat+",newLong = "+newLong);
-			if(!saveLatitude.equals(newLat)|| !saveLongtitude.equals(newLong)){//Ö»ÓĞÎ»ÖÃÓĞ±ä»¯¾Í¸üĞÂµ±Ç°Î»ÖÃ£¬´ïµ½ÊµÊ±¸üĞÂµÄÄ¿µÄ
-				final User user = (User) userManager.getCurrentUser(User.class);
-				user.setLocation(CustomApplcation.lastPoint);
-				user.update(this, new UpdateListener() {
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						CustomApplcation.getInstance().setLatitude(String.valueOf(user.getLocation().getLatitude()));
-						CustomApplcation.getInstance().setLongtitude(String.valueOf(user.getLocation().getLongitude()));
-//						ShowLog("¾­Î³¶È¸üĞÂ³É¹¦");
-					}
-					@Override
-					public void onFailure(int code, String msg) {
-						// TODO Auto-generated method stub
-//						ShowLog("¾­Î³¶È¸üĞÂ Ê§°Ü:"+msg);
-					}
-				});
-			}else{
-//				ShowLog("ÓÃ»§Î»ÖÃÎ´·¢Éú¹ı±ä»¯");
-			}
-		}
-	}
+                    @Override
+                    public void onSuccess(List<BmobChatUser> arg0) {
+                        // TODO Auto-generated method stub
+                        // ä¿å­˜åˆ°applicationä¸­æ–¹ä¾¿æ¯”è¾ƒ
+                        CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(arg0));
+                    }
+                });
+    }
+    /** æ›´æ–°ç”¨æˆ·çš„ç»çº¬åº¦ä¿¡æ¯
+      * @Title: uploadLocation
+      * @Description: TODO
+      * @param  
+      * @return void
+      * @throws
+      */
+    public void updateUserLocation(){
+        if(CustomApplcation.lastPoint!=null){
+            String saveLatitude  = mApplication.getLatitude();
+            String saveLongtitude = mApplication.getLongtitude();
+            String newLat = String.valueOf(CustomApplcation.lastPoint.getLatitude());
+            String newLong = String.valueOf(CustomApplcation.lastPoint.getLongitude());
+//          ShowLog("saveLatitude ="+saveLatitude+",saveLongtitude = "+saveLongtitude);
+//          ShowLog("newLat ="+newLat+",newLong = "+newLong);
+            if(!saveLatitude.equals(newLat)|| !saveLongtitude.equals(newLong)){//åªæœ‰ä½ç½®æœ‰å˜åŒ–å°±æ›´æ–°å½“å‰ä½ç½®ï¼Œè¾¾åˆ°å®æ—¶æ›´æ–°çš„ç›®çš„
+                final User user = (User) userManager.getCurrentUser(User.class);
+                user.setLocation(CustomApplcation.lastPoint);
+                user.update(this, new UpdateListener() {
+                    @Override
+                    public void onSuccess() {
+                        // TODO Auto-generated method stub
+                        CustomApplcation.getInstance().setLatitude(String.valueOf(user.getLocation().getLatitude()));
+                        CustomApplcation.getInstance().setLongtitude(String.valueOf(user.getLocation().getLongitude()));
+//                      ShowLog("ç»çº¬åº¦æ›´æ–°æˆåŠŸ");
+                    }
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        // TODO Auto-generated method stub
+//                      ShowLog("ç»çº¬åº¦æ›´æ–° å¤±è´¥:"+msg);
+                    }
+                });
+            }else{
+//              ShowLog("ç”¨æˆ·ä½ç½®æœªå‘ç”Ÿè¿‡å˜åŒ–");
+            }
+        }
+    }
 }

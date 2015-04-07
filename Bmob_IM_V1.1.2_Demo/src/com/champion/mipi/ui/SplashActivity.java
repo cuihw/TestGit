@@ -19,34 +19,34 @@ import com.champion.mipi.R;
 import com.champion.mipi.config.Config;
 
 /**
- * Òıµ¼Ò³
+ * å¼•å¯¼é¡µ
  * 
  * @ClassName: SplashActivity
  * @Description: TODO
  * @author smile
- * @date 2014-6-4 ÉÏÎç9:45:43
+ * @date 2014-6-4 ä¸Šåˆ9:45:43
  */
 public class SplashActivity extends BaseActivity {
 
 	private static final int GO_HOME = 100;
 	private static final int GO_LOGIN = 200;
 
-	// ¶¨Î»»ñÈ¡µ±Ç°ÓÃ»§µÄµØÀíÎ»ÖÃ
+	// å®šä½è·å–å½“å‰ç”¨æˆ·çš„åœ°ç†ä½ç½®
 	private LocationClient mLocationClient;
 
-	private BaiduReceiver mReceiver;// ×¢²á¹ã²¥½ÓÊÕÆ÷£¬ÓÃÓÚ¼àÌıÍøÂçÒÔ¼°ÑéÖ¤key
+	private BaiduReceiver mReceiver;// æ³¨å†Œå¹¿æ’­æ¥æ”¶å™¨ï¼Œç”¨äºç›‘å¬ç½‘ç»œä»¥åŠéªŒè¯key
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash_mipis);
-		//BmobIM SDK³õÊ¼»¯--Ö»ĞèÒªÕâÒ»¶Î´úÂë¼´¿ÉÍê³É³õÊ¼»¯
-		//Çëµ½Bmob¹ÙÍø(http://www.bmob.cn/)ÉêÇëApplicationId,¾ßÌåµØÖ·:http://docs.bmob.cn/android/faststart/index.html?menukey=fast_start&key=start_android
+		//BmobIM SDKåˆå§‹åŒ–--åªéœ€è¦è¿™ä¸€æ®µä»£ç å³å¯å®Œæˆåˆå§‹åŒ–
+		//è¯·åˆ°Bmobå®˜ç½‘(http://www.bmob.cn/)ç”³è¯·ApplicationId,å…·ä½“åœ°å€:http://docs.bmob.cn/android/faststart/index.html?menukey=fast_start&key=start_android
 		BmobChat.getInstance(this).init(Config.applicationId);
-		// ¿ªÆô¶¨Î»
+		// å¼€å¯å®šä½
 		initLocClient();
-		// ×¢²áµØÍ¼ SDK ¹ã²¥¼àÌıÕß
+		// æ³¨å†Œåœ°å›¾ SDK å¹¿æ’­ç›‘å¬è€…
 		IntentFilter iFilter = new IntentFilter();
 		iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
 		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity {
 		registerReceiver(mReceiver, iFilter);
 
 		if (userManager.getCurrentUser() != null) {
-			// Ã¿´Î×Ô¶¯µÇÂ½µÄÊ±ºò¾ÍĞèÒª¸üĞÂÏÂµ±Ç°Î»ÖÃºÍºÃÓÑµÄ×ÊÁÏ£¬ÒòÎªºÃÓÑµÄÍ·Ïñ£¬êÇ³ÆÉ¶µÄÊÇ¾­³£±ä¶¯µÄ
+			// æ¯æ¬¡è‡ªåŠ¨ç™»é™†çš„æ—¶å€™å°±éœ€è¦æ›´æ–°ä¸‹å½“å‰ä½ç½®å’Œå¥½å‹çš„èµ„æ–™ï¼Œå› ä¸ºå¥½å‹çš„å¤´åƒï¼Œæ˜µç§°å•¥çš„æ˜¯ç»å¸¸å˜åŠ¨çš„
 			updateUserInfos();
 			mHandler.sendEmptyMessageDelayed(GO_HOME, 2000);
 		} else {
@@ -63,7 +63,7 @@ public class SplashActivity extends BaseActivity {
 	}
 
 	/**
-	 * ¿ªÆô¶¨Î»£¬¸üĞÂµ±Ç°ÓÃ»§µÄ¾­Î³¶È×ø±ê
+	 * å¼€å¯å®šä½ï¼Œæ›´æ–°å½“å‰ç”¨æˆ·çš„ç»çº¬åº¦åæ ‡
 	 * @Title: initLocClient
 	 * @Description: TODO
 	 * @param
@@ -73,10 +73,10 @@ public class SplashActivity extends BaseActivity {
 	private void initLocClient() {
 		mLocationClient = CustomApplcation.getInstance().mLocationClient;
 		LocationClientOption option = new LocationClientOption();
-		option.setLocationMode(LocationMode.Hight_Accuracy);// ÉèÖÃ¶¨Î»Ä£Ê½:¸ß¾«¶ÈÄ£Ê½
-		option.setCoorType("bd09ll"); // ÉèÖÃ×ø±êÀàĞÍ:°Ù¶È¾­Î³¶È
-		option.setScanSpan(1000);// ÉèÖÃ·¢Æğ¶¨Î»ÇëÇóµÄ¼ä¸ôÊ±¼äÎª1000ms:µÍÓÚ1000ÎªÊÖ¶¯¶¨Î»Ò»´Î£¬´óÓÚ»òµÈÓÚ1000ÔòÎª¶¨Ê±¶¨Î»
-		option.setIsNeedAddress(false);// ²»ĞèÒª°üº¬µØÖ·ĞÅÏ¢
+		option.setLocationMode(LocationMode.Hight_Accuracy);// è®¾ç½®å®šä½æ¨¡å¼:é«˜ç²¾åº¦æ¨¡å¼
+		option.setCoorType("bd09ll"); // è®¾ç½®åæ ‡ç±»å‹:ç™¾åº¦ç»çº¬åº¦
+		option.setScanSpan(1000);// è®¾ç½®å‘èµ·å®šä½è¯·æ±‚çš„é—´éš”æ—¶é—´ä¸º1000ms:ä½äº1000ä¸ºæ‰‹åŠ¨å®šä½ä¸€æ¬¡ï¼Œå¤§äºæˆ–ç­‰äº1000åˆ™ä¸ºå®šæ—¶å®šä½
+		option.setIsNeedAddress(false);// ä¸éœ€è¦åŒ…å«åœ°å€ä¿¡æ¯
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
 	}
@@ -99,23 +99,23 @@ public class SplashActivity extends BaseActivity {
 	};
 
 	/**
-	 * ¹¹Ôì¹ã²¥¼àÌıÀà£¬¼àÌı SDK key ÑéÖ¤ÒÔ¼°ÍøÂçÒì³£¹ã²¥
+	 * æ„é€ å¹¿æ’­ç›‘å¬ç±»ï¼Œç›‘å¬ SDK key éªŒè¯ä»¥åŠç½‘ç»œå¼‚å¸¸å¹¿æ’­
 	 */
 	public class BaiduReceiver extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
 			String s = intent.getAction();
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-				ShowToast("key ÑéÖ¤³ö´í! ÇëÔÚ AndroidManifest.xml ÎÄ¼şÖĞ¼ì²é key ÉèÖÃ");
+				ShowToast(SplashActivity.this.getString(R.string.error_app_key));
 			} else if (s
 					.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
-				ShowToast("µ±Ç°ÍøÂçÁ¬½Ó²»ÎÈ¶¨£¬Çë¼ì²éÄúµÄÍøÂçÉèÖÃ!");
+				ShowToast(SplashActivity.this.getString(R.string.network_unsteadiness));
 			}
 		}
 	}
 
 	@Override
 	protected void onDestroy() {
-		// ÍË³öÊ±Ïú»Ù¶¨Î»
+		// é€€å‡ºæ—¶é”€æ¯å®šä½
 		if (mLocationClient != null && mLocationClient.isStarted()) {
 			mLocationClient.stop();
 		}

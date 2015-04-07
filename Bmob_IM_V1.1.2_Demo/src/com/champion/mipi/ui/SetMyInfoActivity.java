@@ -53,12 +53,12 @@ import com.champion.mipi.view.dialog.DialogTips;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * ¸öÈË×ÊÁÏÒ³Ãæ
+ * ä¸ªäººèµ„æ–™é¡µé¢
  * 
  * @ClassName: SetMyInfoActivity
  * @Description: TODO
  * @author smile
- * @date 2014-6-10 ÏÂÎç2:55:19
+ * @date 2014-6-10 ä¸‹åˆ2:55:19
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 @SuppressLint("SimpleDateFormat")
@@ -79,7 +79,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// ÒòÎª÷È×åÊÖ»úÏÂÃæÓĞÈı¸öĞéÄâµÄµ¼º½°´Å¥£¬ĞèÒª½«ÆäÒş²Øµô£¬²»È»»áÕÚµôÅÄÕÕºÍÏà²áÁ½¸ö°´Å¥£¬ÇÒÔÚsetContentViewÖ®Ç°µ÷ÓÃ²ÅÄÜÉúĞ§
+		// å› ä¸ºé­…æ—æ‰‹æœºä¸‹é¢æœ‰ä¸‰ä¸ªè™šæ‹Ÿçš„å¯¼èˆªæŒ‰é’®ï¼Œéœ€è¦å°†å…¶éšè—æ‰ï¼Œä¸ç„¶ä¼šé®æ‰æ‹ç…§å’Œç›¸å†Œä¸¤ä¸ªæŒ‰é’®ï¼Œä¸”åœ¨setContentViewä¹‹å‰è°ƒç”¨æ‰èƒ½ç”Ÿæ•ˆ
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentapiVersion >= 14) {
 			getWindow().getDecorView().setSystemUiVisibility(
@@ -101,7 +101,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		layout_head = (RelativeLayout) findViewById(R.id.layout_head);
 		layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
 		layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
-		// ºÚÃûµ¥ÌáÊ¾Óï
+		// é»‘åå•æç¤ºè¯­
 		layout_black_tips = (RelativeLayout) findViewById(R.id.layout_black_tips);
 		tv_set_gender = (TextView) findViewById(R.id.tv_set_gender);
 		btn_chat = (Button) findViewById(R.id.btn_chat);
@@ -111,7 +111,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		btn_chat.setEnabled(false);
 		btn_back.setEnabled(false);
 		if (from.equals("me")) {
-			initTopBarForLeft("¸öÈË×ÊÁÏ");
+			initTopBarForLeft("ä¸ªäººèµ„æ–™");
 			layout_head.setOnClickListener(this);
 			layout_nick.setOnClickListener(this);
 			layout_gender.setOnClickListener(this);
@@ -121,14 +121,14 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			btn_chat.setVisibility(View.GONE);
 			btn_add_friend.setVisibility(View.GONE);
 		} else {
-			initTopBarForLeft("ÏêÏ¸×ÊÁÏ");
+			initTopBarForLeft("è¯¦ç»†èµ„æ–™");
 			iv_nickarraw.setVisibility(View.INVISIBLE);
 			iv_arraw.setVisibility(View.INVISIBLE);
-			//²»¹Ü¶Ô·½ÊÇ²»ÊÇÄãµÄºÃÓÑ£¬¾ù¿ÉÒÔ·¢ËÍÏûÏ¢--BmobIM_V1.1.2ĞŞ¸Ä
+			//ä¸ç®¡å¯¹æ–¹æ˜¯ä¸æ˜¯ä½ çš„å¥½å‹ï¼Œå‡å¯ä»¥å‘é€æ¶ˆæ¯--BmobIM_V1.1.2ä¿®æ”¹
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
-			if (from.equals("add")) {// ´Ó¸½½üµÄÈËÁĞ±íÌí¼ÓºÃÓÑ--ÒòÎª»ñÈ¡¸½½üµÄÈËµÄ·½·¨ÀïÃæÓĞÊÇ·ñÏÔÊ¾ºÃÓÑµÄÇé¿ö£¬Òò´ËÔÚÕâÀïĞèÒªÅĞ¶ÏÏÂÕâ¸öÓÃ»§ÊÇ·ñÊÇ×Ô¼ºµÄºÃÓÑ
-				if (mApplication.getContactList().containsKey(username)) {// ÊÇºÃÓÑ
+			if (from.equals("add")) {// ä»é™„è¿‘çš„äººåˆ—è¡¨æ·»åŠ å¥½å‹--å› ä¸ºè·å–é™„è¿‘çš„äººçš„æ–¹æ³•é‡Œé¢æœ‰æ˜¯å¦æ˜¾ç¤ºå¥½å‹çš„æƒ…å†µï¼Œå› æ­¤åœ¨è¿™é‡Œéœ€è¦åˆ¤æ–­ä¸‹è¿™ä¸ªç”¨æˆ·æ˜¯å¦æ˜¯è‡ªå·±çš„å¥½å‹
+				if (mApplication.getContactList().containsKey(username)) {// æ˜¯å¥½å‹
 //					btn_chat.setVisibility(View.VISIBLE);
 //					btn_chat.setOnClickListener(this);
 					btn_back.setVisibility(View.VISIBLE);
@@ -139,7 +139,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					btn_add_friend.setVisibility(View.VISIBLE);
 					btn_add_friend.setOnClickListener(this);
 				}
-			} else {// ²é¿´ËûÈË
+			} else {// æŸ¥çœ‹ä»–äºº
 //				btn_chat.setVisibility(View.VISIBLE);
 //				btn_chat.setOnClickListener(this);
 				btn_back.setVisibility(View.VISIBLE);
@@ -173,19 +173,19 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					btn_add_friend.setEnabled(true);
 					updateUser(user);
 				} else {
-					ShowLog("onSuccess ²éÎŞ´ËÈË");
+					ShowLog("onSuccess æŸ¥æ— æ­¤äºº");
 				}
 			}
 		});
 	}
 
 	private void updateUser(User user) {
-		// ¸ü¸Ä
+		// æ›´æ”¹
 		refreshAvatar(user.getAvatar());
 		tv_set_name.setText(user.getUsername());
 		tv_set_nick.setText(user.getNick());
-		tv_set_gender.setText(user.getSex() == true ? "ÄĞ" : "Å®");
-		// ¼ì²âÊÇ·ñÎªºÚÃûµ¥ÓÃ»§
+		tv_set_gender.setText(user.getSex() == true ? "ç”·" : "å¥³");
+		// æ£€æµ‹æ˜¯å¦ä¸ºé»‘åå•ç”¨æˆ·
 		if (from.equals("other")) {
 			if (BmobDB.create(this).isBlackUser(user.getUsername())) {
 				btn_back.setVisibility(View.GONE);
@@ -198,7 +198,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	}
 
 	/**
-	 * ¸üĞÂÍ·Ïñ refreshAvatar
+	 * æ›´æ–°å¤´åƒ refreshAvatar
 	 * 
 	 * @return void
 	 * @throws
@@ -225,7 +225,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.btn_chat:// ·¢ÆğÁÄÌì
+		case R.id.btn_chat:// å‘èµ·èŠå¤©
 			Intent intent = new Intent(this, ChatActivity.class);
 			intent.putExtra("user", user);
 			startAnimActivity(intent);
@@ -237,37 +237,37 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		case R.id.layout_nick:
 			startAnimActivity(UpdateInfoActivity.class);
 			break;
-		case R.id.layout_gender:// ĞÔ±ğ
+		case R.id.layout_gender:// æ€§åˆ«
 			showSexChooseDialog();
 			break;
-		case R.id.btn_back:// ºÚÃûµ¥
+		case R.id.btn_back:// é»‘åå•
 			showBlackDialog(user.getUsername());
 			break;
-		case R.id.btn_add_friend:// Ìí¼ÓºÃÓÑ
+		case R.id.btn_add_friend:// æ·»åŠ å¥½å‹
 			addFriend();
 			break;
 		}
 	}
-	String[] sexs = new String[]{ "ÄĞ", "Å®" };
+	String[] sexs = new String[]{ "ç”·", "å¥³" };
 	private void showSexChooseDialog() {
 		new AlertDialog.Builder(this)
-		.setTitle("µ¥Ñ¡¿ò")
+		.setTitle("å•é€‰æ¡†")
 		.setIcon(android.R.drawable.ic_dialog_info)
 		.setSingleChoiceItems(sexs, 0,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
 							int which) {
-						BmobLog.i("µã»÷µÄÊÇ"+sexs[which]);
+						BmobLog.i("ç‚¹å‡»çš„æ˜¯"+sexs[which]);
 						updateInfo(which);
 						dialog.dismiss();
 					}
 				})
-		.setNegativeButton("È¡Ïû", null)
+		.setNegativeButton("å–æ¶ˆ", null)
 		.show();
 	}
 
 	
-	/** ĞŞ¸Ä×ÊÁÏ
+	/** ä¿®æ”¹èµ„æ–™
 	  * updateInfo
 	  * @Title: updateInfo
 	  * @return void
@@ -275,7 +275,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	  */
 	private void updateInfo(int which) {
 		final User user = userManager.getCurrentUser(User.class);
-		BmobLog.i("updateInfo ĞÔ±ğ£º"+user.getSex());
+		BmobLog.i("updateInfo æ€§åˆ«ï¼š"+user.getSex());
 		if(which==0){
 			user.setSex(true);
 		}else{
@@ -286,10 +286,10 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				ShowToast("ĞŞ¸Ä³É¹¦");
+				ShowToast("ä¿®æ”¹æˆåŠŸ");
 				final User u = userManager.getCurrentUser(User.class);
-				BmobLog.i("ĞŞ¸Ä³É¹¦ºóµÄsex = "+u.getSex());
-				tv_set_gender.setText(user.getSex() == true ? "ÄĞ" : "Å®");
+				BmobLog.i("ä¿®æ”¹æˆåŠŸåçš„sex = "+u.getSex());
+				tv_set_gender.setText(user.getSex() == true ? "ç”·" : "å¥³");
 			}
 
 			@Override
@@ -300,7 +300,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		});
 	}
 	/**
-	 * Ìí¼ÓºÃÓÑÇëÇó
+	 * æ·»åŠ å¥½å‹è¯·æ±‚
 	 * 
 	 * @Title: addFriend
 	 * @Description: TODO
@@ -310,10 +310,10 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	 */
 	private void addFriend() {
 		final ProgressDialog progress = new ProgressDialog(this);
-		progress.setMessage("ÕıÔÚÌí¼Ó...");
+		progress.setMessage("æ­£åœ¨æ·»åŠ ...");
 		progress.setCanceledOnTouchOutside(false);
 		progress.show();
-		// ·¢ËÍtagÇëÇó
+		// å‘é€tagè¯·æ±‚
 		BmobChatManager.getInstance(this).sendTagMessage(MsgTag.ADD_CONTACT,
 				user.getObjectId(), new PushListener() {
 
@@ -321,21 +321,21 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					public void onSuccess() {
 						// TODO Auto-generated method stub
 						progress.dismiss();
-						ShowToast("·¢ËÍÇëÇó³É¹¦£¬µÈ´ı¶Ô·½ÑéÖ¤£¡");
+						ShowToast("å‘é€è¯·æ±‚æˆåŠŸï¼Œç­‰å¾…å¯¹æ–¹éªŒè¯ï¼");
 					}
 
 					@Override
 					public void onFailure(int arg0, final String arg1) {
 						// TODO Auto-generated method stub
 						progress.dismiss();
-						ShowToast("·¢ËÍÇëÇó³É¹¦£¬µÈ´ı¶Ô·½ÑéÖ¤£¡");
-						ShowLog("·¢ËÍÇëÇóÊ§°Ü:" + arg1);
+						ShowToast("å‘é€è¯·æ±‚æˆåŠŸï¼Œç­‰å¾…å¯¹æ–¹éªŒè¯ï¼");
+						ShowLog("å‘é€è¯·æ±‚å¤±è´¥:" + arg1);
 					}
 				});
 	}
 
 	/**
-	 * ÏÔÊ¾ºÚÃûµ¥ÌáÊ¾¿ò
+	 * æ˜¾ç¤ºé»‘åå•æç¤ºæ¡†
 	 * 
 	 * @Title: showBlackDialog
 	 * @Description: TODO
@@ -344,32 +344,32 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	 * @throws
 	 */
 	private void showBlackDialog(final String username) {
-		DialogTips dialog = new DialogTips(this, "¼ÓÈëºÚÃûµ¥",
-				"¼ÓÈëºÚÃûµ¥£¬Äã½«²»ÔÙÊÕµ½¶Ô·½µÄÏûÏ¢£¬È·¶¨Òª¼ÌĞøÂğ£¿", "È·¶¨", true, true);
+		DialogTips dialog = new DialogTips(this, "åŠ å…¥é»‘åå•",
+				"åŠ å…¥é»‘åå•ï¼Œä½ å°†ä¸å†æ”¶åˆ°å¯¹æ–¹çš„æ¶ˆæ¯ï¼Œç¡®å®šè¦ç»§ç»­å—ï¼Ÿ", "ç¡®å®š", true, true);
 		dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialogInterface, int userId) {
-				// Ìí¼Óµ½ºÚÃûµ¥ÁĞ±í
+				// æ·»åŠ åˆ°é»‘åå•åˆ—è¡¨
 				userManager.addBlack(username, new UpdateListener() {
 
 					@Override
 					public void onSuccess() {
 						// TODO Auto-generated method stub
-						ShowToast("ºÚÃûµ¥Ìí¼Ó³É¹¦!");
+						ShowToast("é»‘åå•æ·»åŠ æˆåŠŸ!");
 						btn_back.setVisibility(View.GONE);
 						layout_black_tips.setVisibility(View.VISIBLE);
-						// ÖØĞÂÉèÖÃÏÂÄÚ´æÖĞ±£´æµÄºÃÓÑÁĞ±í
+						// é‡æ–°è®¾ç½®ä¸‹å†…å­˜ä¸­ä¿å­˜çš„å¥½å‹åˆ—è¡¨
 						CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(BmobDB.create(SetMyInfoActivity.this).getContactList()));
 					}
 
 					@Override
 					public void onFailure(int arg0, String arg1) {
 						// TODO Auto-generated method stub
-						ShowToast("ºÚÃûµ¥Ìí¼ÓÊ§°Ü:" + arg1);
+						ShowToast("é»‘åå•æ·»åŠ å¤±è´¥:" + arg1);
 					}
 				});
 			}
 		});
-		// ÏÔÊ¾È·ÈÏ¶Ô»°¿ò
+		// æ˜¾ç¤ºç¡®è®¤å¯¹è¯æ¡†
 		dialog.show();
 		dialog = null;
 	}
@@ -389,7 +389,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 			@Override
 			public void onClick(View arg0) {
-				ShowLog("µã»÷ÅÄÕÕ");
+				ShowLog("ç‚¹å‡»æ‹ç…§");
 				// TODO Auto-generated method stub
 				layout_choose.setBackgroundColor(getResources().getColor(
 						R.color.base_color_text_white));
@@ -399,10 +399,10 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
-				// Ô­Í¼
+				// åŸå›¾
 				File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
 						.format(new Date()));
-				filePath = file.getAbsolutePath();// »ñÈ¡ÏàÆ¬µÄ±£´æÂ·¾¶
+				filePath = file.getAbsolutePath();// è·å–ç›¸ç‰‡çš„ä¿å­˜è·¯å¾„
 				Uri imageUri = Uri.fromFile(file);
 
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -416,7 +416,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				ShowLog("µã»÷Ïà²á");
+				ShowLog("ç‚¹å‡»ç›¸å†Œ");
 				layout_photo.setBackgroundColor(getResources().getColor(
 						R.color.base_color_text_white));
 				layout_choose.setBackgroundDrawable(getResources().getDrawable(
@@ -447,7 +447,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		avatorPop.setFocusable(true);
 		avatorPop.setOutsideTouchable(true);
 		avatorPop.setBackgroundDrawable(new BitmapDrawable());
-		// ¶¯»­Ğ§¹û ´Óµ×²¿µ¯Æğ
+		// åŠ¨ç”»æ•ˆæœ ä»åº•éƒ¨å¼¹èµ·
 		avatorPop.setAnimationStyle(R.style.Animations_GrowFromBottom);
 		avatorPop.showAtLocation(layout_all, Gravity.BOTTOM, 0, 0);
 	}
@@ -480,7 +480,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	}
 
 	Bitmap newBitmap;
-	boolean isFromCamera = false;// Çø·ÖÅÄÕÕĞı×ª
+	boolean isFromCamera = false;// åŒºåˆ†æ‹ç…§æ—‹è½¬
 	int degree = 0;
 
 	@Override
@@ -488,22 +488,22 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// ÅÄÕÕĞŞ¸ÄÍ·Ïñ
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// æ‹ç…§ä¿®æ”¹å¤´åƒ
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD²»¿ÉÓÃ");
+					ShowToast("SDä¸å¯ç”¨");
 					return;
 				}
 				isFromCamera = true;
 				File file = new File(filePath);
 				degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
-				Log.i("life", "ÅÄÕÕºóµÄ½Ç¶È£º" + degree);
+				Log.i("life", "æ‹ç…§åçš„è§’åº¦ï¼š" + degree);
 				startImageAction(Uri.fromFile(file), 200, 200,
 						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
 			}
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// ±¾µØĞŞ¸ÄÍ·Ïñ
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// æœ¬åœ°ä¿®æ”¹å¤´åƒ
 			if (avatorPop != null) {
 				avatorPop.dismiss();
 			}
@@ -514,7 +514,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD²»¿ÉÓÃ");
+					ShowToast("SDä¸å¯ç”¨");
 					return;
 				}
 				isFromCamera = false;
@@ -522,24 +522,24 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				startImageAction(uri, 200, 200,
 						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
 			} else {
-				ShowToast("ÕÕÆ¬»ñÈ¡Ê§°Ü");
+				ShowToast("ç…§ç‰‡è·å–å¤±è´¥");
 			}
 
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// ²Ã¼ôÍ·Ïñ·µ»Ø
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// è£å‰ªå¤´åƒè¿”å›
 			// TODO sent to crop
 			if (avatorPop != null) {
 				avatorPop.dismiss();
 			}
 			if (data == null) {
-				// Toast.makeText(this, "È¡ÏûÑ¡Ôñ", Toast.LENGTH_SHORT).show();
+				// Toast.makeText(this, "å–æ¶ˆé€‰æ‹©", Toast.LENGTH_SHORT).show();
 				return;
 			} else {
 				saveCropAvator(data);
 			}
-			// ³õÊ¼»¯ÎÄ¼şÂ·¾¶
+			// åˆå§‹åŒ–æ–‡ä»¶è·¯å¾„
 			filePath = "";
-			// ÉÏ´«Í·Ïñ
+			// ä¸Šä¼ å¤´åƒ
 			uploadAvatar();
 			break;
 		default:
@@ -549,15 +549,15 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	}
 
 	private void uploadAvatar() {
-		BmobLog.i("Í·ÏñµØÖ·£º" + path);
+		BmobLog.i("å¤´åƒåœ°å€ï¼š" + path);
 		final BmobFile bmobFile = new BmobFile(new File(path));
 		bmobFile.upload(this, new UploadFileListener() {
 
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				String url = bmobFile.getFileUrl();
-				// ¸üĞÂBmobUser¶ÔÏó
+				String url = bmobFile.getFileUrl(SetMyInfoActivity.this);
+				// æ›´æ–°BmobUserå¯¹è±¡
 				updateUserAvatar(url);
 			}
 
@@ -570,7 +570,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			@Override
 			public void onFailure(int arg0, String msg) {
 				// TODO Auto-generated method stub
-				ShowToast("Í·ÏñÉÏ´«Ê§°Ü£º" + msg);
+				ShowToast("å¤´åƒä¸Šä¼ å¤±è´¥ï¼š" + msg);
 			}
 		});
 	}
@@ -582,15 +582,15 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				ShowToast("Í·Ïñ¸üĞÂ³É¹¦£¡");
-				// ¸üĞÂÍ·Ïñ
+				ShowToast("å¤´åƒæ›´æ–°æˆåŠŸï¼");
+				// æ›´æ–°å¤´åƒ
 				refreshAvatar(url);
 			}
 
 			@Override
 			public void onFailure(int code, String msg) {
 				// TODO Auto-generated method stub
-				ShowToast("Í·Ïñ¸üĞÂÊ§°Ü£º" + msg);
+				ShowToast("å¤´åƒæ›´æ–°å¤±è´¥ï¼š" + msg);
 			}
 		});
 	}
@@ -598,7 +598,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	String path;
 
 	/**
-	 * ±£´æ²Ã¼ôµÄÍ·Ïñ
+	 * ä¿å­˜è£å‰ªçš„å¤´åƒ
 	 * 
 	 * @param data
 	 */
@@ -613,13 +613,13 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
 				}
 				iv_set_avator.setImageBitmap(bitmap);
-				// ±£´æÍ¼Æ¬
+				// ä¿å­˜å›¾ç‰‡
 				String filename = new SimpleDateFormat("yyMMddHHmmss")
 						.format(new Date());
 				path = BmobConstants.MyAvatarDir + filename;
 				PhotoUtil.saveBitmap(BmobConstants.MyAvatarDir, filename,
 						bitmap, true);
-				// ÉÏ´«Í·Ïñ
+				// ä¸Šä¼ å¤´åƒ
 				if (bitmap != null && bitmap.isRecycled()) {
 					bitmap.recycle();
 				}

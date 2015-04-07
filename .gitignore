@@ -4,11 +4,11 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
-MiPis/bin/
-MiPis/gen/
+*/bin/*
+*/gen/*
 
 
 MiPis/.project

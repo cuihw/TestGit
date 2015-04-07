@@ -18,29 +18,22 @@ import com.champion.mipi.bean.User;
 import com.champion.mipi.util.ImageLoadOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-/** 好友列表
-  * @ClassName: UserFriendAdapter
+/**
+  * @ClassName: WifiUserFriendAdapter
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-12 下午3:03:40
+  * @author
+  * @date
   */
 @SuppressLint("DefaultLocale")
-public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
+public class WifiUserFriendAdapter extends BaseAdapter {
 	private Context ct;
 	private List<User> data;
 
-	public UserFriendAdapter(Context ct, List<User> datas) {
+	public WifiUserFriendAdapter(Context ct, List<User> datas) {
 		this.ct = ct;
 		this.data = datas;
 	}
 
-	/** 当ListView数据发生变化时,调用此方法来更新ListView
-	  * @Title: updateListView
-	  * @Description: TODO
-	  * @param @param list 
-	  * @return void
-	  * @throws
-	  */
 	public void updateListView(List<User> list) {
 		this.data = list;
 		notifyDataSetChanged();
@@ -71,9 +64,9 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			convertView = LayoutInflater.from(ct).inflate(
-					R.layout.item_user_friend, null);
+					R.layout.item_wifi_user_friend, null);
 			viewHolder = new ViewHolder();
-			viewHolder.alpha = (TextView) convertView.findViewById(R.id.alpha);
+
 			viewHolder.name = (TextView) convertView
 					.findViewById(R.id.tv_friend_name);
 			viewHolder.avatar = (ImageView) convertView
@@ -99,55 +92,15 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 		}
 		viewHolder.name.setText(name);
 
-		// 根据position获取分类的首字母的Char ascii值
-		int section = getSectionForPosition(position);
-		// 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-		if (position == getPositionForSection(section)) {
-			viewHolder.alpha.setVisibility(View.VISIBLE);
-			viewHolder.alpha.setText(friend.getSortLetters());
-		} else {
-			viewHolder.alpha.setVisibility(View.GONE);
-		}
-
 		return convertView;
 	}
 
 	static class ViewHolder {
-		TextView alpha;// 首字母提示
 		ImageView avatar;
 		TextView name;
 	}
 
-	/**
-	 * 根据ListView的当前位置获取分类的首字母的Char ascii值
-	 */
-	public int getSectionForPosition(int position) {
-	    if (data == null) return 0;
-	    if (data.get(position).getSortLetters() == null) {
-	        return 0;
-	    }
-		return data.get(position).getSortLetters().charAt(0);
-	}
 
-	/**
-	 * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
-	 */
-	@SuppressLint("DefaultLocale")
-	public int getPositionForSection(int section) {
-		for (int i = 0; i < getCount(); i++) {
-			String sortStr = data.get(i).getSortLetters();
-			char firstChar = sortStr.toUpperCase().charAt(0);
-			if (firstChar == section){
-				return i;
-			}
-		}
 
-		return -1;
-	}
-
-	@Override
-	public Object[] getSections() {
-		return null;
-	}
 
 }

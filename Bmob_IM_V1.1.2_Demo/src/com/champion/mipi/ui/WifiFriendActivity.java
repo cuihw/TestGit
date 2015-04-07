@@ -13,12 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.champion.mipi.R;
-import com.champion.mipi.adapter.UserFriendAdapter;
+import com.champion.mipi.adapter.WifiUserFriendAdapter;
 import com.champion.mipi.bean.User;
+import com.champion.mipi.ui.BaseActivity.OnLeftButtonClickListener;
 import com.champion.mipi.util.CollectionUtils;
-import com.champion.mipi.view.ClearEditText;
+import com.champion.mipi.view.HeaderLayout;
 import com.champion.mipi.view.MyLetterView;
-import com.champion.mipi.view.MyLetterView.OnTouchingLetterChangedListener;
+import com.champion.mipi.view.HeaderLayout.HeaderStyle;
 import com.champion.mipi.wifiServices.ConnectService;
 
 public class WifiFriendActivity extends ActivityBase {
@@ -31,7 +32,7 @@ public class WifiFriendActivity extends ActivityBase {
 
     MyLetterView right_letter;
 
-    private UserFriendAdapter userAdapter;// friend
+    private WifiUserFriendAdapter userAdapter;// friend
 
     List<User> friends = new ArrayList<User>();
 
@@ -40,7 +41,7 @@ public class WifiFriendActivity extends ActivityBase {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_contacts);
+        setContentView(R.layout.wifi_contacts);
         
     }
 
@@ -49,17 +50,25 @@ public class WifiFriendActivity extends ActivityBase {
         super.onResumeFragments();
         initView();
     }
-
+    public void initTopBarForLeft(String titleName) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+    }
     private void initView() {
-
-        list_wifi_friends = (ListView)findViewById(R.id.list_friends);
-        hideEditView();
-        initRightLetterView();
+        initTopBarForLeft(getString(R.string.same_wifi));
+        list_wifi_friends = (ListView)findViewById(R.id.list_wifi_friends);
         
-        //getWifiUsers();
-        userAdapter = new UserFriendAdapter(this, friends);
+        getWifiUsers();
 
-        list_wifi_friends.setAdapter(userAdapter);
+        if (friends != null) {
+
+            userAdapter = new WifiUserFriendAdapter(this, friends);
+
+            list_wifi_friends.setAdapter(userAdapter);
+        }
 
         list_wifi_friends.setOnItemClickListener(new OnItemClickListener(){
 
@@ -75,34 +84,10 @@ public class WifiFriendActivity extends ActivityBase {
         if (service!= null) {
             Map<String, User> userMap = service.getUserInfoMap();
             List<User> users = CollectionUtils.userMap2list(userMap);
-            Log.d(TAG, "users　 " + users.size());
+            Log.d(TAG, "users size: " + users.size());
             friends = users;
         }
     }
 
-    private void hideEditView() {
-        ClearEditText editView = (ClearEditText)findViewById(R.id.et_msg_search);
-        editView.setVisibility(View.GONE);
-    }
-
-    private void initRightLetterView() {
-        right_letter = (MyLetterView)findViewById(R.id.right_letter);
-        dialog = (TextView)findViewById(R.id.dialog);
-        right_letter.setTextView(dialog);
-        right_letter.setOnTouchingLetterChangedListener(new LetterListViewListener());
-    }
-
-    private class LetterListViewListener implements
-            OnTouchingLetterChangedListener {
-
-        @Override
-        public void onTouchingLetterChanged(String s) {
-            // 该字母首次出现的位置
-            int position = userAdapter.getPositionForSection(s.charAt(0));
-            if (position != -1) {
-                list_wifi_friends.setSelection(position);
-            }
-        }
-    }
 
 }
