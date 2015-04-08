@@ -58,10 +58,10 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public Object getItem(int position) {
-	    if (data.size() > position)
-	        return null;
+	    if (getCount() > position)
+	        return data.get(position);
 
-		return data.get(position);
+		return null;
 	}
 
 	@Override

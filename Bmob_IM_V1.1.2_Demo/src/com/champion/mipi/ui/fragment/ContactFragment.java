@@ -361,7 +361,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-		// TODO Auto-generated method stub
+
 		User user = (User) userAdapter.getItem(position-1);
 		//先进入好友的详细资料页面
 		Intent intent =new Intent(getActivity(),SetMyInfoActivity.class);
@@ -369,7 +369,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		intent.putExtra("username", user.getUsername());
 		startAnimActivity(intent);
 	}
-	
+
 	@Override
 	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {

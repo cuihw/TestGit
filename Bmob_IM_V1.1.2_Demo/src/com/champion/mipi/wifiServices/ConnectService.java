@@ -204,6 +204,7 @@ public class ConnectService extends Service {
             if (!mUserAccount.contains(userCached.getUsername())) {
                 mUserAccount.add(userCached.getUsername());
             }
+            sendPersonHasChangedBroadcast();
         }
 
         Log.d(TAG, "receive a REG_HEAD. " + userCached.getUsername() + ", ipaddress:" + userCached.ipAddress);
@@ -231,7 +232,7 @@ public class ConnectService extends Service {
                         user.ipAddress = userCached.ipAddress;
                         user.updateTime = System.currentTimeMillis();
                         mUserinfoMap.put(user.getUsername(), user);
-
+                        sendPersonHasChangedBroadcast();
                     } else {
                         Log.d(TAG, "onSuccess cached map not found this user.");
                     }

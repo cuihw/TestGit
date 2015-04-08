@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +21,6 @@ import cn.bmob.im.bean.BmobChatUser;
 import com.champion.mipi.R;
 import com.champion.mipi.adapter.WifiUserFriendAdapter;
 import com.champion.mipi.bean.User;
-import com.champion.mipi.ui.BaseActivity.OnLeftButtonClickListener;
 import com.champion.mipi.util.CollectionUtils;
 import com.champion.mipi.view.HeaderLayout;
 import com.champion.mipi.view.MyLetterView;
@@ -69,14 +71,7 @@ public class WifiFriendActivity extends ActivityBase {
         initTopBarForLeft(getString(R.string.same_wifi));
         list_wifi_friends = (ListView) findViewById(R.id.list_wifi_friends);
 
-        getWifiUsers();
-
-        if (friends != null) {
-
-            userAdapter = new WifiUserFriendAdapter(this, friends);
-
-            list_wifi_friends.setAdapter(userAdapter);
-        }
+        updateFriend();
 
         list_wifi_friends.setOnItemClickListener(new OnItemClickListener() {
 
@@ -97,6 +92,37 @@ public class WifiFriendActivity extends ActivityBase {
             }
         });
     }
+    
+
+    private void regBroadcastReceiver() {
+
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Auto-generated method stub
+                if (intent.getAction().equals(ConnectService.personHasChangedAction)) {
+                    updateFriend();
+                }
+            }
+          };
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectService.personHasChangedAction);
+        this.registerReceiver(receiver, filter);
+    }
+
+    private void updateFriend() {
+
+        getWifiUsers();
+
+        if (friends != null) {
+
+            userAdapter = new WifiUserFriendAdapter(this, friends);
+
+            list_wifi_friends.setAdapter(userAdapter);
+        }
+    }
 
     private void getWifiUsers() {
         ConnectService service = ConnectService.getInstence();
@@ -107,6 +133,5 @@ public class WifiFriendActivity extends ActivityBase {
             friends = users;
         }
     }
-
 
 }
