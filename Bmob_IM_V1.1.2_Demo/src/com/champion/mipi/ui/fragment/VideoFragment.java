@@ -1,11 +1,11 @@
 package com.champion.mipi.ui.fragment;
 
-import com.champion.mipi.R;
-import com.champion.mipi.ui.FragmentBase;
+import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +14,36 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
+
+import com.champion.mipi.R;
+import com.champion.mipi.ui.FragmentBase;
+import com.champion.mipi.weather.WeatherData;
+import com.champion.mipi.wifiServices.ConnectService;
 
 public class VideoFragment extends FragmentBase {
 
     private static final String TAG = "VideoFragment";
 
+    private static final int UPDATE_TIMES = 0;
+
     WebView mWebView;
 
     private View mVideoFragment;
+
+    private WeatherData mWeatherData;
+
+    private TextView mTemperature;
+    private TextView mMixData;
+    private TextView mTimeTextview;
+
+    private int millisUntilFinished = 4 * 60; // 秒
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mVideoFragment = inflater.inflate(R.layout.video_fragment, container, false);
+        mVideoFragment = inflater.inflate(R.layout.fragment_video, container, false);
 
         mWebView = (WebView) mVideoFragment.findViewById(R.id.video_webView);
 
@@ -68,7 +84,54 @@ public class VideoFragment extends FragmentBase {
         mWebView.setWebViewClient(new VideoClient());
 
         mWebView.loadUrl(youkuUrl);
+
+        mTemperature = (TextView) findViewById(R.id.temp_textview);
+        mMixData = (TextView) findViewById(R.id.mixdata_textview);
+        mTimeTextview = (TextView) findViewById(R.id.time_textview);
+
+
+        initTrainArrive();
+
         super.onResume();
+    }
+
+    private void initTrainArrive() {
+        Message msg = timeHandler.obtainMessage(UPDATE_TIMES);
+        timeHandler.sendMessageDelayed(msg, 1000);
+    }
+
+    private void getWeatherData() {
+
+        mWeatherData = ConnectService.getInstence().getWeatherData();
+        if (mWeatherData != null) {
+
+            String temperature = mWeatherData.getTemperature();
+            List<String> mixData = mWeatherData.getMixData();
+            if (!TextUtils.isEmpty(temperature)) {
+                updateWeatherUI(temperature, mixData);
+            }
+        }
+    }
+
+    private void updateWeatherUI(String temperature, List<String> mixData) {
+
+        if (!TextUtils.isEmpty(temperature)) {
+            String temp = "气温： " + temperature + "    城市：北京";
+            mTemperature.setText(temp);
+        }
+
+        if (mixData != null) {
+            String mixdataArray = "";
+            for (int i = 0; i < mixData.size(); i++) {
+                if (i == mixData.size() - 1) {
+                    mixdataArray = mixdataArray + mixData.get(i);
+                } else {
+                    mixdataArray = mixdataArray + mixData.get(i) + ",   ";
+                }
+            }
+
+            mMixData.setText(mixdataArray);
+        }
     }
 
     @Override
@@ -94,5 +157,33 @@ public class VideoFragment extends FragmentBase {
             return true;
         }
         return false;
+    }
+
+    Handler timeHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == UPDATE_TIMES) {
+                millisUntilFinished--;
+                if (millisUntilFinished < 0) {
+                    millisUntilFinished = 4 * 60;
+                }
+                String time = getTimeFormat(millisUntilFinished);
+                mTimeTextview.setText(time + " 秒后到站");
+
+                Message message = timeHandler.obtainMessage(UPDATE_TIMES);
+                timeHandler.sendMessageDelayed(message, 2000);
+                getWeatherData();
+            }
+
+        }
+    };
+
+    protected String getTimeFormat(int millis) {
+        int minute = millis / 60;
+        int second = millis % 60;
+        String time = minute + ":" + second;
+        return time;
     }
 }

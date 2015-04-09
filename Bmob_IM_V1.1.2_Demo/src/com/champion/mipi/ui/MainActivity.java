@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -129,6 +130,11 @@ public class MainActivity extends ActivityBase implements EventListener{
 		//把当前tab设为选中状态
 		mTabs[index].setSelected(true);
 		currentTabIndex = index;
+		if (currentTabIndex == 0) {
+		    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);  
+		} else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
+		}
 	}
 
 	@Override

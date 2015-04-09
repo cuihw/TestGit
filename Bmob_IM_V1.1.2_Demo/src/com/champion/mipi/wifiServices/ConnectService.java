@@ -29,6 +29,7 @@ import com.champion.mipi.bean.User;
 import com.champion.mipi.util.ByteAndInt;
 import com.champion.mipi.util.CommonUtils;
 import com.champion.mipi.util.PreferencesData;
+import com.champion.mipi.weather.WeatherData;
 
 public class ConnectService extends Service {
 
@@ -79,6 +80,8 @@ public class ConnectService extends Service {
     private MulticastSocket mMulticastSocket = null;
     public boolean isStopUpdateMe = false;
     private boolean isInRunning = false;
+    
+    private WeatherData mWeatherData;
 
     public Map<String, User> getUserInfoMap() {
         return mUserinfoMap;
@@ -129,7 +132,13 @@ public class ConnectService extends Service {
 
         regBroadcastReceiver();
         initNetWork();
+        mWeatherData = new WeatherData(this, null);
     }
+    
+    public WeatherData getWeatherData() {
+        return mWeatherData;
+    }
+
 
     private void initNetWork() {
         mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);

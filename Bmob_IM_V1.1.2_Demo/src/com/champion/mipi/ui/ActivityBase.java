@@ -28,7 +28,7 @@ public class ActivityBase extends BaseActivity {
 
 		checkLogin();
 	}
-	
+
 	public void checkLogin() {
 		BmobUserManager userManager = BmobUserManager.getInstance(this);
 		if (userManager.getCurrentUser() == null) {

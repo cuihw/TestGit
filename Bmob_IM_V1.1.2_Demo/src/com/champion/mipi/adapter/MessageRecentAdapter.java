@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +62,13 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
 		}else{
 			iv_recent_avatar.setImageResource(R.drawable.head);
 		}
+
+		if (TextUtils.isEmpty(item.getNick())) {
+	        tv_recent_name.setText(item.getUserName());
+		} else {
+            tv_recent_name.setText(item.getNick());
+		}
 		
-		tv_recent_name.setText(item.getUserName());
 		tv_recent_time.setText(TimeUtil.getChatTime(item.getTime()));
 		//显示内容
 		if(item.getType()==BmobConfig.TYPE_TEXT){

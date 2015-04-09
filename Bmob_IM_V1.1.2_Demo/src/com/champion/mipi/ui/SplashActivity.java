@@ -18,6 +18,7 @@ import com.champion.mipi.CustomApplcation;
 import com.champion.mipi.R;
 import com.champion.mipi.config.Config;
 
+
 /**
  * 引导页
  * 
@@ -60,6 +61,7 @@ public class SplashActivity extends BaseActivity {
 		} else {
 			mHandler.sendEmptyMessageDelayed(GO_LOGIN, 2000);
 		}
+
 	}
 
 	/**
