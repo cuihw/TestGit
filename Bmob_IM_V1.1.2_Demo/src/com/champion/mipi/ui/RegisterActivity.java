@@ -53,7 +53,7 @@ public class RegisterActivity extends BaseActivity {
 	
 	private void registerById() {
 		int id = CommonUtils.getMyId();
-		String name = "guest" + id;
+		String name = "" + id;
 		String password = "123456789";
 		et_username.setText(name);
 		et_password.setText(password);

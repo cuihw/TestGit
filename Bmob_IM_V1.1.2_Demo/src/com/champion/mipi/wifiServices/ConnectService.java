@@ -326,9 +326,12 @@ public class ConnectService extends Service {
 
             Log.d(TAG, "receive a REG_HEAD.");
             User user = updatePerson(pkg);
+
             if (!TextUtils.isEmpty(user.ipAddress) && !user.ipAddress.equals(myUserInfo.ipAddress)) {
                 try {
                     InetAddress targetIp = InetAddress.getByName(user.ipAddress);
+
+                    Log.d(TAG, "send a ACK_REG_HEAD.");
                     setAckReg();
                     DatagramPacket dp = new DatagramPacket(regBuffer, BUFFERSIZE, targetIp, PORT);
                     mMulticastSocket.send(dp);
@@ -337,7 +340,6 @@ public class ConnectService extends Service {
                 }
             }
         } else if (headStr.equals(ACK_REG)) {
-
             Log.d(TAG, "receive a ACK_REG.");
             updatePerson(pkg);
         } else if (headStr.equals("MESSAGE_HEAD")) {
@@ -482,7 +484,7 @@ public class ConnectService extends Service {
                     if (mUserAccount.size() > 0) {
 
                         for (String key : mUserAccount) {
-                            if (System.currentTimeMillis() - mUserinfoMap.get(key).updateTime > 100000) {
+                            if (System.currentTimeMillis() - mUserinfoMap.get(key).updateTime > 2*60*1000) {
                                 mUserinfoMap.remove(key);
                                 removePersonKeys.add(key);
                                 hasChanged = true;
@@ -495,7 +497,7 @@ public class ConnectService extends Service {
 
                     sendPersonHasChangedBroadcast();
                     try {
-                        sleep(60000);
+                        sleep(60 * 1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
