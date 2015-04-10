@@ -64,6 +64,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 @SuppressLint("SimpleDateFormat")
 public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
+    protected static final String TAG = "SetMyInfoActivity";
     TextView tv_set_name, tv_set_nick, tv_set_gender;
     ImageView iv_set_avator, iv_arraw, iv_nickarraw;
     LinearLayout layout_all;
@@ -390,7 +391,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
             @Override
             public void onClick(View arg0) {
-                ShowLog("点击拍照");
+
+                Log.d(TAG, "click the camera");
                 // TODO Auto-generated method stub
                 layout_choose.setBackgroundColor(getResources().getColor(R.color.base_color_text_white));
                 layout_photo.setBackgroundDrawable(getResources().getDrawable(R.drawable.pop_bg_press));
@@ -413,7 +415,9 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                ShowLog("点击相册");
+
+                Log.d(TAG, "click the camera");
+
                 layout_photo.setBackgroundColor(getResources().getColor(R.color.base_color_text_white));
                 layout_choose.setBackgroundDrawable(getResources().getDrawable(R.drawable.pop_bg_press));
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -502,6 +506,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
                     return;
                 }
                 if (resultCode == RESULT_OK) {
+
+                    Log.i(TAG, "resultCode : RESULT_OK");
                     if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                         ShowToast("SD不可用");
                         return;
@@ -537,21 +543,21 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
     }
 
     private void uploadAvatar() {
-        BmobLog.i("头像地址：" + path);
+
+        Log.d(TAG, "uploadAvatar: " + path);
         final BmobFile bmobFile = new BmobFile(new File(path));
         bmobFile.upload(this, new UploadFileListener() {
 
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
-                String url = bmobFile.getFileUrl(SetMyInfoActivity.this);
+                String url = bmobFile.getFileUrl();
                 // 更新BmobUser对象
                 updateUserAvatar(url);
             }
 
             @Override
             public void onProgress(Integer arg0) {
-                // TODO Auto-generated method stub
 
             }
 
@@ -591,10 +597,13 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
      * @param data
      */
     private void saveCropAvator(Intent data) {
+        Log.i("TAG", "saveCropAvator");
+
         Bundle extras = data.getExtras();
         if (extras != null) {
             Bitmap bitmap = extras.getParcelable("data");
             Log.i("life", "avatar - bitmap = " + bitmap);
+
             if (bitmap != null) {
                 bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
                 if (isFromCamera && degree != 0) {
@@ -602,8 +611,11 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
                 }
                 iv_set_avator.setImageBitmap(bitmap);
                 // 保存图片
-                String filename = new SimpleDateFormat("yyMMddHHmmss").format(new Date());
+                String filename = new SimpleDateFormat("yyMMddHHmmss").format(new Date()) + ".png";
                 path = BmobConstants.MyAvatarDir + filename;
+
+                Log.i("TAG", "saveCropAvator path: " + path);
+
                 PhotoUtil.saveBitmap(BmobConstants.MyAvatarDir, filename, bitmap, true);
                 // 上传头像
                 if (bitmap != null && bitmap.isRecycled()) {
