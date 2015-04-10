@@ -90,8 +90,7 @@ public class ConnectService extends Service {
     // bind service.
     @Override
     public IBinder onBind(Intent arg0) {
-        if (DEBUG)
-            Log.d(TAG, "onBind services");
+
         init();
         return mBinder;
     }

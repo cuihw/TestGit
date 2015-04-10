@@ -39,7 +39,7 @@ public class WeatherData {
     private String webHttp = "http://m.weather.com.cn/mweather/101010100.shtml";
 
     private Context mContext;
-    
+
     public String getTemperature () {
         return mTemperature;
     }
