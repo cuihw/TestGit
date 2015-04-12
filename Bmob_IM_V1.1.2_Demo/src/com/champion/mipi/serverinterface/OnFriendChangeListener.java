@@ -1,4 +1,4 @@
-package com.champion.mipi.wifiServices;
+package com.champion.mipi.serverinterface;
 
 import java.util.List;
 

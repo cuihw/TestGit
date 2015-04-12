@@ -1,4 +1,4 @@
-package com.champion.mipi.wifiServices;
+package com.champion.mipi.serverinterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.champion.mipi.bean.User;
 import com.champion.mipi.weather.WeatherData;
+import com.champion.mipi.wifiServices.ConnectService;
 
 public class DataServerManager {
 
@@ -49,7 +50,6 @@ public class DataServerManager {
     }
 
     public List<User> getWifiFriend() {
-
         return null;
     }
 
@@ -71,4 +71,6 @@ public class DataServerManager {
         Log.d(TAG, "startServices..............");
         mContext.startService(intentStartServices);
     }
+
+    
 }

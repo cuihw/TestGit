@@ -31,21 +31,27 @@ public class WeatherData {
     private int FAILED_UPDATE = 0;
 
     private int UPDATE = 1;
-    
+
     private List<String> mMixData = new ArrayList<String>();
-    
+
     private String mTemperature;
     // beijing
     private String webHttp = "http://m.weather.com.cn/mweather/101010100.shtml";
 
     private Context mContext;
+    
+    private String mIconName;
 
-    public String getTemperature () {
+    public String getTemperature() {
         return mTemperature;
     }
 
     public List<String> getMixData() {
         return mMixData;
+    }
+    
+    public String getIconName () {
+        return mIconName;
     }
 
     public WeatherData(Context context, Handler handler) {
@@ -84,43 +90,49 @@ public class WeatherData {
         mBody = elements.first();
 
         Log.d(TAG, "mBody = " + mBody.toString());
-        
-        //background-image: url("http://i.tq121.com.cn/i/wap/index390/n53.jpg");
-        
-        /*
-<div style="background-image: url(&quot;http://i.tq121.com.cn/i/wap/index390/n53.jpg&quot;);" class="sk">
-<h1><i><a href="#" class="fen bsh-mobile-btn bmstyle-button"><img src="http://i.tq121.com.cn/i/wap/fx.png" alt="分享" width="20"></a></i>
-<span><a href="/manage/citmani.html" title="更换城市">北京</a>
-|<a href="/manage/citmani.html" class="city" title="更换城市">更换城市</a></span></h1>
 
-<table border="0" width="98%">
-<tbody><tr>
-<td width="20%"><img src="http://i.tq121.com.cn/i/wap/80bai/n53.png" alt="霾" width="70"></td>
-<td class="wd" width="50%">9℃</td>
-<td width="30%"><span>霾</span><span>无持续风向</span><span>微风</span></td>
-</tr>
-</tbody></table>
-<h2>04月08日（周三）<span>19:55 更新</span></h2>
-<h3><a href="/mairport/101010100.shtml" style="border-right:1px solid #93a600;" title="北京机场天气">机场天气</a><a href="/mweather1d/101010100.shtml" title="北京今日详情">今日详情</a></h3>
-</div>  
-        */
+        // background-image:
+        // url("http://i.tq121.com.cn/i/wap/index390/n53.jpg");
+
+        /*
+         * <div style=
+         * "background-image: url(&quot;http://i.tq121.com.cn/i/wap/index390/n53.jpg&quot;);"
+         * class="sk"> <h1><i><a href="#"
+         * class="fen bsh-mobile-btn bmstyle-button"><img
+         * src="http://i.tq121.com.cn/i/wap/fx.png" alt="分享" width="20"></a></i>
+         * <span><a href="/manage/citmani.html" title="更换城市">北京</a> |<a
+         * href="/manage/citmani.html" class="city"
+         * title="更换城市">更换城市</a></span></h1>
+         * 
+         * <table border="0" width="98%"> <tbody><tr> <td width="20%"><img
+         * src="http://i.tq121.com.cn/i/wap/80bai/n53.png" alt="霾"
+         * width="70"></td> <td class="wd" width="50%">9℃</td> <td
+         * width="30%"><span>霾</span><span>无持续风向</span><span>微风</span></td>
+         * </tr> </tbody></table> <h2>04月08日（周三）<span>19:55 更新</span></h2>
+         * <h3><a href="/mairport/101010100.shtml"
+         * style="border-right:1px solid #93a600;" title="北京机场天气">机场天气</a><a
+         * href="/mweather1d/101010100.shtml" title="北京今日详情">今日详情</a></h3>
+         * </div>
+         */
 
         elements = mBody.getElementsByClass("sk");
-        
+
         Element skBody = elements.first();
 
-
-        String skBodyStyle = skBody.toString(); //.attr("style");
+        String skBodyStyle = skBody.toString(); // .attr("style");
         int index = skBodyStyle.indexOf("background-image:");
         String background = null;
+
         if (index != -1) {
             index = skBodyStyle.indexOf("http:");
 
-            if (index != -1) background = skBodyStyle.substring(index);
+            if (index != -1)
+                background = skBodyStyle.substring(index);
 
             index = background.indexOf("&quot;");
 
-            if (index != -1) background = background.substring(0, index);
+            if (index != -1)
+                background = background.substring(0, index);
 
             Log.d(TAG, "background = " + background);
         }
@@ -129,6 +141,9 @@ public class WeatherData {
         Elements tableRaws = table.getElementsByTag("td");
 
         if (tableRaws.size() > 2) {
+            // get icon index 
+            mIconName = getIconIndex(tableRaws.get(0));
+            
             mTemperature = tableRaws.get(1).text();
             Log.d(TAG, "mTemperature = " + mTemperature);
 
@@ -141,15 +156,32 @@ public class WeatherData {
             }
         }
         notifyDataUpdate(UPDATE);
-        
 
     }
 
+    private String getIconIndex(Element element) {
+        // TODO Auto-generated method stub
+        Elements imgElements= element.getElementsByTag("img");
+        Element imgEle = imgElements.first();
+        String imgsrc = imgEle.attr("abs:src");
+        Log.d(TAG, "getIconIndex imgsrc = " + imgsrc);
+        //http://i.tq121.com.cn/i/wap/80bai/n53.png
+        int start = imgsrc.lastIndexOf("/") + 1;
+        int end = imgsrc.lastIndexOf(".");
+        String fileName = null;
+        if (start != -1 && end != -1) {
+            fileName = imgsrc.substring(start, end);            
+        }
+
+        Log.d(TAG, "getIconIndex fileName = " + fileName);
+        return fileName;
+    }
+
     private void notifyDataUpdate(int UPDATE) {
-            Log.d(TAG, "notifyDataUpdate...............");
-            Intent intent = new Intent();
-            intent.setAction(WEATHER_UPDATE);
-            mContext.sendBroadcast(intent);
+        Log.d(TAG, "notifyDataUpdate...............");
+        Intent intent = new Intent();
+        intent.setAction(WEATHER_UPDATE);
+        mContext.sendBroadcast(intent);
     }
 
     private Document getWebpageDoc(String url) {
