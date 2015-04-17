@@ -123,9 +123,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 
-        String myAccount = PreferencesData.getStringData( this, ConnectService.MY_ID, "");
+        String myAccount = PreferencesData.getStringData( this, PreferencesData.MY_ID, "");
         if (!myAccount.equals(name)) {
-            PreferencesData.setStringData(this, ConnectService.MY_ID, name);
+            PreferencesData.setStringData(this, PreferencesData.MY_ID, name);
         }
         
 

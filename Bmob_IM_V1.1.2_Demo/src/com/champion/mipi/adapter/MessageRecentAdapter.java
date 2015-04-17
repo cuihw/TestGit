@@ -34,7 +34,7 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
 	private LayoutInflater inflater;
 	private List<BmobRecent> mData;
 	private Context mContext;
-	
+
 	public MessageRecentAdapter(Context context, int textViewResourceId, List<BmobRecent> objects) {
 		super(context, textViewResourceId, objects);
 		inflater = LayoutInflater.from(context);

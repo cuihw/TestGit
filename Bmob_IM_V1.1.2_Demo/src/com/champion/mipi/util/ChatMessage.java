@@ -19,6 +19,7 @@ public class ChatMessage implements Serializable, Comparable {
 	public String mAvatar;
 
 	public int type = 0;
+
 	// 10 TYPE MESSAGE.
 	// TEXT
 	public static final int TYPE_RECEIVER_TXT = 0;

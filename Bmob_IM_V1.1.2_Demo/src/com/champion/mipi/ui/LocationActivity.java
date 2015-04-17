@@ -76,6 +76,7 @@ public class LocationActivity extends BaseActivity implements
 		IntentFilter iFilter = new IntentFilter();
 		iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
 		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+
 		mReceiver = new BaiduReceiver();
 		registerReceiver(mReceiver, iFilter);
 
@@ -124,7 +125,7 @@ public class LocationActivity extends BaseActivity implements
 			intent.putExtra("address", lastLocation.getAddrStr());
 			setResult(RESULT_OK, intent);
 			this.finish();
-		}else{
+		} else {
 			ShowToast("获取地理位置信息失败!");
 		}
 	}
@@ -216,9 +217,8 @@ public class LocationActivity extends BaseActivity implements
 		public void onReceive(Context context, Intent intent) {
 			String s = intent.getAction();
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-				ShowToast("key 验证出错! 请在 AndroidManifest.xml 文件中检查 key 设置");
-			} else if (s
-					.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
+				// ShowToast("key 验证出错! 请在 AndroidManifest.xml 文件中检查 key 设置");
+			} else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
 				ShowToast("网络出错");
 			}
 		}

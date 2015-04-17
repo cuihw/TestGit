@@ -15,11 +15,8 @@ import android.widget.Scroller;
 
 import com.champion.mipi.R;
 
-/** µ¥¸öµÄÏÂÀ­Ë¢ÐÂ¿Ø¼þ
+/**
  * @ClassName: XListView
- * @Description: TODO
- * @author smile
- * @date 2014-4-24 ÏÂÎç5:09:02
  */
 public class XListView extends ListView implements OnScrollListener {
 	private float mLastY = -1; // save event y
@@ -77,6 +74,17 @@ public class XListView extends ListView implements OnScrollListener {
 		initWithContext(context);
 	}
 
+	OnScrollListener listener = new OnScrollListener(){
+
+        @Override
+        public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView arg0, int arg1) {
+        }};
+
+        
 	private void initWithContext(Context context) {
 		mScroller = new Scroller(context, new DecelerateInterpolator());
 		// XListView need the scroll event, and it will dispatch the event to
@@ -196,7 +204,7 @@ public class XListView extends ListView implements OnScrollListener {
 	private void updateHeaderHeight(float delta) {
 		mHeaderView.setVisiableHeight((int) delta
 				+ mHeaderView.getVisiableHeight());
-		if (mEnablePullRefresh && !mPullRefreshing) { // Î´´¦ÓÚË¢ÐÂ×´Ì¬£¬¸üÐÂ¼ýÍ·
+		if (mEnablePullRefresh && !mPullRefreshing) { // Î´ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Í·
 			if (mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
 				mHeaderView.setState(XListViewHeader.STATE_READY);
 			} else {

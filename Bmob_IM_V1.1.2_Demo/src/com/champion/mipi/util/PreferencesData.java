@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 public class PreferencesData {
 
     public static final String SHARE_PRE = "SharedPreferences";
+
     public static SharedPreferences mSharedPreferences;
+
+    public static final String MY_ID = "myId";
     
     public static SharedPreferences.Editor mEditor;
     

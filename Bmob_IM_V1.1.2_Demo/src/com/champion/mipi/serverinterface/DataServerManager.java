@@ -31,7 +31,7 @@ public class DataServerManager {
         }
     }
 
-    public DataServerManager getInstences(Context c) {
+    public synchronized DataServerManager getInstences(Context c) {
         if (instences == null) {
             instences = new DataServerManager(c);
         }
@@ -72,5 +72,4 @@ public class DataServerManager {
         mContext.startService(intentStartServices);
     }
 
-    
 }

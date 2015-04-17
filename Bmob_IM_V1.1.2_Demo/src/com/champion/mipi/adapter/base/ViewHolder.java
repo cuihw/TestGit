@@ -7,18 +7,18 @@ import android.view.View;
   * @ClassName: ViewHolder
   * @Description: TODO
   */
-@SuppressWarnings("unchecked")
+
 public class ViewHolder {
 	public static <T extends View> T get(View view, int id) {
-		SparseArray<View> viewHolder = (SparseArray<View>) view.getTag();
-		if (viewHolder == null) {
-			viewHolder = new SparseArray<View>();
-			view.setTag(viewHolder);
+		SparseArray<View> viewArray = (SparseArray<View>) view.getTag();
+		if (viewArray == null) {
+			viewArray = new SparseArray<View>();
+			view.setTag(viewArray);
 		}
-		View childView = viewHolder.get(id);
+		View childView = viewArray.get(id);
 		if (childView == null) {
 			childView = view.findViewById(id);
-			viewHolder.put(id, childView);
+			viewArray.put(id, childView);
 		}
 		return (T) childView;
 	}

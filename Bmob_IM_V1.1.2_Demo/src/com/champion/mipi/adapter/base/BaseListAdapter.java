@@ -81,7 +81,6 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = bindView(position, convertView, parent);
 
-
 		addInternalClickListener(convertView, position, list.get(position));
 		return convertView;
 	}

@@ -24,8 +24,7 @@ public class EmoteAdapter extends BaseArrayListAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_face_text, null);
 			holder = new ViewHolder();
-			holder.mIvImage = (ImageView) convertView
-					.findViewById(R.id.v_face_text);
+			holder.mIvImage = (ImageView) convertView.findViewById(R.id.v_face_text);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

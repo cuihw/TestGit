@@ -18,7 +18,6 @@ import com.champion.mipi.bean.User;
 import com.champion.mipi.config.BmobConstants;
 import com.champion.mipi.util.CommonUtils;
 import com.champion.mipi.util.PreferencesData;
-import com.champion.mipi.wifiServices.ConnectService;
 
 
 public class RegisterActivity extends BaseActivity {
@@ -59,9 +58,9 @@ public class RegisterActivity extends BaseActivity {
 		et_password.setText(password);
 		et_email.setText(password);
 
-        String myAccount = PreferencesData.getStringData( this, ConnectService.MY_ID, "");
+        String myAccount = PreferencesData.getStringData( this, PreferencesData.MY_ID, "");
         if (!myAccount.equals(name)) {
-            PreferencesData.setStringData(this, ConnectService.MY_ID, name);
+            PreferencesData.setStringData(this, PreferencesData.MY_ID, name);
         }
  		register();
 	}

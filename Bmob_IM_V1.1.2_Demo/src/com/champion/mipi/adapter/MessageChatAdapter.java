@@ -65,11 +65,11 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
 	
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	
-	public MessageChatAdapter(Context context,List<BmobMsg> msgList) {
+	public MessageChatAdapter(Context context,List msgList) {
 		// TODO Auto-generated constructor stub
 		super(context, msgList);
 		currentObjectId = BmobUserManager.getInstance(context).getCurrentUserObjectId();
-		
+
 		options = new DisplayImageOptions.Builder()
 		.showImageForEmptyUri(R.drawable.ic_launcher)
 		.showImageOnFail(R.drawable.ic_launcher)

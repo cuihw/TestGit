@@ -40,6 +40,7 @@ public class AddFriendAdapter extends BaseListAdapter<BmobChatUser> {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_add_friend, null);
 		}
+
 		final BmobChatUser contract = getList().get(arg0);
 		TextView name = ViewHolder.get(convertView, R.id.name);
 		ImageView iv_avatar = ViewHolder.get(convertView, R.id.avatar);

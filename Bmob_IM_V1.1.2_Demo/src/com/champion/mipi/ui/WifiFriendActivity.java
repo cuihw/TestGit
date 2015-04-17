@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.bmob.im.bean.BmobChatUser;
 
 import com.champion.mipi.R;
@@ -23,9 +22,10 @@ import com.champion.mipi.adapter.WifiUserFriendAdapter;
 import com.champion.mipi.bean.User;
 import com.champion.mipi.util.CollectionUtils;
 import com.champion.mipi.view.HeaderLayout;
-import com.champion.mipi.view.MyLetterView;
 import com.champion.mipi.view.HeaderLayout.HeaderStyle;
+import com.champion.mipi.view.MyLetterView;
 import com.champion.mipi.wifiServices.ConnectService;
+import com.champion.mipi.wifiServices.WifiCommunication;
 
 public class WifiFriendActivity extends ActivityBase {
 
@@ -67,7 +67,6 @@ public class WifiFriendActivity extends ActivityBase {
 
     private void initView() {
 
-
         initTopBarForLeft(getString(R.string.same_wifi));
         list_wifi_friends = (ListView) findViewById(R.id.list_wifi_friends);
 
@@ -101,14 +100,14 @@ public class WifiFriendActivity extends ActivityBase {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // TODO Auto-generated method stub
-                if (intent.getAction().equals(ConnectService.personHasChangedAction)) {
+                if (intent.getAction().equals(WifiCommunication.personHasChangedAction)) {
                     updateFriend();
                 }
             }
           };
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectService.personHasChangedAction);
+        filter.addAction(WifiCommunication.personHasChangedAction);
         this.registerReceiver(receiver, filter);
     }
 
@@ -127,7 +126,7 @@ public class WifiFriendActivity extends ActivityBase {
     private void getWifiUsers() {
         ConnectService service = ConnectService.getInstence();
         if (service != null) {
-            Map<String, User> userMap = service.getUserInfoMap();
+            Map<String, User> userMap = service.getWifiUserInfoMap();
             List<User> users = CollectionUtils.userMap2list(userMap);
             Log.d(TAG, "users size: " + users.size());
             friends = users;

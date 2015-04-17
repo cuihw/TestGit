@@ -4,14 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/** Ê×Ñ¡Ïî¹ÜÀí
+/** ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½
   * @ClassName: SharePreferenceUtil
   * @Description: TODO
   * @author smile
-  * @date 2014-6-10 ÏÂÎç4:20:14
+  * @date 2014-6-10 ï¿½ï¿½ï¿½ï¿½4:20:14
   */
 @SuppressLint("CommitPrefEdits")
 public class SharePreferenceUtil {
+    
+    
 	private SharedPreferences mSharedPreferences;
 	private static SharedPreferences.Editor editor;
 
@@ -23,7 +25,7 @@ public class SharePreferenceUtil {
 	private String SHARED_KEY_VOICE = "shared_key_sound";
 	private String SHARED_KEY_VIBRATE = "shared_key_vibrate";
 	
-	// ÊÇ·ñÔÊÐíÍÆËÍÍ¨Öª
+	// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öª
 	public boolean isAllowPushNotify() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
 	}
@@ -33,7 +35,7 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
-	// ÔÊÐíÉùÒô
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public boolean isAllowVoice() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VOICE, true);
 	}
@@ -43,7 +45,7 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
-	// ÔÊÐíÕð¶¯
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public boolean isAllowVibrate() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VIBRATE, true);
 	}
