@@ -1,6 +1,5 @@
 package champion.mipis.database;
 
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -18,19 +17,23 @@ public class MipisContentProvider extends ContentProvider {
 
     public static final String AUTHORITY = "champion.mipis.database.MipisContentProvider";
 
-    public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY + "/");
+    public static final Uri BASE_URI = Uri
+            .parse("content://" + AUTHORITY + "/");
 
     // user table
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, DatabaseHelper.TABLE_MESSAGE);
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI,
+            DatabaseHelper.TABLE_MESSAGE);
 
     // The URI for this table.
-    public static final Uri CONTENT_USER_URI = Uri.withAppendedPath(BASE_URI, DatabaseHelper.TABLE_USER);
+    public static final Uri CONTENT_USER_URI = Uri.withAppendedPath(BASE_URI,
+            DatabaseHelper.TABLE_USER);
 
     // The URI for this table.
-    public static final Uri CONTENT_THREAD_URI = Uri.withAppendedPath(BASE_URI, DatabaseHelper.TABLE_THREAD_USER);
-    
+    public static final Uri CONTENT_THREAD_URI = Uri.withAppendedPath(BASE_URI,
+            DatabaseHelper.TABLE_THREAD_USER);
+
     private DatabaseHelper mDatabaseHelper;
-    
+
     private static final UriMatcher uriMatcher;
 
     private static final int MESSAGE = 1;
@@ -62,7 +65,7 @@ public class MipisContentProvider extends ContentProvider {
     public boolean onCreate() {
         // TODO Auto-generated method stub
         mDatabaseHelper = DatabaseHelper.getInstance(getContext());
-        
+
         return true;
     }
 
@@ -70,20 +73,20 @@ public class MipisContentProvider extends ContentProvider {
     public String getType(Uri uri) {
         // TODO Auto-generated method stub
         switch (uriMatcher.match(uri)) {
-        case MESSAGE:
-            return "vnd.android.cursor.dir/champion.mipis.provider.message";
-        case MESSAGE_ID:
-            return "vnd.android.cursor.item/champion.mipis.provider.message";
-        case USER:
-            return "vnd.android.cursor.dir/champion.mipis.provider.user";
-        case USER_ID:
-            return "vnd.android.cursor.item/champion.mipis.provider.user";
-        case THREAD_USER:
-            return "vnd.android.cursor.dir/champion.mipis.provider.thread_user";
-        case THREAD_USER_ID:
-            return "vnd.android.cursor.item/champion.mipis.provider.thread_user";
-        default:
-            throw new IllegalArgumentException("Unsupported URI " + uri);
+            case MESSAGE:
+                return "vnd.android.cursor.dir/champion.mipis.provider.message";
+            case MESSAGE_ID:
+                return "vnd.android.cursor.item/champion.mipis.provider.message";
+            case USER:
+                return "vnd.android.cursor.dir/champion.mipis.provider.user";
+            case USER_ID:
+                return "vnd.android.cursor.item/champion.mipis.provider.user";
+            case THREAD_USER:
+                return "vnd.android.cursor.dir/champion.mipis.provider.thread_user";
+            case THREAD_USER_ID:
+                return "vnd.android.cursor.item/champion.mipis.provider.thread_user";
+            default:
+                throw new IllegalArgumentException("Unsupported URI " + uri);
         }
     }
 
@@ -92,24 +95,27 @@ public class MipisContentProvider extends ContentProvider {
 
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
-        long rowId ;
+        long rowId;
 
         switch (match) {
             case MESSAGE:
             case MESSAGE_ID:
-                rowId = db.insert(DatabaseHelper.TABLE_MESSAGE, DatabaseHelper._ID, initialValues);
+                rowId = db.insert(DatabaseHelper.TABLE_MESSAGE,
+                        DatabaseHelper._ID, initialValues);
                 uri = ContentUris.withAppendedId(CONTENT_URI, rowId);
                 break;
 
             case USER:
             case USER_ID:
-                rowId = db.insert(DatabaseHelper.TABLE_USER, DatabaseHelper._ID, initialValues);
+                rowId = db.insert(DatabaseHelper.TABLE_USER,
+                        DatabaseHelper._ID, initialValues);
                 uri = ContentUris.withAppendedId(CONTENT_USER_URI, rowId);
                 break;
 
             case THREAD_USER:
             case THREAD_USER_ID:
-                rowId = db.insert(DatabaseHelper.TABLE_THREAD_USER, DatabaseHelper._ID, initialValues);
+                rowId = db.insert(DatabaseHelper.TABLE_THREAD_USER,
+                        DatabaseHelper._ID, initialValues);
                 uri = ContentUris.withAppendedId(CONTENT_THREAD_URI, rowId);
                 break;
             default:
@@ -121,31 +127,30 @@ public class MipisContentProvider extends ContentProvider {
         return uri;
     }
 
-    
     @Override
     public int delete(Uri uri, String where, String[] whereArgs) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
 
         String id = uri.getPathSegments().get(1);
- 
-      
-        
+
         int count = 0;
         switch (match) {
             case MESSAGE:
 
-                count = db.delete(DatabaseHelper.TABLE_MESSAGE, where, whereArgs);
+                count = db.delete(DatabaseHelper.TABLE_MESSAGE, where,
+                        whereArgs);
                 break;
 
-                
-                
             case MESSAGE_ID:
-                where = DatabaseHelper._ID + "=" + id
-                + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : "");
-                
+                where = DatabaseHelper._ID
+                        + "="
+                        + id
+                        + (!TextUtils.isEmpty(where) ? " AND (" + where + ')'
+                                : "");
 
-                count = db.delete(DatabaseHelper.TABLE_MESSAGE, where, whereArgs);
+                count = db.delete(DatabaseHelper.TABLE_MESSAGE, where,
+                        whereArgs);
                 break;
 
             case USER:
@@ -153,17 +158,27 @@ public class MipisContentProvider extends ContentProvider {
                 count = db.delete(DatabaseHelper.TABLE_USER, where, whereArgs);
                 break;
             case USER_ID:
-                where = DatabaseHelper._ID + "=" + id + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : "");
+                where = DatabaseHelper._ID
+                        + "="
+                        + id
+                        + (!TextUtils.isEmpty(where) ? " AND (" + where + ')'
+                                : "");
                 count = db.delete(DatabaseHelper.TABLE_USER, where, whereArgs);
                 break;
 
             case THREAD_USER:
-                count = db.delete(DatabaseHelper.TABLE_THREAD_USER, where, whereArgs);
+                count = db.delete(DatabaseHelper.TABLE_THREAD_USER, where,
+                        whereArgs);
 
                 break;
             case THREAD_USER_ID:
-                where = DatabaseHelper._ID + "=" + id + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : "");
-                count = db.delete(DatabaseHelper.TABLE_THREAD_USER, where, whereArgs);
+                where = DatabaseHelper._ID
+                        + "="
+                        + id
+                        + (!TextUtils.isEmpty(where) ? " AND (" + where + ')'
+                                : "");
+                count = db.delete(DatabaseHelper.TABLE_THREAD_USER, where,
+                        whereArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI " + uri);
@@ -174,14 +189,15 @@ public class MipisContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projectionIn, String selection, String[] selectionArgs, String sort) {
-        // TODO Auto-generated method stub
+    public Cursor query(Uri uri, String[] projectionIn, String selection,
+            String[] selectionArgs, String sort) {
+
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         // Generate the body of the query
         String groupBy = null;
         int match = uriMatcher.match(uri);
-        Log.d(TAG,"query match >" + match);
+        Log.d(TAG, "query match >" + match);
         switch (match) {
             case MESSAGE:
                 qb.setTables(DatabaseHelper.TABLE_MESSAGE);
@@ -224,7 +240,7 @@ public class MipisContentProvider extends ContentProvider {
         // Register the contexts ContentResolver to be notified if
         // the cursor result set changes.
         if (c != null) {
-            Log.d(TAG,"query c.getCount() >" + c.getCount());
+            Log.d(TAG, "query c.getCount() >" + c.getCount());
 
             c.setNotificationUri(getContext().getContentResolver(), uri);
         }
@@ -234,7 +250,8 @@ public class MipisContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String where, String[] whereArgs) {
+    public int update(Uri uri, ContentValues values, String where,
+            String[] whereArgs) {
         int count;
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
@@ -245,33 +262,39 @@ public class MipisContentProvider extends ContentProvider {
 
         switch (match) {
             case MESSAGE:
-                count = db.update(DatabaseHelper.TABLE_MESSAGE, values, where, whereArgs);
+                count = db.update(DatabaseHelper.TABLE_MESSAGE, values, where,
+                        whereArgs);
                 break;
             case MESSAGE_ID:
-                count = db.update(DatabaseHelper.TABLE_MESSAGE, values, DatabaseHelper._ID + "=" + id, null);
+                count = db.update(DatabaseHelper.TABLE_MESSAGE, values,
+                        DatabaseHelper._ID + "=" + id, null);
 
                 break;
             case USER:
-                count = db.update(DatabaseHelper.TABLE_USER, values, where, whereArgs);
+                count = db.update(DatabaseHelper.TABLE_USER, values, where,
+                        whereArgs);
                 break;
             case USER_ID:
-                count = db.update(DatabaseHelper.TABLE_USER, values, DatabaseHelper._ID + "=" + id, null);
+                count = db.update(DatabaseHelper.TABLE_USER, values,
+                        DatabaseHelper._ID + "=" + id, null);
                 break;
 
             case THREAD_USER:
 
-                count = db.update(DatabaseHelper.TABLE_THREAD_USER, values, where, whereArgs);
+                count = db.update(DatabaseHelper.TABLE_THREAD_USER, values,
+                        where, whereArgs);
                 break;
             case THREAD_USER_ID:
-                count = db.update(DatabaseHelper.TABLE_THREAD_USER, values, DatabaseHelper._ID + "=" + id, null);
+                count = db.update(DatabaseHelper.TABLE_THREAD_USER, values,
+                        DatabaseHelper._ID + "=" + id, null);
                 break;
 
             default:
-                throw new UnsupportedOperationException("Cannot update URI " + uri);
+                throw new UnsupportedOperationException("Cannot update URI "
+                        + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
-
     }
 
 }

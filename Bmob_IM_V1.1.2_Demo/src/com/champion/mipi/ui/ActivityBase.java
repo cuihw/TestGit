@@ -42,7 +42,7 @@ public class ActivityBase extends BaseActivity {
 	  * hideSoftInputView
 	  * @Title: hideSoftInputView
 	  * @Description: TODO
-	  * @param  
+	  * @param
 	  * @return void
 	  * @throws
 	  */

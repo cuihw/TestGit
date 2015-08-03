@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,8 +18,6 @@ import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -338,7 +335,6 @@ public class XmppClient {
         vcard.setAvatar(bytes);
         vcard.setEncodedImage(encodedImage);
         vcard.setField("PHOTO", "<TYPE>image/jpg</TYPE><BINVAL>" + encodedImage + "</BINVAL>", true);
-
 
         ByteArrayInputStream bais = new ByteArrayInputStream(vcard.getAvatar());
 /*        Image image = ImageIO.  ImageIO.read(bais);

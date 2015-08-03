@@ -12,7 +12,7 @@ public class PreferencesData {
     public static final String MY_ID = "myId";
     
     public static SharedPreferences.Editor mEditor;
-    
+
     public static void setStringData(Context c, String key, String value) {
         mSharedPreferences = c.getSharedPreferences( SHARE_PRE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();

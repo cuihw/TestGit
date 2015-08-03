@@ -24,8 +24,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 /**图片浏览
   * @ClassName: ImageBrowserActivity
   * @Description: TODO
-  * @author smile
-  * @date 2014-6-19 下午8:22:49
   */
 public class ImageBrowserActivity extends BaseActivity implements OnPageChangeListener{
 
@@ -33,7 +31,7 @@ public class ImageBrowserActivity extends BaseActivity implements OnPageChangeLi
 	private ImageBrowserAdapter mAdapter;
 	LinearLayout layout_image;
 	private int mPosition;
-	
+
 	private ArrayList<String> mPhotos;
 
 	@Override
@@ -116,7 +114,6 @@ public class ImageBrowserActivity extends BaseActivity implements OnPageChangeLi
 						FailReason failReason) {
 					// TODO Auto-generated method stub
 					progress.setVisibility(View.GONE);
-					
 				}
 				
 				@Override

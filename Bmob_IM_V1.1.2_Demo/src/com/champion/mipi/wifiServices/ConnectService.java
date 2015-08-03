@@ -87,6 +87,9 @@ public class ConnectService extends Service {
     public void init() {
         mWeatherData = new WeatherData(this);
         mWifiCommunication = WifiCommunication.getInstence(this);
+        
+        DemoPisInfo demoInfo = new DemoPisInfo();
+
     }
 
     public WeatherData getWeatherData() {

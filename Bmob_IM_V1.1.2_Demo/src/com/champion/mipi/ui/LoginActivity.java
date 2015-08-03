@@ -127,7 +127,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         if (!myAccount.equals(name)) {
             PreferencesData.setStringData(this, PreferencesData.MY_ID, name);
         }
-        
 
 		final ProgressDialog progress = new ProgressDialog(
 				LoginActivity.this);

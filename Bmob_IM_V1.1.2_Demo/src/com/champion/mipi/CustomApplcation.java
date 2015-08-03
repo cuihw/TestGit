@@ -202,7 +202,7 @@ public class CustomApplcation extends Application {
 
     /**
      * 设置经度
-     * 
+     *
      * @param pwd
      */
     public void setLongtitude(String lon) {

@@ -17,6 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_THREAD_USER = "thread_user";
 
+    public static final String TABLE_GROUP = "group";
+
     static final String DATABASE_NAME = "mipis.db";
 
     // user table 
@@ -36,7 +38,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATE = "date";
     public static final String READ = "readed";
     public static final String STATE = "state"; // failed or succeed.
-    public static final String THREAD_ID = "thread_id"; // .
+    public static final String THREAD_ID = "thread_id"; //.
+
+    // thread table 
+    // _ID ,
+    // USERNAME, 
+    public static final String ISGROUP = "is_group";
+    
+    
+    // group table 
+    // _ID ,
+    // group_name, 
+    public static final String GROUP_NAME = "group_name";
 
     private static DatabaseHelper mInstance;
 
@@ -82,6 +95,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void createThreadUserTable(SQLiteDatabase db2) {
         db.execSQL("create table if not exists " + TABLE_MESSAGE
                 + "( _id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + USERNAME + "TEXT NOT NULL )"
+                + " isgroup  TEXT NOT NULL )");
+    }
+
+    private void createGroupTable(SQLiteDatabase db) {
+        db.execSQL("create table if not exists " + TABLE_GROUP
+                + "( _id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + GROUP_NAME + "TEXT NOT NULL )");
+    }
+
+    private void createUserGroupTable(SQLiteDatabase db) {
+        db.execSQL("create table if not exists " + TABLE_GROUP
+                + "( _id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + GROUP_NAME + "TEXT NOT NULL )"
                 + USERNAME + "TEXT NOT NULL )");
     }
 

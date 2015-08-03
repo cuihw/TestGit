@@ -376,7 +376,7 @@ public class WifiCommunication {
      *    <ip>192.168.1.3</ip>
      *    <username>chris_cui</username>
      * </cmd>
-    */
+     */
     public void sendFile(String username, String filenamepath, String type) {
 
         Map<String, String> tagMap = new HashMap<String, String>();

@@ -42,9 +42,9 @@ public class MainActivity extends ActivityBase implements EventListener{
 	private ContactFragment contactFragment;
 	private RecentFragment recentFragment;
 	private SettingsFragment settingFragment;
-	
+
 	private Fragment mOldFragment;
-	
+
 	private Fragment[] fragments;
 	private int index;
 	private int currentTabIndex;
