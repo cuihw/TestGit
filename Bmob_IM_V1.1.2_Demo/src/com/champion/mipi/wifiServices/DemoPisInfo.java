@@ -30,7 +30,7 @@ public class DemoPisInfo {
 
                 Socket socket = null;
                 try {
-                    socket = new Socket("www.championlee.com.cn",7380);
+                    socket = new Socket("www.championlee.com.cn",7308);
                     
 
                 } catch (UnknownHostException e) {
@@ -60,8 +60,11 @@ public class DemoPisInfo {
                 try {
                     Log.d(TAG, "ReceiveThread Running !");
                     //socket.set
-                    //输入流  
-                    java.io.InputStream is=socket.getInputStream();  
+                    if (socket == null) {
+                        Log.d(TAG, "socket is null !");
+                        return;
+                    }
+                    java.io.InputStream is = socket.getInputStream();  
                     BufferedReader br=new BufferedReader(new InputStreamReader(is));  
                     if (is != null && br != null) {
                         String readStr=null;  
@@ -71,6 +74,7 @@ public class DemoPisInfo {
                     } else {
                         Log.d(TAG, "InputStream is null or BufferedReader is null");
                         sleep(2000);
+                        return;
                     }
                     
 //                  Reader reader = new InputStreamReader(socket.getInputStream());
@@ -81,12 +85,13 @@ public class DemoPisInfo {
 //                        System.out.println("client:"+charBuffer.toString());
 //                    }
 
-                } catch (Exception e) {  
-                    e.printStackTrace();  
-                }  
-            }  
-        }  
-    }  
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        }
+    }
       
     
     class SendThread extends Thread{  
