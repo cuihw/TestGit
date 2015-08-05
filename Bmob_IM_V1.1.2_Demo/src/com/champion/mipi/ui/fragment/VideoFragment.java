@@ -133,7 +133,7 @@ public class VideoFragment extends FragmentBase {
     private void updateWeatherUI(String temperature, List<String> mixData, int resId) {
 
         if (!TextUtils.isEmpty(temperature)) {
-            String temp = "北京   气温： " + temperature;
+            String temp = "北京 气温： " + temperature;
             mTemperature.setText(temp);
         } else {
             return;

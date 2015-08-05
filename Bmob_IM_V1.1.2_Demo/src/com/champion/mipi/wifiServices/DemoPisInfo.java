@@ -1,125 +1,150 @@
 package com.champion.mipi.wifiServices;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-
-import java.io.Reader;
-import java.net.InetAddress;
+import java.io.InputStream;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
-import java.nio.CharBuffer;
 
-import org.jivesoftware.smack.util.Base64.InputStream;
+import com.champion.mipi.ui.EmergencyActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class DemoPisInfo {
 
     private static final String TAG = "DemoPisInfo";
 
+    static Socket mSocket = null;
 
-    public DemoPisInfo() {
+    static ReceiveThread mReceiveThread;
 
-        new Thread(new Runnable(){
+    Object mLock = new Object();
+
+    static DemoPisInfo mInstence;
+
+    Context mContext;
+    
+    public static synchronized DemoPisInfo getInstence(Context c) {
+        
+        if (mInstence == null) {
+            mInstence = new DemoPisInfo(c);
+        }
+        return mInstence;
+    }
+
+    private DemoPisInfo(Context c) {
+        mContext = c;
+        connectToServer ();
+    }
+
+    private static int testCount = 5;
+
+    private void connectToServer () {
+
+        new Thread(new Runnable() {
 
             @Override
             public void run() {
+                synchronized (mLock) {
+                    Log.d(TAG, "start test");
+                    Log.d(TAG, "testCount = " + testCount);
+                    if (testCount == 0) {
+                        startEmergencyActivity("test!! 紧急情况，地铁15号线由于突发状况暂停运行，请大家换乘其他交通工具！");
+                    }
 
-                Socket socket = null;
-                try {
-                    socket = new Socket("www.championlee.com.cn",7308);
-                    
+                    if (testCount >= 0) {
+                        testCount--;
+                    }
+                    Log.d(TAG, "Try to connect championlee.com");
+                    try {
+                        if (mSocket == null) {
+                            mSocket = new Socket("www.championlee.com.cn", 7308);
+                        }
+                    } catch (Exception e) {
+                        mSocket = null;
+                        e.printStackTrace();
+                    }
 
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                    if (mReceiveThread == null) {
+                        mReceiveThread = new ReceiveThread(mSocket);
+                        mReceiveThread.start();
+                    }
 
-                    e.printStackTrace();
                 }
-
-                Log.d(TAG, "connect to championlee.com");
-                // new SendThread(socket).start();  
-                new ReceiveThread(socket).start();  
-            }}).start();
-
+            }
+        }).start();
     }
-    
-    class ReceiveThread extends Thread{  
-        private Socket socket;  
-          
-        public ReceiveThread(Socket socket) {  
+
+    class ReceiveThread extends Thread {
+        private Socket socket;
+
+        public ReceiveThread(Socket socket) {
             this.socket = socket;
         }
-  
-        @Override  
-        public void run() {  
-            while(true){
+
+        @Override
+        public void run() {
+            while (true) {
                 try {
                     Log.d(TAG, "ReceiveThread Running !");
-                    //socket.set
+                    // socket.set
                     if (socket == null) {
                         Log.d(TAG, "socket is null !");
+                        sleep(3000);
+                        connectToServer ();
+                        mReceiveThread = null;
                         return;
                     }
-                    java.io.InputStream is = socket.getInputStream();  
-                    BufferedReader br=new BufferedReader(new InputStreamReader(is));  
-                    if (is != null && br != null) {
-                        String readStr=null;  
-                        while(!((readStr=br.readLine())==null)){  
-                            Log.d(TAG, "recv message："+readStr);  
-                        }
-                    } else {
-                        Log.d(TAG, "InputStream is null or BufferedReader is null");
-                        sleep(2000);
-                        return;
-                    }
-                    
-//                  Reader reader = new InputStreamReader(socket.getInputStream());
-//                    CharBuffer charBuffer = CharBuffer.allocate(8192);  
-//                    int index = -1;
-//                    while((index=reader.read(charBuffer))!=-1){  
-//                        charBuffer.flip();
-//                        System.out.println("client:"+charBuffer.toString());
-//                    }
+                    InputStream is = socket.getInputStream();
 
+                    int length = is.read();
+                    Log.d(TAG, "length = " + length);
+                    if (length != -1) {
+                        byte[] buffer = new byte[length];
+                        is.read(buffer);
+                        String message = new String(buffer);
+                        Log.d(TAG, "recv message：" + message + ", length = " + length);
+                        String strBuf = bytes2hex(buffer) ;
+                        Log.d(TAG, "buffer：" + strBuf);
+                        startEmergencyActivity(message);
+                    }
+
+                    sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;
                 }
             }
         }
+
     }
-      
-    
-    class SendThread extends Thread{  
-        private Socket socket;  
-        public SendThread(Socket socket) {  
-            this.socket = socket;  
-        }  
 
-//        @Override  
-//        public void run() {  
-//            while(true){  
-//                try {
-//                    String send = getSend();              
-//                    PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));  
-//                    pw.write(send);  
-//                    pw.flush();  
-//                } catch (Exception e) {
-//                    e.printStackTrace();  
-//                }  
-//            }  
-//        }  
-//
-//        public String getSend() throws InterruptedException{
-//            Thread.sleep(1000);
-//            return "<SOAP-ENV:Envelope>"+System.currentTimeMillis()+"</SOAP-ENV:Envelope>";  
-//        }
+    private void startEmergencyActivity(String message) {
+        Log.d(TAG, "start startEmergencyActivity");
 
-    }  
-    
-    
+        if (!TextUtils.isEmpty(message)) {
+
+            Intent intent = new Intent(mContext, EmergencyActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("message", message);
+            mContext.startActivity(intent);
+        } else {
+            Log.d(TAG, "message is null.");
+        }
+    }
+
+    public static String bytes2hex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        String tmp = null;
+        for (byte b : bytes) {
+            tmp = Integer.toHexString(0xFF & b);
+            if (tmp.length() == 1) {
+                tmp = "0" + tmp;
+            }
+            tmp = "0x" + tmp + " ";
+            sb.append(tmp);
+        }
+        return sb.toString();
+    }
+
 }

@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="欢迎乘坐地铁5号线"
+                android:text="欢迎乘坐5号线"
                 android:textColor="@color/base_color_text_white" />
 
             <TextView

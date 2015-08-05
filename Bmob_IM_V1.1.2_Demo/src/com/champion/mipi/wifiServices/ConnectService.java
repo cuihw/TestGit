@@ -34,6 +34,8 @@ public class ConnectService extends Service {
     public static final String updateMyInformationAction = "com.champion.mipis.updateMyInformation";
 
     private WifiCommunication mWifiCommunication;
+
+    private DemoPisInfo mDemoPisInfo;
     
     private WeatherData mWeatherData;
 
@@ -87,8 +89,8 @@ public class ConnectService extends Service {
     public void init() {
         mWeatherData = new WeatherData(this);
         mWifiCommunication = WifiCommunication.getInstence(this);
-        
-        DemoPisInfo demoInfo = new DemoPisInfo();
+
+        mDemoPisInfo =  DemoPisInfo.getInstence(this);
 
     }
 
