@@ -1,14 +1,17 @@
 package com.champion.mipi.wifiServices;
 
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-
-import com.champion.mipi.ui.EmergencyActivity;
+import java.net.UnknownHostException;
 
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.champion.mipi.ui.EmergencyActivity;
 
 public class DemoPisInfo {
 
@@ -69,11 +72,11 @@ public class DemoPisInfo {
                         mReceiveThread = new ReceiveThread(mSocket);
                         mReceiveThread.start();
                     }
-
                 }
             }
         }).start();
     }
+
 
     class ReceiveThread extends Thread {
         private Socket socket;
@@ -146,5 +149,4 @@ public class DemoPisInfo {
         }
         return sb.toString();
     }
-
 }
