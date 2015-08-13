@@ -1,6 +1,7 @@
 package com.champion.mipi.wifiServices;
 
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -98,11 +99,19 @@ public class DemoPisInfo {
                         mReceiveThread = null;
                         return;
                     }
+//                    DataInputStream input = new DataInputStream(socket.getInputStream());
+//                    Thread.sleep(1000);
+//                    byte[] buffer = new byte[255];
+//                    int length = input.read();
+//                    System.out.println("服务器端返回过来的是length: " + length);
+//                    input.read(buffer);
+                    
                     InputStream is = socket.getInputStream();
-
+                    
                     int length = is.read();
                     Log.d(TAG, "length = " + length);
                     if (length != -1) {
+                        Thread.sleep(1000);
                         byte[] buffer = new byte[length];
                         is.read(buffer);
                         String message = new String(buffer);
